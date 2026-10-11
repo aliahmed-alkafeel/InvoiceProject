@@ -1,4 +1,6 @@
-﻿namespace UI.Controls
+﻿using System;
+
+namespace UI.Controls
 {
     partial class ToolBar
     {
@@ -123,6 +125,11 @@
             this.panelControl1.ResumeLayout(false);
             this.ResumeLayout(false);
 
+        }
+
+        private void btnAdd_Click_1(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

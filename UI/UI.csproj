@@ -45,8 +45,10 @@
     <Reference Include="DevExpress.XtraEditors.v24.2" />
     <Reference Include="DevExpress.Printing.v24.2.Core" />
     <Reference Include="DevExpress.Drawing.v24.2" />
+    <Reference Include="DevExpress.XtraGrid.v24.2, Version=24.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v24.2, Version=24.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraNavBar.v24.2, Version=24.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v24.2, Version=24.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.2\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -81,11 +83,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\MainGridViewControl.cs">
+    <Compile Include="Controls\SaveCancelControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\MainGridViewControl.Designer.cs">
-      <DependentUpon>MainGridViewControl.cs</DependentUpon>
+    <Compile Include="Controls\SaveCancelControl.Designer.cs">
+      <DependentUpon>SaveCancelControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SaveCancelControl2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SaveCancelControl2.Designer.cs">
+      <DependentUpon>SaveCancelControl2.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ToolBar.cs">
       <SubType>UserControl</SubType>
@@ -105,11 +113,40 @@
     <Compile Include="Controls\TopBarV2Control.Designer.cs">
       <DependentUpon>TopBarV2Control.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\BillsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BillsForm.Designer.cs">
+      <DependentUpon>BillsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EmployeesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EmployeesForm.Designer.cs">
+      <DependentUpon>EmployeesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ItemBillsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ItemBillsForm.Designer.cs">
+      <DependentUpon>ItemBillsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ItemsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ItemsForm.Designer.cs">
       <DependentUpon>ItemsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\VouchersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\VouchersForm.Designer.cs">
+      <DependentUpon>VouchersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InvoiceDbDataSet21.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InvoiceDbDataSet21.xsd</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,8 +156,11 @@
     <Compile Include="Forms\LogInForm.Designer.cs">
       <DependentUpon>LogInForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Controls\MainGridViewControl.resx">
-      <DependentUpon>MainGridViewControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\SaveCancelControl.resx">
+      <DependentUpon>SaveCancelControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SaveCancelControl2.resx">
+      <DependentUpon>SaveCancelControl2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ToolBar.resx">
       <DependentUpon>ToolBar.cs</DependentUpon>
@@ -149,6 +189,17 @@
       <DependentUpon>LogInForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
+    <None Include="InvoiceDbDataSet21.xsc">
+      <DependentUpon>InvoiceDbDataSet21.xsd</DependentUpon>
+    </None>
+    <None Include="InvoiceDbDataSet21.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>InvoiceDbDataSet21.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="InvoiceDbDataSet21.xss">
+      <DependentUpon>InvoiceDbDataSet21.xsd</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -170,10 +221,7 @@
       <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-    <Folder Include="Reports\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -34,5 +34,16 @@ namespace UI.Properties {
                 this["RememberedUsername"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=Localhost;Initial Catalog=InvoiceDb;Integrated Security=True;TrustSer" +
+            "verCertificate=True")]
+        public string InvoiceDbConnectionString {
+            get {
+                return ((string)(this["InvoiceDbConnectionString"]));
+            }
+        }
     }
 }

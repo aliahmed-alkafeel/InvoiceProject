@@ -11,11 +11,16 @@ using System.Windows.Forms;
 
 namespace UI.Controls
 {
-    public partial class MainGridViewControl : DevExpress.XtraEditors.XtraUserControl
+    public partial class SaveCancelControl : DevExpress.XtraEditors.XtraUserControl
     {
-        public MainGridViewControl()
+        public SaveCancelControl()
         {
             InitializeComponent();
+        }
+
+        private void simpleButton1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

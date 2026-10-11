@@ -23,14 +23,17 @@ namespace UI.Controls
 
         }
 
-        private void btnAdd_Click_1(object sender, EventArgs e)
-        {
-
-        }
 
         private void searchControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             searchControl1.Properties.NullValuePrompt = "بحث...";
         }
+
+        public event EventHandler CreateClicked;
+        public event EventHandler EditClicked;
+        public event EventHandler DeleteClicked;
+        public event EventHandler RefreshClicked;
+        public event EventHandler SaveClicked;
+        public event EventHandler CancelClicked;
     }
 }

@@ -18,22 +18,24 @@ namespace UI.Controls
             InitializeComponent();
         }
 
-        private void tablePanel1_Paint(object sender, PaintEventArgs e)
+    private void btnCreate_Click(object sender, EventArgs e)
+        { 
+            CreateClicked?.Invoke(this, EventArgs.Empty);
+        } 
+    private void btnEdit_Click(object sender, EventArgs e)
         {
-
+            EditClicked?.Invoke(this, EventArgs.Empty);
+        } 
+    private void btnDelete_Click(object sender, EventArgs e)
+        { 
+            DeleteClicked?.Invoke(this, EventArgs.Empty); 
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
+        public event EventHandler CreateClicked;
+        public event EventHandler EditClicked;
+        public event EventHandler DeleteClicked;
 
-        }
-
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tablePanel1_Paint_1(object sender, PaintEventArgs e)
+        private void searchControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

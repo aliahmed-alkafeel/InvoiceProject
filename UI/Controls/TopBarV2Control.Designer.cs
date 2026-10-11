@@ -53,12 +53,12 @@
             this.tablePanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tablePanel1.Location = new System.Drawing.Point(0, 0);
             this.tablePanel1.Name = "tablePanel1";
+            this.tablePanel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tablePanel1.Rows.AddRange(new DevExpress.Utils.Layout.TablePanelRow[] {
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 45F)});
             this.tablePanel1.Size = new System.Drawing.Size(900, 55);
             this.tablePanel1.TabIndex = 1;
             this.tablePanel1.UseSkinIndents = true;
-            this.tablePanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tablePanel1_Paint_1);
             // 
             // btnEdit
             // 
@@ -69,7 +69,7 @@
             this.btnEdit.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnEdit.ImageOptions.Image")));
             this.btnEdit.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.RightCenter;
             this.btnEdit.ImageOptions.ImageToTextIndent = 5;
-            this.btnEdit.Location = new System.Drawing.Point(713, 11);
+            this.btnEdit.Location = new System.Drawing.Point(102, 11);
             this.btnEdit.Margin = new System.Windows.Forms.Padding(1);
             this.btnEdit.Name = "btnEdit";
             this.tablePanel1.SetRow(this.btnEdit, 0);
@@ -82,12 +82,12 @@
             // 
             this.btnDelete.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.btnDelete.Appearance.Options.UseFont = true;
-            this.tablePanel1.SetColumn(this.btnDelete, 1);
+            this.tablePanel1.SetColumn(this.btnDelete, 3);
             this.btnDelete.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnDelete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.ImageOptions.Image")));
             this.btnDelete.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.RightCenter;
             this.btnDelete.ImageOptions.ImageToTextIndent = 5;
-            this.btnDelete.Location = new System.Drawing.Point(623, 11);
+            this.btnDelete.Location = new System.Drawing.Point(12, 11);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(1);
             this.btnDelete.Name = "btnDelete";
             this.tablePanel1.SetRow(this.btnDelete, 0);
@@ -100,12 +100,12 @@
             // 
             this.btnAdd.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.btnAdd.Appearance.Options.UseFont = true;
-            this.tablePanel1.SetColumn(this.btnAdd, 3);
+            this.tablePanel1.SetColumn(this.btnAdd, 1);
             this.btnAdd.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnAdd.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnAdd.ImageOptions.Image")));
             this.btnAdd.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.RightCenter;
             this.btnAdd.ImageOptions.ImageToTextIndent = 5;
-            this.btnAdd.Location = new System.Drawing.Point(803, 11);
+            this.btnAdd.Location = new System.Drawing.Point(192, 11);
             this.btnAdd.Margin = new System.Windows.Forms.Padding(1);
             this.btnAdd.Name = "btnAdd";
             this.tablePanel1.SetRow(this.btnAdd, 0);
@@ -117,12 +117,13 @@
             // 
             this.tablePanel1.SetColumn(this.searchControl1, 0);
             this.searchControl1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.searchControl1.Location = new System.Drawing.Point(13, 12);
+            this.searchControl1.Location = new System.Drawing.Point(587, 12);
             this.searchControl1.Name = "searchControl1";
             this.searchControl1.Properties.AutoHeight = false;
             this.searchControl1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Repository.ClearButton(),
             new DevExpress.XtraEditors.Repository.SearchButton()});
+            this.searchControl1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tablePanel1.SetRow(this.searchControl1, 0);
             this.searchControl1.Size = new System.Drawing.Size(300, 30);
             this.searchControl1.TabIndex = 4;
