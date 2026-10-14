@@ -20,7 +20,6 @@ namespace UI.Controls
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-
         }
 
 

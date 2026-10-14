@@ -1,4 +1,5 @@
 ﻿using Data.UnitOfWork;
+using DevExpress.XtraBars.Customization;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.TextEditController.Utils;
 using DevExpress.XtraGrid.Views.Base;
@@ -8,6 +9,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Forms.Items;
 
 namespace UI.Forms
 {
@@ -15,15 +17,13 @@ namespace UI.Forms
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        // الصنف المحدد حاليًا.
         private Item _selectedItem;
 
-        // حالة الشاشة.
+ 
         private bool _isCreating;
         private bool _isEditing;
         private bool _isLoadingItems;
 
-        // يجب تعيينه إلى Guid المستخدم الحالي قبل الإضافة.
         public Guid CurrentUserId { get; set; }
 
         public ItemsForm(IUnitOfWork unitOfWork)
@@ -33,13 +33,12 @@ namespace UI.Forms
             _unitOfWork = unitOfWork
                 ?? throw new ArgumentNullException(nameof(unitOfWork));
 
-            // ربط أزرار TopBarV2Control بأحداث الفورم.
             topBarV2Control1.CreateClicked += ItemsToolbar_CreateClicked;
             topBarV2Control1.EditClicked += ItemsToolbar_EditClicked;
             topBarV2Control1.DeleteClicked += ItemsToolbar_DeleteClicked;
 
         }
-
+     
         // =========================================================
         // 1. Load
         // =========================================================
@@ -62,19 +61,19 @@ namespace UI.Forms
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
-            var categories = await _unitOfWork.Categories
-        .Select()
-        .Select(c => new
-        {
-            //c.Id,
-            c.Name
-        })
-        .ToListAsync();
+        //    var categories = await _unitOfWork.Categories
+        //.Select()
+        //.Select(c => new
+        //{
+        //    c.Id,
+        //    c.Name
+        //})
+        //.ToListAsync();
 
-            cmbCategories.Properties.DataSource = categories;
-            cmbCategories.Properties.DisplayMember = "Name";
-            cmbCategories.Properties.ValueMember = "Name";
-            cmbCategories.Properties.NullText = "اختر التصنيف";
+            //cmbCategories.Properties.DataSource = categories;
+            //cmbCategories.Properties.DisplayMember = "Name";
+            //cmbCategories.Properties.ValueMember = "Name";
+            //cmbCategories.Properties.NullText = "اختر التصنيف";
 
         }
 
@@ -99,11 +98,11 @@ namespace UI.Forms
 
                     var item = gridView1.GetFocusedRow() as Item;
 
-                    LoadItemDetails(item);
+                    //LoadItemDetails(item);
                 }
                 else
                 {
-                    LoadItemDetails(null);
+                    //LoadItemDetails(null);
                 }
             }
             finally
@@ -121,49 +120,25 @@ namespace UI.Forms
             FocusedRowChangedEventArgs e)
         {
             // لا تغيّر الحقول أثناء التحميل أو الإضافة أو التعديل.
-            if (_isLoadingItems || _isCreating || _isEditing)
-                return;
+            //if (_isLoadingItems || _isCreating || _isEditing)
+            //    return;
 
             var selectedItem = gridView1.GetFocusedRow() as Item;
 
-            LoadItemDetails(selectedItem);
+            //LoadItemDetails(selectedItem);
         }
 
         // =========================================================
         // 4. Display selected item in the right panel
         // =========================================================
 
-        private void LoadItemDetails(Item item)
-        {
-            _selectedItem = item;
 
-            if (item == null)
-            {
-                ClearDetails();
-                return;
-            }
-
-            txtName.Text = item.Name;
-            txtPrice.EditValue = item.Price;
-            cmbCategories.EditValue = item.Category?.Name;
-            chkIsActive.Checked = item.IsActive;
-            txtNotes.Text = item.Notes;
-
-        }
 
         // =========================================================
         // 5. Clear detail fields
         // =========================================================
 
-        private void ClearDetails()
-        {
-            txtName.Text = string.Empty;
-            cmbCategories.EditValue = null;
-            txtPrice.EditValue = null;
-            chkIsActive.Checked = false;
-            txtNotes.Text = string.Empty;
 
-        }
 
         // =========================================================
         // 6. Enable / Disable editing
@@ -171,8 +146,8 @@ namespace UI.Forms
 
         private void SetDetailsEditable(bool editable)
         {
-            txtName.Properties.ReadOnly = !editable;
-            txtPrice.Properties.ReadOnly = !editable;
+            //txtName.Properties.ReadOnly = !editable;
+            //txtPrice.Properties.ReadOnly = !editable;
         }
 
         // =========================================================
@@ -186,16 +161,22 @@ namespace UI.Forms
             if (!ConfirmDiscardChanges())
                 return;
 
+            var editForm = Program.ServiceProvider.GetService(typeof(ItemsEditForm)) as ItemsEditForm;
+                editForm.ShowDialog(this);
+
+            
+            
+            
             _isCreating = true;
             _isEditing = false;
 
             _selectedItem = null;
 
-            ClearDetails();
+            //ClearDetails();
 
             SetDetailsEditable(true);
 
-            txtName.Focus();
+            //txtName.Focus();
         }
 
         // =========================================================
@@ -206,17 +187,6 @@ namespace UI.Forms
             object sender,
             EventArgs e)
         {
-            if (_isCreating || _isEditing)
-            {
-                XtraMessageBox.Show(
-                    "Save or cancel the current operation first.",
-                    "Information",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-
-                return;
-            }
-
             var selectedItem = gridView1.GetFocusedRow() as Item;
 
             if (selectedItem == null)
@@ -229,15 +199,33 @@ namespace UI.Forms
 
                 return;
             }
+            using (var editForm = Program.ServiceProvider.GetService(typeof(ItemsEditForm)) as ItemsEditForm)
+            {
+                editForm.ShowDialog(this);
+               
+            }
+
+            
+            if (_isCreating || _isEditing)
+            {
+                XtraMessageBox.Show(
+                    "Save or cancel the current operation first.",
+                    "Information",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+
 
             _isCreating = false;
             _isEditing = true;
 
-            LoadItemDetails(selectedItem);
+            //LoadItemDetails(selectedItem);
 
             SetDetailsEditable(true);
 
-            txtName.Focus();
+            //txtName.Focus();
         }
 
         // =========================================================
@@ -260,54 +248,54 @@ namespace UI.Forms
             }
 
             // Validate Name.
-            string name = txtName.Text.Trim();
+            //string name = txtName.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                XtraMessageBox.Show(
-                    "Name is required.",
-                    "Validation",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+            //if (string.IsNullOrWhiteSpace(name))
+            //{
+            //    XtraMessageBox.Show(
+            //        "Name is required.",
+            //        "Validation",
+            //        MessageBoxButtons.OK,
+            //        MessageBoxIcon.Warning);
 
-                txtName.Focus();
-                return;
+            //    txtName.Focus();
+            //    return;
             }
 
             // Validate Price.
-            if (!decimal.TryParse(txtPrice.Text, out decimal price) ||
-                price < 0)
-            {
-                XtraMessageBox.Show(
-                    "Please enter a valid price.",
-                    "Validation",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+        //    if (!decimal.TryParse(txtPrice.Text, out decimal price) ||
+        //        price < 0)
+        //    {
+        //        XtraMessageBox.Show(
+        //            "Please enter a valid price.",
+        //            "Validation",
+        //            MessageBoxButtons.OK,
+        //            MessageBoxIcon.Warning);
 
-                txtPrice.Focus();
-                return;
-            }
+        //        txtPrice.Focus();
+        //        return;
+        //    }
 
-            try
-            {
-                if (_isCreating)
-                {
-                    await CreateItemAsync(name, price);
-                }
-                else if (_isEditing)
-                {
-                    await UpdateItemAsync(name, price);
-                }
-            }
-            catch (Exception ex)
-            {
-                XtraMessageBox.Show(
-                    $"Failed to save the item.\n{ex.Message}",
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-        }
+        //    try
+        //    {
+        //        if (_isCreating)
+        //        {
+        //            await CreateItemAsync(name, price);
+        //        }
+        //        else if (_isEditing)
+        //        {
+        //            await UpdateItemAsync(name, price);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        XtraMessageBox.Show(
+        //            $"Failed to save the item.\n{ex.Message}",
+        //            "Error",
+        //            MessageBoxButtons.OK,
+        //            MessageBoxIcon.Error);
+        //    }
+        //}
 
         // =========================================================
         // 10. Create item
@@ -511,20 +499,20 @@ namespace UI.Forms
         // 14. Cancel
         // =========================================================
 
-        private void ItemsToolbar_CancelClicked(
-            object sender,
-            EventArgs e)
-        {
-            _isCreating = false;
-            _isEditing = false;
+        //private void ItemsToolbar_CancelClicked(
+        //    object sender,
+        //    EventArgs e)
+        //{
+        //    _isCreating = false;
+        //    _isEditing = false;
 
-            SetDetailsEditable(false);
+        //    SetDetailsEditable(false);
 
-            // Restore the values from the selected grid row.
-            var selectedItem = gridView1.GetFocusedRow() as Item;
+        //    // Restore the values from the selected grid row.
+        //    var selectedItem = gridView1.GetFocusedRow() as Item;
 
-            LoadItemDetails(selectedItem);
-        }
+        //    LoadItemDetails(selectedItem);
+        //}
 
         // =========================================================
         // 15. Confirm before discarding changes
@@ -545,6 +533,56 @@ namespace UI.Forms
         }
 
         private void labelControl2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbCategories_EditValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelControl5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelControl4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtName_EditValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chkIsActive_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtNotes_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelControl3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPrice_EditValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveCancelControl21_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void topBarV2Control1_Load(object sender, EventArgs e)
         {
 
         }

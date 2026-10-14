@@ -9,7 +9,7 @@ using Models.Entities;
 
 namespace Data.UnitOfWork
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork: IDisposable
     {
         IGenericRepository<AccountsTree> AccountsTrees { get; }
         IGenericRepository<Bill> Bills { get; }
@@ -22,6 +22,6 @@ namespace Data.UnitOfWork
         IGenericRepository<Group> Groups { get; }
         IGenericRepository<Role> Roles { get; }
         IGenericRepository<GroupRole> GroupRoles { get; }
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+        Task<int> SaveChangesAsync();
     }
 }

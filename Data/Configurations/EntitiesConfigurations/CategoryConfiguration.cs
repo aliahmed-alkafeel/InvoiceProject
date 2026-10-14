@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Models.Entities;
 
-namespace Data.Configurations
+namespace Data.Configurations.EntitiesConfigurations
 {
-    internal class GroupConfiguration : EntityTypeConfiguration<Group>
+    internal class CategoryConfiguration : EntityTypeConfiguration<Category>
     {
-        public GroupConfiguration()
+        public CategoryConfiguration()
         {
-            Property(g => g.GroupName)
+            Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(200);
+
         }
     }
 }

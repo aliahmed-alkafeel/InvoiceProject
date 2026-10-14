@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Configurations
+namespace Data.Configurations.EntitiesConfigurations
 {
     internal class ItemConfiguration : EntityTypeConfiguration<Item>
     {
@@ -16,6 +16,7 @@ namespace Data.Configurations
                 .IsRequired()
                 .HasMaxLength(200);
             Property(x => x.Price).IsRequired().HasPrecision(18, 2);
+
         }
     }
 }

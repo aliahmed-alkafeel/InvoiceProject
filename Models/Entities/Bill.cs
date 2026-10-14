@@ -21,9 +21,7 @@ namespace Models.Entities
 
         public decimal CurrencyEqualValue { get; set; }
 
-        public DateTime Date { get; set; }
-
-        public string Note { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
 
         [ForeignKey(nameof(AccountTreeGuid))]
         public AccountsTree AccountTree { get; set; }

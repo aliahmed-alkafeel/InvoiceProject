@@ -66,26 +66,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configurations\AccountsTreeConfigration.cs" />
-    <Compile Include="Configurations\BillConfiguration.cs" />
-    <Compile Include="Configurations\BillItemsConfiguration.cs" />
-    <Compile Include="Configurations\CurrencyConfiguration.cs" />
-    <Compile Include="Configurations\EmployeeConfiguration.cs" />
-    <Compile Include="Configurations\GroupConfiguration.cs" />
-    <Compile Include="Configurations\ItemConfigration.cs" />
-    <Compile Include="Configurations\CategoryConfiguration.cs" />
-    <Compile Include="Configurations\VoucherConfiguration.cs" />
+    <Compile Include="Configurations\EntitiesConfigurations\AccountsTreeConfigration.cs" />
+    <Compile Include="Configurations\EntitiesConfigurations\BillConfiguration.cs" />
+    <Compile Include="Configurations\EntitiesConfigurations\BillItemsConfiguration.cs" />
+    <Compile Include="Configurations\EntitiesConfigurations\CurrencyConfiguration.cs" />
+    <Compile Include="Configurations\EntitiesConfigurations\EmployeeConfiguration.cs" />
+    <Compile Include="Configurations\EntitiesConfigurations\GroupConfiguration.cs" />
+    <Compile Include="Configurations\EntitiesConfigurations\ItemConfigration.cs" />
+    <Compile Include="Configurations\EntitiesConfigurations\CategoryConfiguration.cs" />
+    <Compile Include="Configurations\EntitiesConfigurations\VoucherConfiguration.cs" />
     <Compile Include="Context\InvoiceDbContext.cs" />
     <Compile Include="Migrations\202610070730390_Init.cs" />
     <Compile Include="Migrations\202610070730390_Init.Designer.cs">
       <DependentUpon>202610070730390_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202610131249444_notedeleted.cs" />
+    <Compile Include="Migrations\202610131249444_notedeleted.Designer.cs">
+      <DependentUpon>202610131249444_notedeleted.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Implementations\GenericRepository.cs" />
     <Compile Include="Repositories\Interfaces\IGenericRepository.cs" />
     <Compile Include="Seed\DbInitializer.cs" />
+    <Compile Include="Services\Implementations\CategoryService.cs" />
+    <Compile Include="Services\Implementations\ItemsService.cs" />
     <Compile Include="Services\Implementations\LoginService.cs" />
+    <Compile Include="Services\Interfaces\ICategoryService.cs" />
+    <Compile Include="Services\Interfaces\IItemsService.cs" />
     <Compile Include="Services\Interfaces\ILoginService.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
@@ -104,6 +112,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202610070730390_Init.resx">
       <DependentUpon>202610070730390_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202610131249444_notedeleted.resx">
+      <DependentUpon>202610131249444_notedeleted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

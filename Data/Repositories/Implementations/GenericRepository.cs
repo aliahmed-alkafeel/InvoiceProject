@@ -57,7 +57,7 @@ namespace Data.Repositories.Implementations
         }
         public void Add(T obj)
         {
-            obj.CreatedById = userId;
+            obj.CreatedById = Guid.Empty;
             obj.CreatedAt = DateTime.Now;
             _dbSet.Add(obj);
         }

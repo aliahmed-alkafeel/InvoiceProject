@@ -18,8 +18,8 @@ namespace Models.Entities
 
         public decimal Price { get; set; }
         [ForeignKey(nameof(BillGuid))]
-        public virtual Bill Bill { get; set; }
+        public Bill Bill { get; set; }
         [ForeignKey(nameof(ItemGuid))]
-        public virtual Item Item { get; set; }
+        public Item Item { get; set; }
     }
 }

@@ -35,8 +35,8 @@
             this.navButton5 = new DevExpress.XtraBars.Navigation.NavButton();
             this.navButton7 = new DevExpress.XtraBars.Navigation.NavButton();
             this.navButton4 = new DevExpress.XtraBars.Navigation.NavButton();
-            this.navButton9 = new DevExpress.XtraBars.Navigation.NavButton();
-            this.navButton3 = new DevExpress.XtraBars.Navigation.NavButton();
+            this.btnCategories = new DevExpress.XtraBars.Navigation.NavButton();
+            this.btnItems = new DevExpress.XtraBars.Navigation.NavButton();
             ((System.ComponentModel.ISupportInitialize)(this.tileNavPane1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,8 +48,8 @@
             this.tileNavPane1.Buttons.Add(this.navButton5);
             this.tileNavPane1.Buttons.Add(this.navButton7);
             this.tileNavPane1.Buttons.Add(this.navButton4);
-            this.tileNavPane1.Buttons.Add(this.navButton9);
-            this.tileNavPane1.Buttons.Add(this.navButton3);
+            this.tileNavPane1.Buttons.Add(this.btnCategories);
+            this.tileNavPane1.Buttons.Add(this.btnItems);
             // 
             // tileNavCategory1
             // 
@@ -104,17 +104,19 @@
             this.navButton4.Caption = "الفواتير";
             this.navButton4.Name = "navButton4";
             // 
-            // navButton9
+            // btnCategories
             // 
-            this.navButton9.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
-            this.navButton9.Caption = "الاصناف";
-            this.navButton9.Name = "navButton9";
+            this.btnCategories.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
+            this.btnCategories.Caption = "الاصناف";
+            this.btnCategories.Name = "btnCategories";
+            this.btnCategories.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnCategories_Click);
             // 
-            // navButton3
+            // btnItems
             // 
-            this.navButton3.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
-            this.navButton3.Caption = "المنتجات";
-            this.navButton3.Name = "navButton3";
+            this.btnItems.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
+            this.btnItems.Caption = "المنتجات";
+            this.btnItems.Name = "btnItems";
+            this.btnItems.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnItems_Click);
             // 
             // TopBarControl
             // 
@@ -135,8 +137,8 @@
         private DevExpress.XtraBars.Navigation.NavButton navButton5;
         private DevExpress.XtraBars.Navigation.NavButton navButton7;
         private DevExpress.XtraBars.Navigation.NavButton navButton4;
-        private DevExpress.XtraBars.Navigation.NavButton navButton9;
-        private DevExpress.XtraBars.Navigation.NavButton navButton3;
+        private DevExpress.XtraBars.Navigation.NavButton btnCategories;
+        private DevExpress.XtraBars.Navigation.NavButton btnItems;
         private DevExpress.XtraBars.Navigation.TileNavPane tileNavPane1;
     }
 }

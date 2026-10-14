@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraEditors;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Forms;
+using UI.Forms.Items;
 
 namespace UI.Base.TopBar
 {
@@ -16,12 +19,22 @@ namespace UI.Base.TopBar
         public TopBarControl()
         {
             InitializeComponent();
-
         }
 
         private void tileNavPane1_Click(object sender, EventArgs e)
         {
+        }
 
+        private void btnItems_Click(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
+        {
+        }
+
+        private void btnCategories_Click(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
+        {
+            var categoriesForm =
+                Program.CurrentScopeProvider.GetRequiredService<CategoriesForm>();
+
+            categoriesForm.LoadPage();
         }
     }
 }

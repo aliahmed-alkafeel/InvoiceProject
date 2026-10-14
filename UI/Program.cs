@@ -17,6 +17,7 @@ using DevExpress.Skins;
 using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
 using UI.Forms;
+using UI.Forms.Items;
 using UI.Screens;
 
 namespace UI
@@ -24,6 +25,47 @@ namespace UI
     internal static class Program
     {
         public static IServiceProvider ServiceProvider { get; private set; }
+        public static IServiceProvider CurrentScopeProvider { get; private set; }
+        private static XtraForm _hostForm;
+        private static XtraForm _currentPage;
+
+        public static void LoadPage(this XtraForm page)
+        {
+            if (_hostForm == null)
+                throw new InvalidOperationException("لم يتم تحديد الفورم الرئيسي.");
+
+            if (_currentPage != null)
+            {
+                _hostForm.Controls.Remove(_currentPage);
+                _currentPage.Dispose();
+            }
+            else
+            {
+                var oldControls = _hostForm.Controls
+                    .Cast<Control>()
+                    .ToList();
+
+                _hostForm.Controls.Clear();
+
+                foreach (var control in oldControls)
+                {
+                    control.Dispose();
+                }
+            }
+
+            page.TopLevel = false;
+            page.FormBorderStyle = FormBorderStyle.None;
+            page.Dock = DockStyle.Fill;
+
+            _hostForm.Controls.Add(page);
+
+            page.Show();
+            page.BringToFront();
+
+            _currentPage = page;
+
+            _hostForm.Text = page.Text;
+        }
         [STAThread]
         static void Main()
         {
@@ -68,8 +110,13 @@ Properties.Settings.Default.RememberedUsername;
             }
             using (var mainScope = ServiceProvider.CreateScope())
             {
+                CurrentScopeProvider = mainScope.ServiceProvider;
+
                 var mainForm =
-                    mainScope.ServiceProvider.GetRequiredService<ItemsForm>();
+                    CurrentScopeProvider.GetRequiredService<ItemsForm>();
+
+                _hostForm = mainForm;
+                _currentPage = null;
 
                 Application.Run(mainForm);
             }
@@ -80,11 +127,13 @@ Properties.Settings.Default.RememberedUsername;
             services.AddScoped<InvoiceDbContext>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-
+            services.AddScoped<IItemsService, ItemsService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ILoginService, LoginService>();
-            services.AddTransient<ItemsForm>();
+            services.AddTransient <ItemsForm>();
             services.AddTransient<LogInForm>();
+            services.AddTransient<ItemsEditForm>();
+            services.AddTransient<CategoriesForm>();
         }
     }
 }

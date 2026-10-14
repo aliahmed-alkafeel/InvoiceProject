@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Models.Entities;
 
-namespace Data.Configurations
+namespace Data.Configurations.EntitiesConfigurations
 {
     internal class CurrencyConfiguration : EntityTypeConfiguration<Currency>
     {

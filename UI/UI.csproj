@@ -119,6 +119,12 @@
     <Compile Include="Forms\BillsForm.Designer.cs">
       <DependentUpon>BillsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CategoriesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CategoriesForm.Designer.cs">
+      <DependentUpon>CategoriesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EmployeesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,12 +137,19 @@
     <Compile Include="Forms\ItemBillsForm.Designer.cs">
       <DependentUpon>ItemBillsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ItemsForm.cs">
+    <Compile Include="Forms\Items\ItemsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ItemsForm.Designer.cs">
+    <Compile Include="Forms\Items\ItemsForm.Designer.cs">
       <DependentUpon>ItemsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Items\ItemsEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Items\ItemsEditForm.Designer.cs">
+      <DependentUpon>ItemsEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Items\ItemsHelper.cs" />
     <Compile Include="Forms\VouchersForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,8 +184,14 @@
     <EmbeddedResource Include="Controls\TopBarV2Control.resx">
       <DependentUpon>TopBarV2Control.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ItemsForm.resx">
+    <EmbeddedResource Include="Forms\CategoriesForm.resx">
+      <DependentUpon>CategoriesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Items\ItemsForm.resx">
       <DependentUpon>ItemsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Items\ItemsEditForm.resx">
+      <DependentUpon>ItemsEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

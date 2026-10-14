@@ -22,6 +22,7 @@ namespace Data.Services.Implementations
 
         public async Task<bool> LoginAsync(string username, string password)
         {
+
             var employee = await _unitOfWork.Employees.Select()
                 .FirstOrDefaultAsync(x => x.Username == username);
             if (employee == null)

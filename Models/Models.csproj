@@ -51,6 +51,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\AccountsTreeDto.cs" />
+    <Compile Include="DTOs\BaseDto.cs" />
+    <Compile Include="DTOs\BillDto.cs" />
+    <Compile Include="DTOs\BillItemDto.cs" />
+    <Compile Include="DTOs\CategoryDto.cs" />
+    <Compile Include="DTOs\CurrencyDto.cs" />
+    <Compile Include="DTOs\EmployeeDto.cs" />
+    <Compile Include="DTOs\GroupDto.cs" />
+    <Compile Include="DTOs\GroupRoleDto.cs" />
+    <Compile Include="DTOs\ItemDto.cs" />
+    <Compile Include="DTOs\RoleDto.cs" />
+    <Compile Include="DTOs\VoucherDto.cs" />
     <Compile Include="Resources\CurrentUser.cs" />
     <Compile Include="Entities\AccountsTree.cs" />
     <Compile Include="Entities\BaseModel.cs" />
@@ -70,9 +82,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DTOs\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

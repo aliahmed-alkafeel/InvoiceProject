@@ -18,7 +18,7 @@ namespace Models.Entities
         public string Email { get; set; }
 
         public string Username { get; set; }
-
+         
         public string Password { get; set; }
         [ForeignKey(nameof(GroupGuid))]
         public Group Group { get; set; }
