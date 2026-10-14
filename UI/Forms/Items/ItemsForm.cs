@@ -49,18 +49,29 @@ namespace UI.Forms
 
         private async Task LoadItemsAsync()
         {
+            if (CheckItemsLoading())
+                return;
+
             _isLoadingItems = true;
+
+            try
+            {
                 var items = await _unitOfWork.Items
                     .Select()
                     .Include(i => i.Category)
                     .ToListAsync();
+
                 gridControl1.DataSource = items;
+
                 if (gridView1.RowCount > 0)
                 {
                     gridView1.FocusedRowHandle = 0;
-                }          
+                }
+            }
+            finally
+            {
                 _isLoadingItems = false;
- 
+            }
         }
 
         private void gridView1_FocusedRowChanged(
@@ -71,6 +82,8 @@ namespace UI.Forms
 
         private async void ItemsToolbar_CreateClicked(object sender, EventArgs e)
         {
+            if (CheckItemsLoading())
+                return;
             var editForm = Program.ServiceProvider
                 .GetService(typeof(ItemsEditForm)) as ItemsEditForm;
             var result = editForm.ShowDialog(this);
@@ -83,6 +96,8 @@ namespace UI.Forms
 
         private async void ItemsToolbar_EditClicked(object sender, EventArgs e)
         {
+            if (CheckItemsLoading())
+                return;
             var selectedItem = gridView1.GetFocusedRow() as Item;
 
             if (selectedItem == null)
@@ -113,6 +128,8 @@ namespace UI.Forms
             object sender,
             EventArgs e)
         {
+            if (CheckItemsLoading())
+                return;
             var item = gridView1.GetFocusedRow() as Item;
 
             if (item == null)
@@ -168,9 +185,14 @@ namespace UI.Forms
             object sender,
             EventArgs e)
         {
+            if (CheckItemsLoading())
+                return;
+            UseWaitCursor = true;
+            
             try
             {
                 await LoadItemsAsync();
+                gridView1.ClearGrouping();
             }
             catch (Exception ex)
             {
@@ -180,50 +202,25 @@ namespace UI.Forms
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+            finally
+            {
+                await Task.Delay(300);
+                UseWaitCursor = false;
+            }
+        }
+        private bool CheckItemsLoading()
+        {
+            if (!_isLoadingItems)
+                return false;
+
+            XtraMessageBox.Show(
+                "جاري تحميل المنتجات، يرجى الانتظار حتى اكتمال التحميل.",
+                "تحميل المنتجات",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+
+            return true;
         }
 
-        private void labelControl2_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void cmbCategories_EditValueChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void labelControl5_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void labelControl4_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void txtName_EditValueChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void chkIsActive_CheckedChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void txtNotes_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void labelControl3_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void txtPrice_EditValueChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void saveCancelControl21_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void topBarV2Control1_Load(object sender, EventArgs e)
-        {
-        }
     }
 }

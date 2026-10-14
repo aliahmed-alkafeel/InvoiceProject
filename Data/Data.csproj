@@ -40,6 +40,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.8.6.3\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=10.0.0.12, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.10.0.12\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -50,6 +53,9 @@
       <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.10.0.12\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -66,6 +72,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\DTOsConfigurations\AccountsTreeDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\BaseDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\BillDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\BillItemDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\CategoryDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\CurrencyDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\EmployeeDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\GroupDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\GroupRoleDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\ItemDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\RoleDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\VoucherDtoConfiguration.cs" />
     <Compile Include="Configurations\EntitiesConfigurations\AccountsTreeConfigration.cs" />
     <Compile Include="Configurations\EntitiesConfigurations\BillConfiguration.cs" />
     <Compile Include="Configurations\EntitiesConfigurations\BillItemsConfiguration.cs" />
