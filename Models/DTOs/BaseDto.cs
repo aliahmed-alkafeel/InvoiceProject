@@ -7,7 +7,7 @@ namespace Models.DTOs
 {
     public class BaseDto
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
         public string Notes { get; set; }
     }
 }

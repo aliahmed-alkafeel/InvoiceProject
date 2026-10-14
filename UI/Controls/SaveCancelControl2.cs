@@ -30,5 +30,11 @@ namespace UI.Controls
             CancelClicked?.Invoke(this, EventArgs.Empty);
 
         }
+        public string SaveText
+        {
+            get => btnSave.Text;
+            set => btnSave.Text = value;
+        }
+
     }
 }

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -49,13 +50,34 @@ namespace UI.Forms.Items
                 if(result)
                 {
                     MessageBox.Show("تم إضافة المنتج بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult = DialogResult.OK;
                     Close();
                 }
                 else
                 {
                     MessageBox.Show("فشل في إضافة المنتج", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
+            }
+            else
+            {
+                var newItem = new ItemDto();
+                newItem.Id = _selectedItem.Id;
+                newItem.Name = txtName.Text;
+                newItem.Price = Convert.ToDecimal(txtPrice.EditValue);
+                newItem.CategoryGuid = (Guid)cmbCategories.EditValue;
+                newItem.IsActive = chkIsActive.Checked;
+                newItem.Notes = txtNotes.Text;
+                var result = await _itemsService.UpdateItemAsync(newItem);
+                if (result)
+                {
+                    MessageBox.Show("تم تعديل المنتج بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("فشل في تعديل المنتج", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -79,12 +101,12 @@ namespace UI.Forms.Items
 
             cmbCategories.Properties.DataSource = categories;
             cmbCategories.Properties.DisplayMember = "Name";
-            cmbCategories.Properties.ValueMember = "Guid";         
-
+            cmbCategories.Properties.ValueMember = "Id";
             cmbCategories.Properties.NullText = "اختر التصنيف";
             if (_selectedItem == null)
             {
                 lblTitle.Text = "إضافة منتج";
+                saveCancelControl21.SaveText = "إضافة";
             }
 
             LoadItemDetails(_selectedItem);
@@ -92,21 +114,14 @@ namespace UI.Forms.Items
         private void LoadItemDetails(Item item)
         {
             _selectedItem = item;
-
             if (item == null)
             {
                 ClearDetails();
                 return;
             }
-    //        var categories = await _categoryService.GetAllCategoriesAsync();
-    //        var categoryExists = categories.Any(
-    //c => c.Id == _selectedItem.CategoryGuid);
-
-    //        MessageBox.Show($"Category exists: {categoryExists}");
             txtName.Text = item.Name;
             txtPrice.EditValue = item.Price;
-  
-            cmbCategories.EditValue = item.CategoryGuid.ToString();
+            cmbCategories.EditValue = item.CategoryGuid;
             chkIsActive.Checked = item.IsActive;
             txtNotes.Text = item.Notes;
 
