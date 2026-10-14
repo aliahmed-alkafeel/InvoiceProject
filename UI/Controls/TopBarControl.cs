@@ -27,6 +27,10 @@ namespace UI.Base.TopBar
 
         private void btnItems_Click(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
         {
+            var itemsForm =
+    Program.CurrentScopeProvider.GetRequiredService<ItemsForm>();
+
+            itemsForm.LoadPage();
         }
 
         private void btnCategories_Click(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)

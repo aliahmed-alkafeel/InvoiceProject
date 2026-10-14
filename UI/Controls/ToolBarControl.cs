@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace UI.Controls
 {
-    public partial class TopBarV2Control : DevExpress.XtraEditors.XtraUserControl
+    public partial class ToolBarControl : DevExpress.XtraEditors.XtraUserControl
     {
-        public TopBarV2Control()
+        public ToolBarControl()
         {
             InitializeComponent();
         }
@@ -34,12 +34,13 @@ namespace UI.Controls
         public event EventHandler CreateClicked;
         public event EventHandler EditClicked;
         public event EventHandler DeleteClicked;
+        public event EventHandler RefreshClicked;
 
-        private void searchControl1_SelectedIndexChanged(object sender, EventArgs e)
+       
+
+        private void btnRefresh_Click(object sender, EventArgs e)
         {
-
+            RefreshClicked?.Invoke(this, EventArgs.Empty);
         }
-
-   
     }
 }

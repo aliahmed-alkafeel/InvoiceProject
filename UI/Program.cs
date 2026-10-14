@@ -16,6 +16,7 @@ using DevExpress.LookAndFeel;
 using DevExpress.Skins;
 using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
+using UI.Base.TopBar;
 using UI.Forms;
 using UI.Forms.Items;
 using UI.Screens;
@@ -34,25 +35,17 @@ namespace UI
             if (_hostForm == null)
                 throw new InvalidOperationException("لم يتم تحديد الفورم الرئيسي.");
 
+            if (_currentPage != null &&
+                _currentPage.GetType() == page.GetType())
+            {
+                page.Dispose();
+                return;
+            }
             if (_currentPage != null)
             {
                 _hostForm.Controls.Remove(_currentPage);
                 _currentPage.Dispose();
             }
-            else
-            {
-                var oldControls = _hostForm.Controls
-                    .Cast<Control>()
-                    .ToList();
-
-                _hostForm.Controls.Clear();
-
-                foreach (var control in oldControls)
-                {
-                    control.Dispose();
-                }
-            }
-
             page.TopLevel = false;
             page.FormBorderStyle = FormBorderStyle.None;
             page.Dock = DockStyle.Fill;
@@ -113,10 +106,16 @@ Properties.Settings.Default.RememberedUsername;
                 CurrentScopeProvider = mainScope.ServiceProvider;
 
                 var mainForm =
+                    CurrentScopeProvider.GetRequiredService<MainForm>();
+
+                var firstForm =
                     CurrentScopeProvider.GetRequiredService<ItemsForm>();
 
                 _hostForm = mainForm;
+
                 _currentPage = null;
+
+                firstForm.LoadPage();
 
                 Application.Run(mainForm);
             }
@@ -131,6 +130,7 @@ Properties.Settings.Default.RememberedUsername;
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddTransient <ItemsForm>();
+            services.AddTransient<MainForm>();
             services.AddTransient<LogInForm>();
             services.AddTransient<ItemsEditForm>();
             services.AddTransient<CategoriesForm>();

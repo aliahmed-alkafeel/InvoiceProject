@@ -1,6 +1,6 @@
 ﻿namespace UI.Controls
 {
-    partial class TopBarV2Control
+    partial class ToolBarControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TopBarV2Control));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ToolBarControl));
             this.tablePanel1 = new DevExpress.Utils.Layout.TablePanel();
-            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
-            this.btnEdit = new DevExpress.XtraEditors.SimpleButton();
             this.btnDelete = new DevExpress.XtraEditors.SimpleButton();
+            this.btnRefresh = new DevExpress.XtraEditors.SimpleButton();
+            this.btnEdit = new DevExpress.XtraEditors.SimpleButton();
             this.btnAdd = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.tablePanel1)).BeginInit();
             this.tablePanel1.SuspendLayout();
@@ -41,97 +41,104 @@
             // tablePanel1
             // 
             this.tablePanel1.Columns.AddRange(new DevExpress.Utils.Layout.TablePanelColumn[] {
-            new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Relative, 1F),
+            new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 90F),
             new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 90F),
             new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 90F),
             new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 90F),
             new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 90F)});
-            this.tablePanel1.Controls.Add(this.simpleButton1);
-            this.tablePanel1.Controls.Add(this.btnEdit);
             this.tablePanel1.Controls.Add(this.btnDelete);
+            this.tablePanel1.Controls.Add(this.btnRefresh);
+            this.tablePanel1.Controls.Add(this.btnEdit);
             this.tablePanel1.Controls.Add(this.btnAdd);
             this.tablePanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tablePanel1.Location = new System.Drawing.Point(0, 0);
             this.tablePanel1.Name = "tablePanel1";
-            this.tablePanel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tablePanel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tablePanel1.Rows.AddRange(new DevExpress.Utils.Layout.TablePanelRow[] {
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 45F)});
-            this.tablePanel1.Size = new System.Drawing.Size(900, 55);
+            this.tablePanel1.Size = new System.Drawing.Size(900, 50);
             this.tablePanel1.TabIndex = 1;
             this.tablePanel1.UseSkinIndents = true;
-            // 
-            // simpleButton1
-            // 
-            this.simpleButton1.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
-            this.simpleButton1.Appearance.Options.UseFont = true;
-            this.tablePanel1.SetColumn(this.simpleButton1, 1);
-            this.simpleButton1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.simpleButton1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.ImageOptions.Image")));
-            this.simpleButton1.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.RightCenter;
-            this.simpleButton1.ImageOptions.ImageToTextIndent = 5;
-            this.simpleButton1.Location = new System.Drawing.Point(533, 11);
-            this.simpleButton1.Margin = new System.Windows.Forms.Padding(1);
-            this.simpleButton1.Name = "simpleButton1";
-            this.tablePanel1.SetRow(this.simpleButton1, 0);
-            this.simpleButton1.Size = new System.Drawing.Size(85, 32);
-            this.simpleButton1.TabIndex = 9;
-            this.simpleButton1.Text = "تحديث";
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
-            this.btnEdit.Appearance.Options.UseFont = true;
-            this.btnEdit.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnEdit.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnEdit.ImageOptions.Image")));
-            this.btnEdit.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.RightCenter;
-            this.btnEdit.ImageOptions.ImageToTextIndent = 5;
-            this.btnEdit.Location = new System.Drawing.Point(713, 11);
-            this.btnEdit.Margin = new System.Windows.Forms.Padding(1);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(85, 32);
-            this.btnEdit.TabIndex = 7;
-            this.btnEdit.Text = "تعديل";
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnDelete
             // 
             this.btnDelete.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.btnDelete.Appearance.Options.UseFont = true;
-            this.btnDelete.Dock = System.Windows.Forms.DockStyle.Right;
+            this.tablePanel1.SetColumn(this.btnDelete, 2);
+            this.btnDelete.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDelete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.ImageOptions.Image")));
             this.btnDelete.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.RightCenter;
             this.btnDelete.ImageOptions.ImageToTextIndent = 5;
-            this.btnDelete.Location = new System.Drawing.Point(623, 11);
+            this.btnDelete.Location = new System.Drawing.Point(620, 11);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(1);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(85, 32);
-            this.btnDelete.TabIndex = 6;
+            this.tablePanel1.SetRow(this.btnDelete, 0);
+            this.btnDelete.Size = new System.Drawing.Size(88, 27);
+            this.btnDelete.TabIndex = 12;
             this.btnDelete.Text = "حذف";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.btnRefresh.Appearance.Options.UseFont = true;
+            this.tablePanel1.SetColumn(this.btnRefresh, 3);
+            this.btnRefresh.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnRefresh.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.ImageOptions.Image")));
+            this.btnRefresh.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.RightCenter;
+            this.btnRefresh.ImageOptions.ImageToTextIndent = 5;
+            this.btnRefresh.Location = new System.Drawing.Point(530, 11);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(1);
+            this.btnRefresh.Name = "btnRefresh";
+            this.tablePanel1.SetRow(this.btnRefresh, 0);
+            this.btnRefresh.Size = new System.Drawing.Size(88, 27);
+            this.btnRefresh.TabIndex = 11;
+            this.btnRefresh.Text = "تحديث";
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.btnEdit.Appearance.Options.UseFont = true;
+            this.tablePanel1.SetColumn(this.btnEdit, 1);
+            this.btnEdit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnEdit.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnEdit.ImageOptions.Image")));
+            this.btnEdit.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.RightCenter;
+            this.btnEdit.ImageOptions.ImageToTextIndent = 5;
+            this.btnEdit.Location = new System.Drawing.Point(710, 11);
+            this.btnEdit.Margin = new System.Windows.Forms.Padding(1);
+            this.btnEdit.Name = "btnEdit";
+            this.tablePanel1.SetRow(this.btnEdit, 0);
+            this.btnEdit.Size = new System.Drawing.Size(88, 27);
+            this.btnEdit.TabIndex = 7;
+            this.btnEdit.Text = "تعديل";
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnAdd
             // 
             this.btnAdd.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.btnAdd.Appearance.Options.UseFont = true;
-            this.btnAdd.Dock = System.Windows.Forms.DockStyle.Right;
+            this.tablePanel1.SetColumn(this.btnAdd, 0);
+            this.btnAdd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnAdd.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnAdd.ImageOptions.Image")));
             this.btnAdd.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.RightCenter;
             this.btnAdd.ImageOptions.ImageToTextIndent = 5;
-            this.btnAdd.Location = new System.Drawing.Point(803, 11);
+            this.btnAdd.Location = new System.Drawing.Point(800, 11);
             this.btnAdd.Margin = new System.Windows.Forms.Padding(1);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(85, 32);
+            this.tablePanel1.SetRow(this.btnAdd, 0);
+            this.btnAdd.Size = new System.Drawing.Size(88, 27);
             this.btnAdd.TabIndex = 5;
             this.btnAdd.Text = "اضافة";
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // TopBarV2Control
+            // ToolBarControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tablePanel1);
-            this.Name = "TopBarV2Control";
-            this.Size = new System.Drawing.Size(900, 55);
+            this.Name = "ToolBarControl";
+            this.Size = new System.Drawing.Size(900, 50);
             ((System.ComponentModel.ISupportInitialize)(this.tablePanel1)).EndInit();
             this.tablePanel1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -142,8 +149,8 @@
 
         private DevExpress.Utils.Layout.TablePanel tablePanel1;
         private DevExpress.XtraEditors.SimpleButton btnEdit;
-        private DevExpress.XtraEditors.SimpleButton btnDelete;
         private DevExpress.XtraEditors.SimpleButton btnAdd;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.SimpleButton btnDelete;
+        private DevExpress.XtraEditors.SimpleButton btnRefresh;
     }
 }

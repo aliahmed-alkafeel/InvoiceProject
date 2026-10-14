@@ -95,23 +95,17 @@
     <Compile Include="Controls\SaveCancelControl2.Designer.cs">
       <DependentUpon>SaveCancelControl2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ToolBar.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ToolBar.Designer.cs">
-      <DependentUpon>ToolBar.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\TopBarControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\TopBarControl.Designer.cs">
       <DependentUpon>TopBarControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TopBarV2Control.cs">
+    <Compile Include="Controls\ToolBarControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\TopBarV2Control.Designer.cs">
-      <DependentUpon>TopBarV2Control.cs</DependentUpon>
+    <Compile Include="Controls\ToolBarControl.Designer.cs">
+      <DependentUpon>ToolBarControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\BillsForm.cs">
       <SubType>Form</SubType>
@@ -150,6 +144,12 @@
       <DependentUpon>ItemsEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Items\ItemsHelper.cs" />
+    <Compile Include="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\VouchersForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,23 +175,35 @@
     <EmbeddedResource Include="Controls\SaveCancelControl2.resx">
       <DependentUpon>SaveCancelControl2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ToolBar.resx">
-      <DependentUpon>ToolBar.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\TopBarControl.resx">
       <DependentUpon>TopBarControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\TopBarV2Control.resx">
-      <DependentUpon>TopBarV2Control.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ToolBarControl.resx">
+      <DependentUpon>ToolBarControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BillsForm.resx">
+      <DependentUpon>BillsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CategoriesForm.resx">
       <DependentUpon>CategoriesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EmployeesForm.resx">
+      <DependentUpon>EmployeesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ItemBillsForm.resx">
+      <DependentUpon>ItemBillsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Items\ItemsForm.resx">
       <DependentUpon>ItemsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Items\ItemsEditForm.resx">
       <DependentUpon>ItemsEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\VouchersForm.resx">
+      <DependentUpon>VouchersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

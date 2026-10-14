@@ -3,12 +3,14 @@ using DevExpress.XtraBars.Customization;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.TextEditController.Utils;
 using DevExpress.XtraGrid.Views.Base;
+using Microsoft.Extensions.DependencyInjection;
 using Models.Entities;
 using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Controls;
 using UI.Forms.Items;
 
 namespace UI.Forms
@@ -33,15 +35,12 @@ namespace UI.Forms
             _unitOfWork = unitOfWork
                 ?? throw new ArgumentNullException(nameof(unitOfWork));
 
-            topBarV2Control1.CreateClicked += ItemsToolbar_CreateClicked;
-            topBarV2Control1.EditClicked += ItemsToolbar_EditClicked;
-            topBarV2Control1.DeleteClicked += ItemsToolbar_DeleteClicked;
+            ToolBarControl1.CreateClicked += ItemsToolbar_CreateClicked;
+            ToolBarControl1.EditClicked += ItemsToolbar_EditClicked;
+            ToolBarControl1.DeleteClicked += ItemsToolbar_DeleteClicked;
 
         }
      
-        // =========================================================
-        // 1. Load
-        // =========================================================
 
         private async void ItemsForm_LoadAsync(
             object sender,
@@ -61,19 +60,7 @@ namespace UI.Forms
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
-        //    var categories = await _unitOfWork.Categories
-        //.Select()
-        //.Select(c => new
-        //{
-        //    c.Id,
-        //    c.Name
-        //})
-        //.ToListAsync();
 
-            //cmbCategories.Properties.DataSource = categories;
-            //cmbCategories.Properties.DisplayMember = "Name";
-            //cmbCategories.Properties.ValueMember = "Name";
-            //cmbCategories.Properties.NullText = "اختر التصنيف";
 
         }
 
@@ -111,48 +98,24 @@ namespace UI.Forms
             }
         }
 
-        // =========================================================
-        // 3. When selected row changes
-        // =========================================================
+
 
         private void gridView1_FocusedRowChanged(
             object sender,
             FocusedRowChangedEventArgs e)
         {
-            // لا تغيّر الحقول أثناء التحميل أو الإضافة أو التعديل.
-            //if (_isLoadingItems || _isCreating || _isEditing)
-            //    return;
+       
 
             var selectedItem = gridView1.GetFocusedRow() as Item;
 
-            //LoadItemDetails(selectedItem);
         }
 
-        // =========================================================
-        // 4. Display selected item in the right panel
-        // =========================================================
-
-
-
-        // =========================================================
-        // 5. Clear detail fields
-        // =========================================================
-
-
-
-        // =========================================================
-        // 6. Enable / Disable editing
-        // =========================================================
 
         private void SetDetailsEditable(bool editable)
         {
             //txtName.Properties.ReadOnly = !editable;
             //txtPrice.Properties.ReadOnly = !editable;
         }
-
-        // =========================================================
-        // 7. Create
-        // =========================================================
 
         private void ItemsToolbar_CreateClicked(
             object sender,
@@ -179,10 +142,7 @@ namespace UI.Forms
             //txtName.Focus();
         }
 
-        // =========================================================
-        // 8. Edit
-        // =========================================================
-
+   
         private void ItemsToolbar_EditClicked(
             object sender,
             EventArgs e)
@@ -199,13 +159,15 @@ namespace UI.Forms
 
                 return;
             }
-            using (var editForm = Program.ServiceProvider.GetService(typeof(ItemsEditForm)) as ItemsEditForm)
+            using (var editForm =
+        ActivatorUtilities.CreateInstance<ItemsEditForm>(
+            Program.CurrentScopeProvider,
+            selectedItem))
             {
                 editForm.ShowDialog(this);
-               
             }
 
-            
+
             if (_isCreating || _isEditing)
             {
                 XtraMessageBox.Show(
@@ -390,10 +352,6 @@ namespace UI.Forms
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
-
-        // =========================================================
-        // 12. Delete - Soft Delete
-        // =========================================================
 
         private async void ItemsToolbar_DeleteClicked(
             object sender,

@@ -70,21 +70,23 @@ namespace UI.Forms.Items
 
         private async void ItemsEditForm_Load(object sender, EventArgs e)
         {
-
             var categories = (await _categoryService.GetAllCategoriesAsync())
-        .Select(c => new
-        {
-            c.Id,
-            c.Name
-        });
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Name
+                }).ToList();
+
             cmbCategories.Properties.DataSource = categories;
             cmbCategories.Properties.DisplayMember = "Name";
-            cmbCategories.Properties.ValueMember = "Id";
+            cmbCategories.Properties.ValueMember = "Guid";         
+
             cmbCategories.Properties.NullText = "اختر التصنيف";
             if (_selectedItem == null)
             {
                 lblTitle.Text = "إضافة منتج";
             }
+
             LoadItemDetails(_selectedItem);
         }
         private void LoadItemDetails(Item item)
@@ -96,10 +98,15 @@ namespace UI.Forms.Items
                 ClearDetails();
                 return;
             }
+    //        var categories = await _categoryService.GetAllCategoriesAsync();
+    //        var categoryExists = categories.Any(
+    //c => c.Id == _selectedItem.CategoryGuid);
 
+    //        MessageBox.Show($"Category exists: {categoryExists}");
             txtName.Text = item.Name;
             txtPrice.EditValue = item.Price;
-            cmbCategories.EditValue = item.Category?.Name;
+  
+            cmbCategories.EditValue = item.CategoryGuid.ToString();
             chkIsActive.Checked = item.IsActive;
             txtNotes.Text = item.Notes;
 
