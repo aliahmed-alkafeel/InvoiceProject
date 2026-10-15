@@ -14,7 +14,7 @@ namespace Data.Services.Implementations
     {
         private readonly IUnitOfWork _unitOfWork;
 
-    public ItemService(IUnitOfWork unitOfWork)
+        public ItemService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -57,13 +57,13 @@ namespace Data.Services.Implementations
                 .FirstOrDefaultAsync();
 
             return item ?? throw new InvalidOperationException(
-                $"Item with ID '{id}' was not found.");
+                $"لم يتم العثور على المادة بالمعرّف '{id}'.");
         }
 
         public async Task<bool> CreateItemAsync(ItemDto model)
         {
             if (model == null)
-                throw new ArgumentNullException(nameof(model));
+                throw new ArgumentNullException(nameof(model), "بيانات المادة مطلوبة.");
 
             var item = new Item
             {
@@ -82,7 +82,7 @@ namespace Data.Services.Implementations
         public async Task<bool> UpdateItemAsync(ItemDto model)
         {
             if (model == null)
-                throw new ArgumentNullException(nameof(model));
+                throw new ArgumentNullException(nameof(model), "بيانات المادة مطلوبة.");
 
             var item = await _unitOfWork.Items
                 .Select()
@@ -90,7 +90,7 @@ namespace Data.Services.Implementations
 
             if (item == null)
                 throw new InvalidOperationException(
-                    $"Item with ID '{model.Id}' was not found.");
+                    $"لم يتم العثور على المادة بالمعرّف '{model.Id}'.");
 
             item.Name = model.Name;
             item.Price = model.Price.Value;
@@ -111,13 +111,11 @@ namespace Data.Services.Implementations
 
             if (item == null)
                 throw new InvalidOperationException(
-                    $"Item with ID '{modelId}' was not found.");
+                    $"لم يتم العثور على المادة بالمعرّف '{modelId}'.");
 
             _unitOfWork.Items.Delete(item);
 
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
     }
-
-
 }

@@ -14,8 +14,7 @@ namespace Data.Services.Implementations
     {
         private readonly IUnitOfWork _unitOfWork;
 
-
-    public CategoryService(IUnitOfWork unitOfWork)
+        public CategoryService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -48,14 +47,14 @@ namespace Data.Services.Implementations
                 })
                 .FirstOrDefaultAsync();
 
-            return category ?? throw new KeyNotFoundException(
-                $"Category with ID '{id}' was not found.");
+            return category ?? throw new InvalidOperationException(
+                $"لم يتم العثور على التصنيف بالمعرّف '{id}'.");
         }
 
         public async Task<bool> CreateCategoryAsync(CategoryDto model)
         {
             if (model == null)
-                throw new ArgumentNullException(nameof(model));
+                throw new ArgumentNullException(nameof(model), "بيانات التصنيف مطلوبة.");
 
             var category = new Category
             {
@@ -72,7 +71,7 @@ namespace Data.Services.Implementations
         public async Task<bool> UpdateCategoryAsync(CategoryDto model)
         {
             if (model == null)
-                throw new ArgumentNullException(nameof(model));
+                throw new ArgumentNullException(nameof(model), "بيانات التصنيف مطلوبة.");
 
             var category = await _unitOfWork.Categories
                 .Select()
@@ -80,7 +79,7 @@ namespace Data.Services.Implementations
 
             if (category == null)
                 throw new InvalidOperationException(
-                    $"Category with ID '{model.Id}' was not found.");
+                    $"لم يتم العثور على التصنيف بالمعرّف '{model.Id}'.");
 
             category.Name = model.Name;
             category.IsActive = model.IsActive;
@@ -99,13 +98,11 @@ namespace Data.Services.Implementations
 
             if (category == null)
                 throw new InvalidOperationException(
-                    $"Category with ID '{modelId}' was not found.");
+                    $"لم يتم العثور على التصنيف بالمعرّف '{modelId}'.");
 
             _unitOfWork.Categories.Delete(category);
 
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
     }
-
-
 }

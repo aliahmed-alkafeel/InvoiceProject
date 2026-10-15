@@ -107,13 +107,22 @@
     <Compile Include="Repositories\Implementations\GenericRepository.cs" />
     <Compile Include="Repositories\Interfaces\IGenericRepository.cs" />
     <Compile Include="Seed\DbInitializer.cs" />
+    <Compile Include="Services\Implementations\AccountsTreeService.cs" />
     <Compile Include="Services\Implementations\CategoryService.cs" />
+    <Compile Include="Services\Implementations\CurrencyService.cs" />
+    <Compile Include="Services\Implementations\EmployeesService.cs" />
+    <Compile Include="Services\Implementations\GroupsService.cs" />
     <Compile Include="Services\Implementations\ItemService.cs" />
     <Compile Include="Services\Implementations\LoginService.cs" />
-    <Compile Include="Services\Interfaces\IAccountsTreeDto.cs" />
+    <Compile Include="Services\Interfaces\IAccountsTreeService.cs" />
+    <Compile Include="Services\Interfaces\IBillService.cs" />
     <Compile Include="Services\Interfaces\ICategoriesService.cs" />
+    <Compile Include="Services\Interfaces\ICurrencyService.cs" />
+    <Compile Include="Services\Interfaces\IEmployeesService.cs" />
+    <Compile Include="Services\Interfaces\IGroupsService.cs" />
     <Compile Include="Services\Interfaces\IItemService.cs" />
     <Compile Include="Services\Interfaces\ILoginService.cs" />
+    <Compile Include="Services\Interfaces\IVoucherService.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
