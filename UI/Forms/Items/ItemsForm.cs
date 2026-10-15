@@ -1,8 +1,11 @@
-﻿using Data.UnitOfWork;
+﻿using Data.Services.Implementations;
+using Data.Services.Interfaces;
+using Data.UnitOfWork;
 using DevExpress.Internal.WinApi.Windows.UI.Notifications;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
 using Microsoft.Extensions.DependencyInjection;
+using Models.DTOs;
 using Models.Entities;
 using System;
 using System.Data.Entity;
@@ -14,16 +17,16 @@ namespace UI.Forms
 {
     public partial class ItemsForm : XtraForm
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IItemsService _itemsService;
 
-        public Guid CurrentUserId { get; set; }
+        //public Guid CurrentUserId { get; set; }
         private bool _isLoadingItems;
-        public ItemsForm(IUnitOfWork unitOfWork)
+
+        public ItemsForm(IItemsService itemsService)
         {
+            _itemsService = itemsService;
             InitializeComponent();
 
-            _unitOfWork = unitOfWork
-                ?? throw new ArgumentNullException(nameof(unitOfWork));
 
             ToolBarControl1.CreateClicked += ItemsToolbar_CreateClicked;
             ToolBarControl1.EditClicked += ItemsToolbar_EditClicked;
@@ -40,8 +43,8 @@ namespace UI.Forms
             catch (Exception ex)
             {
                 XtraMessageBox.Show(
-                    $"Failed to load items.\n{ex.Message}",
-                    "Error",
+                    $"فشل تحميل المنتجات.\n{ex.Message}",
+                    "خطأ",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -56,10 +59,7 @@ namespace UI.Forms
 
             try
             {
-                var items = await _unitOfWork.Items
-                    .Select()
-                    .Include(i => i.Category)
-                    .ToListAsync();
+                var items = await _itemsService.GetAllItemsAsync();
 
                 gridControl1.DataSource = items;
 
@@ -74,37 +74,42 @@ namespace UI.Forms
             }
         }
 
-        private void gridView1_FocusedRowChanged(
-            object sender,
-            FocusedRowChangedEventArgs e)
-        {
-        }
 
-        private async void ItemsToolbar_CreateClicked(object sender, EventArgs e)
+
+        private async void ItemsToolbar_CreateClicked(
+            object sender,
+            EventArgs e)
         {
             if (CheckItemsLoading())
                 return;
-            var editForm = Program.ServiceProvider
-                .GetService(typeof(ItemsEditForm)) as ItemsEditForm;
-            var result = editForm.ShowDialog(this);
+
+            using (var editForm = Program.ServiceProvider
+                .GetService(typeof(ItemsEditForm)) as ItemsEditForm)
+            {
+
+                var result = editForm.ShowDialog(this);
+
             if (result == DialogResult.OK)
             {
                 await LoadItemsAsync();
             }
-
+            }
         }
 
-        private async void ItemsToolbar_EditClicked(object sender, EventArgs e)
+        private async void ItemsToolbar_EditClicked(
+            object sender,
+            EventArgs e)
         {
             if (CheckItemsLoading())
                 return;
-            var selectedItem = gridView1.GetFocusedRow() as Item;
+
+            var selectedItem = gridView1.GetFocusedRow() as ItemDto;
 
             if (selectedItem == null)
             {
                 XtraMessageBox.Show(
-                    "Please select an item first.",
-                    "Information",
+                    "يرجى اختيار منتج لتعديله.",
+                    "اختيار منتج",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
@@ -117,6 +122,7 @@ namespace UI.Forms
                     selectedItem))
             {
                 var result = editForm.ShowDialog(this);
+
                 if (result == DialogResult.OK)
                 {
                     await LoadItemsAsync();
@@ -130,13 +136,14 @@ namespace UI.Forms
         {
             if (CheckItemsLoading())
                 return;
-            var item = gridView1.GetFocusedRow() as Item;
+
+            var item = gridView1.GetFocusedRow() as ItemDto;
 
             if (item == null)
             {
                 XtraMessageBox.Show(
-                    "Please select an item first.",
-                    "Information",
+                    "يرجى اختيار منتج أولاً.",
+                    "تنبيه",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
@@ -144,38 +151,32 @@ namespace UI.Forms
             }
 
             var result = XtraMessageBox.Show(
-                $"Are you sure you want to delete '{item.Name}'?",
-                "Confirm Delete",
+                $"هل أنت متأكد من حذف المنتج '{item.Name}'؟",
+                "تأكيد الحذف",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
-            if (result != DialogResult.Yes)
+            if (result == DialogResult.No)
                 return;
 
             try
             {
-                item.IsDeleted = true;
-                item.DeletedAt = DateTime.UtcNow;
-
-                item.DeletedById = CurrentUserId == Guid.Empty
-                    ? (Guid?)null
-                    : CurrentUserId;
-
-                await _unitOfWork.SaveChangesAsync();
+                
+               await  _itemsService.DeleteItemAsync(item.Id);
 
                 await LoadItemsAsync();
 
                 XtraMessageBox.Show(
-                    "Item deleted successfully.",
-                    "Success",
+                    "تم حذف المنتج بنجاح.",
+                    "نجاح",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 XtraMessageBox.Show(
-                    $"Failed to delete the item.\n{ex.Message}",
-                    "Error",
+                    $"فشل حذف المنتج.\n{ex.Message}",
+                    "خطأ",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -187,8 +188,9 @@ namespace UI.Forms
         {
             if (CheckItemsLoading())
                 return;
+
             UseWaitCursor = true;
-            
+
             try
             {
                 await LoadItemsAsync();
@@ -197,8 +199,8 @@ namespace UI.Forms
             catch (Exception ex)
             {
                 XtraMessageBox.Show(
-                    $"Failed to refresh items.\n{ex.Message}",
-                    "Error",
+                    $"فشل تحديث قائمة المنتجات.\n{ex.Message}",
+                    "خطأ",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -208,19 +210,19 @@ namespace UI.Forms
                 UseWaitCursor = false;
             }
         }
+
         private bool CheckItemsLoading()
         {
             if (!_isLoadingItems)
                 return false;
 
             XtraMessageBox.Show(
-                "جاري تحميل المنتجات، يرجى الانتظار حتى اكتمال التحميل.",
+                "جارٍ تحميل المنتجات، يرجى الانتظار حتى اكتمال التحميل.",
                 "تحميل المنتجات",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
 
             return true;
         }
-
     }
 }

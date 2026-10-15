@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Forms.Extentions;
 
 namespace UI.Forms.Items
 {
@@ -22,9 +23,10 @@ namespace UI.Forms.Items
     {
         private readonly IItemsService _itemsService;
         private readonly ICategoryService _categoryService;
-        private Item _selectedItem;
+        private ItemDto _selectedItem;
+        private bool isEdit => _selectedItem != null;
         public ItemsEditForm(IUnitOfWork unitOfWork,
-            IItemsService itemsService, ICategoryService categoryService, Item selectedItem = null)
+            IItemsService itemsService, ICategoryService categoryService, ItemDto selectedItem = null)
         {
             InitializeComponent();
             _itemsService = itemsService;
@@ -34,18 +36,24 @@ namespace UI.Forms.Items
             saveCancelControl21.CancelClicked += SaveCancelControl_CancelClicked;
         }
 
-        private async void SaveCancelControl_SaveClicked(object sender, EventArgs e)
+        private async void SaveCancelControl_SaveClicked()
         {
-            if(_selectedItem == null)
-            {
                 var newItem = new ItemDto()
                 {
-                Name = txtName.Text,
-                Price = Convert.ToDecimal(txtPrice.EditValue),
-                CategoryGuid = (Guid) cmbCategories.EditValue,
-                IsActive = chkIsActive.Checked,
+                    Id = isEdit ? _selectedItem.Id : Guid.NewGuid(),
+                    Name = txtName.Text,
+                    Price = string.IsNullOrWhiteSpace(txtPrice.Text) ? (decimal?)null : Convert.ToDecimal(txtPrice.EditValue),
+                    CategoryGuid = cmbCategories.EditValue is Guid categoryId ? categoryId : Guid.Empty,
+                    IsActive = chkIsActive.Checked,
                 Notes = txtNotes.Text
                 };
+                if (!ValidationHelper.IsValid(new ItemDtoConfiguration(), newItem, out var errors))
+                {
+                    XtraMessageBox.Show(errors);
+                    return;
+                }
+            if(!isEdit)
+            {
                 var result = await _itemsService.CreateItemAsync(newItem);
                 if(result)
                 {
@@ -60,13 +68,6 @@ namespace UI.Forms.Items
             }
             else
             {
-                var newItem = new ItemDto();
-                newItem.Id = _selectedItem.Id;
-                newItem.Name = txtName.Text;
-                newItem.Price = Convert.ToDecimal(txtPrice.EditValue);
-                newItem.CategoryGuid = (Guid)cmbCategories.EditValue;
-                newItem.IsActive = chkIsActive.Checked;
-                newItem.Notes = txtNotes.Text;
                 var result = await _itemsService.UpdateItemAsync(newItem);
                 if (result)
                 {
@@ -81,7 +82,7 @@ namespace UI.Forms.Items
             }
         }
 
-        private void SaveCancelControl_CancelClicked(object sender, EventArgs e)
+        private void SaveCancelControl_CancelClicked()
         {
             Close();
         }
@@ -103,7 +104,7 @@ namespace UI.Forms.Items
             cmbCategories.Properties.DisplayMember = "Name";
             cmbCategories.Properties.ValueMember = "Id";
             cmbCategories.Properties.NullText = "اختر التصنيف";
-            if (_selectedItem == null)
+            if (!isEdit)
             {
                 lblTitle.Text = "إضافة منتج";
                 saveCancelControl21.SaveText = "إضافة";
@@ -111,7 +112,7 @@ namespace UI.Forms.Items
 
             LoadItemDetails(_selectedItem);
         }
-        private void LoadItemDetails(Item item)
+        private void LoadItemDetails(ItemDto item)
         {
             _selectedItem = item;
             if (item == null)

@@ -1,4 +1,5 @@
-﻿using Models.DTOs;
+﻿using FluentValidation;
+using Models.DTOs;
 using Models.Entities;
 using System;
 using System.Collections;
@@ -9,18 +10,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.DTOs
+namespace Data.Configurations.DTOsConfigurations
 {
-    public class BillDto : BaseDto
+    public class BillDtoConfiguration : BaseDtoConfiguration<BillDto>
     {
-        public string BillNumber { get; set; }
-        public BillType BillType { get; set; } 
-        public Guid AccountTreeGuid { get; set; }
-        public Guid CurrencyGuid { get; set; }
-        public decimal CurrencyEqualValue { get; set; }
-        public DateTime Date { get; set; } = DateTime.Now;
-        public AccountsTreeDto AccountTree { get; set; }
-        public CurrencyDto Currency { get; set; }
-        public ICollection<BillItemDto> BillItems { get; set; } = new HashSet<BillItemDto>();
+        public BillDtoConfiguration()
+        {
+            RuleFor(x => x.BillNumber)
+                .NotEmpty().WithMessage("رقم الفاتورة مطلوب")
+                .MaximumLength(50).WithMessage("الحد الاقصى لطول رقم الفاتورة هو 50");
+
+            RuleFor(x => x.BillType).NotEmpty().WithMessage("نوع الفاتورة مطلوب")
+                .IsInEnum().WithMessage("نوع الفاتورة غير صحيح");
+
+            RuleFor(x => x.AccountTreeGuid).NotEmpty().WithMessage("اختر الحساب");
+            RuleFor(x => x.CurrencyGuid).NotEmpty().WithMessage("اختر العملة");
+
+            RuleFor(x => x.CurrencyEqualValue).NotEmpty().WithMessage("سعر الصرف مطلوب")
+                .GreaterThan(0).WithMessage("سعر الصرف يجب أن يكون أكبر من صفر");
+
+            RuleFor(x => x.Date).NotEmpty().WithMessage("التاريخ مطلوب");
+
+            RuleFor(x => x.BillItems)
+                .NotEmpty().WithMessage("الفاتورة يجب أن تحتوي مادة واحدة على الأقل");
+
+            RuleForEach(x => x.BillItems)
+                .SetValidator(new BillItemDtoConfiguration());
+        }
     }
 }

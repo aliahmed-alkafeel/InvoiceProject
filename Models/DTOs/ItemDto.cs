@@ -12,7 +12,7 @@ namespace Models.DTOs
     {
         public Guid CategoryGuid { get; set; }
         public string Name { get; set; }
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; } 
         public bool IsActive { get; set; }
         [ForeignKey(nameof(CategoryGuid))]
         public CategoryDto Category { get; set; }

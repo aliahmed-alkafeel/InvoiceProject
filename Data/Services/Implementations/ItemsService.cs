@@ -63,7 +63,7 @@ namespace Data.Services.Implementations
             var item = new Item
             {
                 Name = model.Name,
-                Price = model.Price,
+                Price = model.Price.Value,
                 IsActive = model.IsActive,
                 Notes = model.Notes,
                 CategoryGuid = model.CategoryGuid
@@ -88,7 +88,7 @@ namespace Data.Services.Implementations
                     $"Item with ID '{model.Id}' was not found.");
 
             item.Name = model.Name;
-            item.Price = model.Price;
+            item.Price = model.Price.Value;
             item.IsActive = model.IsActive;
             item.Notes = model.Notes;
             item.CategoryGuid = model.CategoryGuid;

@@ -17,17 +17,17 @@ namespace UI.Controls
         {
             InitializeComponent();
         }
-        public event EventHandler SaveClicked;
-        public event EventHandler CancelClicked;
+        public event Action SaveClicked;
+        public event Action CancelClicked;
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-         SaveClicked?.Invoke(this, EventArgs.Empty);
+         SaveClicked?.Invoke();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            CancelClicked?.Invoke(this, EventArgs.Empty);
+            CancelClicked?.Invoke();
 
         }
         public string SaveText

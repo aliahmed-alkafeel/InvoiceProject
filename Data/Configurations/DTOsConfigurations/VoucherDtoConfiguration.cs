@@ -1,4 +1,5 @@
-﻿using Models.Entities;
+﻿using FluentValidation;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,23 +10,26 @@ using System.Threading.Tasks;
 
 namespace Models.DTOs
 {
-    public class VoucherDto : BaseDto
+    public class VoucherDtoConfiguration : BaseDtoConfiguration<VoucherDto>
     {
-        public Guid AccountTreeGuid { get; set; }
+        public VoucherDtoConfiguration()
+        {
+            RuleFor(x => x.VoucherNumber)
+                .NotEmpty().WithMessage("رقم السند مطلوب")
+                .MaximumLength(50).WithMessage("الحد الاقصى لطول رقم السند هو 50");
 
-        public string VoucherNumber { get; set; }
+            RuleFor(x => x.VoucherType).NotEmpty().WithMessage("نوع السند مطلوب").IsInEnum().WithMessage("نوع السند غير صحيح");
 
-        public VoucherType VoucherType { get; set; }
+            RuleFor(x => x.AccountTreeGuid).NotEmpty().WithMessage("اختر الحساب");
+            RuleFor(x => x.CurrencyGuid).NotEmpty().WithMessage("اختر العملة");
 
-        public decimal Amount { get; set; }
+            RuleFor(x => x.Amount)
+                .GreaterThan(0).WithMessage("المبلغ يجب أن يكون أكبر من صفر");
 
-        public Guid CurrencyGuid { get; set; }
+            RuleFor(x => x.CurrencyEqualValue)
+                .GreaterThan(0).WithMessage("سعر الصرف يجب أن يكون أكبر من صفر");
 
-        public decimal CurrencyEqualValue { get; set; }
-
-        public DateTime Date { get; set; }
-        public AccountsTreeDto AccountTree { get; set; }
-        public CurrencyDto Currency { get; set; }
+            RuleFor(x => x.Date).NotEmpty().WithMessage("التاريخ مطلوب");
+        }
     }
-
 }
