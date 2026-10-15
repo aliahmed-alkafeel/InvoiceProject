@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UI.Forms;
+using UI.Forms.Categories;
 using UI.Forms.Items;
 
 namespace UI.Base.TopBar

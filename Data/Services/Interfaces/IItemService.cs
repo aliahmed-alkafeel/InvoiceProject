@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Data.Services.Interfaces
 {
-    public interface IItemsService
+    public interface IItemService
     {
         Task<List<ItemDto>> GetAllItemsAsync();
         Task<ItemDto> GetItemByIdAsync(Guid id);

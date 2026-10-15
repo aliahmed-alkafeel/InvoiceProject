@@ -17,12 +17,12 @@ namespace UI.Forms
 {
     public partial class ItemsForm : XtraForm
     {
-        private readonly IItemsService _itemsService;
+        private readonly IItemService _itemsService;
 
         //public Guid CurrentUserId { get; set; }
         private bool _isLoadingItems;
 
-        public ItemsForm(IItemsService itemsService)
+        public ItemsForm(IItemService itemsService)
         {
             _itemsService = itemsService;
             InitializeComponent();
@@ -56,7 +56,6 @@ namespace UI.Forms
                 return;
 
             _isLoadingItems = true;
-
             try
             {
                 var items = await _itemsService.GetAllItemsAsync();

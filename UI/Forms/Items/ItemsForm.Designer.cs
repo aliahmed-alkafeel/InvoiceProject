@@ -80,7 +80,6 @@ namespace UI.Forms
             this.gridView1.GridControl = this.gridControl1;
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsBehavior.Editable = false;
-            //this.gridView1.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gridView1_FocusedRowChanged);
             // 
             // colNotes
             // 
@@ -89,7 +88,7 @@ namespace UI.Forms
             this.colNotes.Name = "colNotes";
             this.colNotes.Visible = true;
             this.colNotes.VisibleIndex = 4;
-            this.colNotes.Width = 43;
+            this.colNotes.Width = 250;
             // 
             // colIsActive
             // 
@@ -98,7 +97,7 @@ namespace UI.Forms
             this.colIsActive.Name = "colIsActive";
             this.colIsActive.Visible = true;
             this.colIsActive.VisibleIndex = 3;
-            this.colIsActive.Width = 42;
+            this.colIsActive.Width = 55;
             // 
             // colPrice
             // 
@@ -107,7 +106,7 @@ namespace UI.Forms
             this.colPrice.Name = "colPrice";
             this.colPrice.Visible = true;
             this.colPrice.VisibleIndex = 2;
-            this.colPrice.Width = 42;
+            this.colPrice.Width = 150;
             // 
             // colCategory
             // 
@@ -116,6 +115,7 @@ namespace UI.Forms
             this.colCategory.Name = "colCategory";
             this.colCategory.Visible = true;
             this.colCategory.VisibleIndex = 1;
+            this.colCategory.Width = 268;
             // 
             // colName
             // 
@@ -124,7 +124,7 @@ namespace UI.Forms
             this.colName.Name = "colName";
             this.colName.Visible = true;
             this.colName.VisibleIndex = 0;
-            this.colName.Width = 42;
+            this.colName.Width = 150;
             // 
             // itemsBindingSource
             // 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UI.Forms.Extentions
+namespace UI.Extentions
 {
     public static class ValidationHelper
     {

@@ -89,12 +89,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\SaveCancelControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\SaveCancelControl.Designer.cs">
-      <DependentUpon>SaveCancelControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\SaveCancelControl2.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -119,11 +113,17 @@
     <Compile Include="Forms\BillsForm.Designer.cs">
       <DependentUpon>BillsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\CategoriesForm.cs">
+    <Compile Include="Forms\Categories\CategoriesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\CategoriesForm.Designer.cs">
+    <Compile Include="Forms\Categories\CategoriesForm.Designer.cs">
       <DependentUpon>CategoriesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Categories\CategoriesManageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Categories\CategoriesManageForm.Designer.cs">
+      <DependentUpon>CategoriesManageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\EmployeesForm.cs">
       <SubType>Form</SubType>
@@ -131,7 +131,8 @@
     <Compile Include="Forms\EmployeesForm.Designer.cs">
       <DependentUpon>EmployeesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Extentions\ValidationHelper.cs" />
+    <Compile Include="Extentions\GlobalExceptionHandler.cs" />
+    <Compile Include="Extentions\ValidationHelper.cs" />
     <Compile Include="Forms\ItemBillsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,7 +151,6 @@
     <Compile Include="Forms\Items\ItemsEditForm.Designer.cs">
       <DependentUpon>ItemsEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Items\ItemsHelper.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -176,9 +176,6 @@
     <Compile Include="Forms\LogInForm.Designer.cs">
       <DependentUpon>LogInForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Controls\SaveCancelControl.resx">
-      <DependentUpon>SaveCancelControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\SaveCancelControl2.resx">
       <DependentUpon>SaveCancelControl2.cs</DependentUpon>
     </EmbeddedResource>
@@ -191,8 +188,11 @@
     <EmbeddedResource Include="Forms\BillsForm.resx">
       <DependentUpon>BillsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CategoriesForm.resx">
+    <EmbeddedResource Include="Forms\Categories\CategoriesForm.resx">
       <DependentUpon>CategoriesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Categories\CategoriesManageForm.resx">
+      <DependentUpon>CategoriesManageForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EmployeesForm.resx">
       <DependentUpon>EmployeesForm.cs</DependentUpon>

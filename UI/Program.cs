@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Data.Context;
+﻿using Data.Context;
 using Data.Repositories.Implementations;
 using Data.Repositories.Interfaces;
 using Data.Seed;
@@ -16,8 +10,16 @@ using DevExpress.LookAndFeel;
 using DevExpress.Skins;
 using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using UI.Base.TopBar;
+using UI.Extentions;
 using UI.Forms;
+using UI.Forms.Categories;
 using UI.Forms.Items;
 using UI.Screens;
 
@@ -30,38 +32,10 @@ namespace UI
         private static XtraForm _hostForm;
         private static XtraForm _currentPage;
 
-        public static void LoadPage(this XtraForm page)
-        {
-            if (_hostForm == null)
-                throw new InvalidOperationException("لم يتم تحديد الفورم الرئيسي.");
-
-            if (_currentPage != null &&
-                _currentPage.GetType() == page.GetType())
-            {
-                page.Dispose();
-                return;
-            }
-            if (_currentPage != null)
-            {
-                _hostForm.Controls.Remove(_currentPage);
-                _currentPage.Dispose();
-            }
-            page.TopLevel = false;
-            page.FormBorderStyle = FormBorderStyle.None;
-            page.Dock = DockStyle.Fill;
-
-            _hostForm.Controls.Add(page);
-
-            page.Show();
-            page.BringToFront();
-
-            _currentPage = page;
-
-            _hostForm.Text = page.Text;
-        }
         [STAThread]
         static void Main()
         {
+            GlobalExceptionHandler.UseGlobalExceptionHandler();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -126,14 +100,45 @@ Properties.Settings.Default.RememberedUsername;
             services.AddScoped<InvoiceDbContext>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IItemsService, ItemsService>();
+            services.AddScoped<IItemService, ItemService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ILoginService, LoginService>();
-            services.AddTransient <ItemsForm>();
+            services.AddTransient<ItemsForm>();
             services.AddTransient<MainForm>();
             services.AddTransient<LogInForm>();
             services.AddTransient<ItemsEditForm>();
             services.AddTransient<CategoriesForm>();
+            services.AddTransient<CategoriesManageForm>();
+        }
+
+        public static void LoadPage(this XtraForm page)
+        {
+            if (_hostForm == null)
+                throw new InvalidOperationException("لم يتم تحديد الفورم الرئيسي.");
+
+            if (_currentPage != null &&
+                _currentPage.GetType() == page.GetType())
+            {
+                page.Dispose();
+                return;
+            }
+            if (_currentPage != null)
+            {
+                _hostForm.Controls.Remove(_currentPage);
+                _currentPage.Dispose();
+            }
+            page.TopLevel = false;
+            page.FormBorderStyle = FormBorderStyle.None;
+            page.Dock = DockStyle.Fill;
+
+            _hostForm.Controls.Add(page);
+
+            page.Show();
+            page.BringToFront();
+
+            _currentPage = page;
+
+            _hostForm.Text = page.Text;
         }
     }
 }

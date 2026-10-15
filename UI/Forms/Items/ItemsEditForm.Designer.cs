@@ -40,13 +40,13 @@
             this.chkIsActive = new DevExpress.XtraEditors.CheckEdit();
             this.txtNotes = new System.Windows.Forms.RichTextBox();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
-            this.txtPrice = new DevExpress.XtraEditors.TextEdit();
             this.saveCancelControl21 = new UI.Controls.SaveCancelControl2();
+            this.spnPrice = new DevExpress.XtraEditors.SpinEdit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbCategories.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkIsActive.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPrice.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spnPrice.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -132,7 +132,7 @@
             // 
             // chkIsActive
             // 
-            this.chkIsActive.Location = new System.Drawing.Point(81, 162);
+            this.chkIsActive.Location = new System.Drawing.Point(69, 163);
             this.chkIsActive.Name = "chkIsActive";
             this.chkIsActive.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.chkIsActive.Properties.Appearance.Options.UseFont = true;
@@ -154,18 +154,11 @@
             // 
             this.labelControl3.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelControl3.Appearance.Options.UseFont = true;
-            this.labelControl3.Location = new System.Drawing.Point(268, 165);
+            this.labelControl3.Location = new System.Drawing.Point(268, 164);
             this.labelControl3.Name = "labelControl3";
             this.labelControl3.Size = new System.Drawing.Size(40, 17);
             this.labelControl3.TabIndex = 58;
             this.labelControl3.Text = ":السعر";
-            // 
-            // txtPrice
-            // 
-            this.txtPrice.Location = new System.Drawing.Point(185, 162);
-            this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(66, 20);
-            this.txtPrice.TabIndex = 57;
             // 
             // saveCancelControl21
             // 
@@ -175,11 +168,26 @@
             this.saveCancelControl21.Size = new System.Drawing.Size(191, 45);
             this.saveCancelControl21.TabIndex = 56;
             // 
+            // spnPrice
+            // 
+            this.spnPrice.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.spnPrice.Location = new System.Drawing.Point(162, 160);
+            this.spnPrice.Name = "spnPrice";
+            this.spnPrice.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.spnPrice.Size = new System.Drawing.Size(89, 20);
+            this.spnPrice.TabIndex = 67;
+            // 
             // ItemsEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(409, 348);
+            this.Controls.Add(this.spnPrice);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.cmbCategories);
             this.Controls.Add(this.labelControl5);
@@ -189,7 +197,6 @@
             this.Controls.Add(this.chkIsActive);
             this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.labelControl3);
-            this.Controls.Add(this.txtPrice);
             this.Controls.Add(this.saveCancelControl21);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -201,7 +208,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkIsActive.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPrice.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spnPrice.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -219,9 +226,9 @@
         private DevExpress.XtraEditors.CheckEdit chkIsActive;
         private System.Windows.Forms.RichTextBox txtNotes;
         private DevExpress.XtraEditors.LabelControl labelControl3;
-        private DevExpress.XtraEditors.TextEdit txtPrice;
         private Controls.SaveCancelControl2 saveCancelControl21;
         private DevExpress.XtraGrid.Columns.GridColumn colName;
         private DevExpress.XtraGrid.Columns.GridColumn colId;
+        private DevExpress.XtraEditors.SpinEdit spnPrice;
     }
 }

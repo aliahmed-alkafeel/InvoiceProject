@@ -21,6 +21,7 @@ namespace Models.DTOs
                 .MaximumLength(150).WithMessage("اسم المنتج لا يزيد عن 150 حرف");
 
             RuleFor(x => x.Price).NotNull().WithMessage("السعر مطلوب")
+                
                 .GreaterThanOrEqualTo(0).WithMessage("السعر لا يكون سالبًا");
         }
     }

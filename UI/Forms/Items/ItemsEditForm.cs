@@ -15,18 +15,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using UI.Forms.Extentions;
+using UI.Extentions;
 
 namespace UI.Forms.Items
 {
     public partial class ItemsEditForm : DevExpress.XtraEditors.XtraForm
     {
-        private readonly IItemsService _itemsService;
+        private readonly IItemService _itemsService;
         private readonly ICategoryService _categoryService;
         private ItemDto _selectedItem;
         private bool isEdit => _selectedItem != null;
         public ItemsEditForm(IUnitOfWork unitOfWork,
-            IItemsService itemsService, ICategoryService categoryService, ItemDto selectedItem = null)
+            IItemService itemsService, ICategoryService categoryService, ItemDto selectedItem = null)
         {
             InitializeComponent();
             _itemsService = itemsService;
@@ -42,7 +42,7 @@ namespace UI.Forms.Items
                 {
                     Id = isEdit ? _selectedItem.Id : Guid.NewGuid(),
                     Name = txtName.Text,
-                    Price = string.IsNullOrWhiteSpace(txtPrice.Text) ? (decimal?)null : Convert.ToDecimal(txtPrice.EditValue),
+                    Price = string.IsNullOrWhiteSpace(spnPrice.Text) ? (decimal?)null : Convert.ToDecimal(spnPrice.EditValue),
                     CategoryGuid = cmbCategories.EditValue is Guid categoryId ? categoryId : Guid.Empty,
                     IsActive = chkIsActive.Checked,
                 Notes = txtNotes.Text
@@ -121,8 +121,8 @@ namespace UI.Forms.Items
                 return;
             }
             txtName.Text = item.Name;
-            txtPrice.EditValue = item.Price;
-            cmbCategories.EditValue = item.CategoryGuid;
+            spnPrice.EditValue = item.Price;
+            cmbCategories.EditValue = item.Category.Id;
             chkIsActive.Checked = item.IsActive;
             txtNotes.Text = item.Notes;
 
@@ -131,7 +131,7 @@ namespace UI.Forms.Items
         {
             txtName.Text = string.Empty;
             cmbCategories.EditValue = null;
-            txtPrice.EditValue = null;
+            spnPrice.EditValue = null;
             chkIsActive.Checked = false;
             txtNotes.Text = string.Empty;
 

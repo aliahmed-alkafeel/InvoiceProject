@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Data.Services.Implementations
 {
-    public class ItemsService : IItemsService
+    public class ItemService : IItemService
     {
         private readonly IUnitOfWork _unitOfWork;
 
-    public ItemsService(IUnitOfWork unitOfWork)
+    public ItemService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -22,7 +22,7 @@ namespace Data.Services.Implementations
         public async Task<List<ItemDto>> GetAllItemsAsync()
         {
             return await _unitOfWork.Items
-                .Select()
+                .Select().Include(i => i.Category)
                 .Select(i => new ItemDto
                 {
                     Id = i.Id,
@@ -30,7 +30,12 @@ namespace Data.Services.Implementations
                     Price = i.Price,
                     IsActive = i.IsActive,
                     Notes = i.Notes,
-                    CategoryGuid = i.CategoryGuid,
+                    Category = new CategoryDto
+                    {
+                        Id = i.Category.Id,
+                        Name = i.Category.Name,
+                        IsActive = i.Category.IsActive
+                    },
                 })
                 .ToListAsync();
         }

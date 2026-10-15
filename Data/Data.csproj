@@ -108,10 +108,11 @@
     <Compile Include="Repositories\Interfaces\IGenericRepository.cs" />
     <Compile Include="Seed\DbInitializer.cs" />
     <Compile Include="Services\Implementations\CategoryService.cs" />
-    <Compile Include="Services\Implementations\ItemsService.cs" />
+    <Compile Include="Services\Implementations\ItemService.cs" />
     <Compile Include="Services\Implementations\LoginService.cs" />
-    <Compile Include="Services\Interfaces\ICategoryService.cs" />
-    <Compile Include="Services\Interfaces\IItemsService.cs" />
+    <Compile Include="Services\Interfaces\IAccountsTreeDto.cs" />
+    <Compile Include="Services\Interfaces\ICategoriesService.cs" />
+    <Compile Include="Services\Interfaces\IItemService.cs" />
     <Compile Include="Services\Interfaces\ILoginService.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
