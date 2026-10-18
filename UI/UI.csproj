@@ -107,11 +107,29 @@
     <Compile Include="Controls\ToolBarControl.Designer.cs">
       <DependentUpon>ToolBarControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\BillsForm.cs">
+    <Compile Include="Forms\AccountsTree\AccountsTreeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\BillsForm.Designer.cs">
+    <Compile Include="Forms\AccountsTree\AccountsTreeForm.Designer.cs">
+      <DependentUpon>AccountsTreeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AccountsTree\AccountsTreeManageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AccountsTree\AccountsTreeManageForm.Designer.cs">
+      <DependentUpon>AccountsTreeManageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Bills\BillsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Bills\BillsForm.Designer.cs">
       <DependentUpon>BillsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Bills\BillsManageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Bills\BillsManageForm.Designer.cs">
+      <DependentUpon>BillsManageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Categories\CategoriesForm.cs">
       <SubType>Form</SubType>
@@ -125,18 +143,48 @@
     <Compile Include="Forms\Categories\CategoriesManageForm.Designer.cs">
       <DependentUpon>CategoriesManageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\EmployeesForm.cs">
+    <Compile Include="Forms\Currencies\CurrenciesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\EmployeesForm.Designer.cs">
+    <Compile Include="Forms\Currencies\CurrenciesForm.Designer.cs">
+      <DependentUpon>CurrenciesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Currencies\CurrenciesManageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Currencies\CurrenciesManageForm.Designer.cs">
+      <DependentUpon>CurrenciesManageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Employees\EmployeesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Employees\EmployeesForm.Designer.cs">
       <DependentUpon>EmployeesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Extentions\GlobalExceptionHandler.cs" />
     <Compile Include="Extentions\ValidationHelper.cs" />
-    <Compile Include="Forms\ItemBillsForm.cs">
+    <Compile Include="Forms\Employees\EmployeesManageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ItemBillsForm.Designer.cs">
+    <Compile Include="Forms\Employees\EmployeesManageForm.Designer.cs">
+      <DependentUpon>EmployeesManageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Groups\GroupsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Groups\GroupsForm.Designer.cs">
+      <DependentUpon>GroupsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Groups\GroupsManageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Groups\GroupsManageForm.Designer.cs">
+      <DependentUpon>GroupsManageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Bills\ItemBillsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Bills\ItemBillsForm.Designer.cs">
       <DependentUpon>ItemBillsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Items\ItemsForm.cs">
@@ -157,11 +205,23 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Vouchers\VouchersCreateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Vouchers\VouchersCreateForm.Designer.cs">
+      <DependentUpon>VouchersCreateForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Vouchers\VouchersForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Vouchers\VouchersForm.Designer.cs">
       <DependentUpon>VouchersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Vouchers\VouchersManageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Vouchers\VouchersManageForm.Designer.cs">
+      <DependentUpon>VouchersManageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="InvoiceDbDataSet21.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -185,7 +245,10 @@
     <EmbeddedResource Include="Controls\ToolBarControl.resx">
       <DependentUpon>ToolBarControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\BillsForm.resx">
+    <EmbeddedResource Include="Forms\AccountsTree\AccountsTreeForm.resx">
+      <DependentUpon>AccountsTreeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Bills\BillsForm.resx">
       <DependentUpon>BillsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Categories\CategoriesForm.resx">
@@ -194,10 +257,25 @@
     <EmbeddedResource Include="Forms\Categories\CategoriesManageForm.resx">
       <DependentUpon>CategoriesManageForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\EmployeesForm.resx">
+    <EmbeddedResource Include="Forms\Currencies\CurrenciesForm.resx">
+      <DependentUpon>CurrenciesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Currencies\CurrenciesManageForm.resx">
+      <DependentUpon>CurrenciesManageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Employees\EmployeesForm.resx">
       <DependentUpon>EmployeesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ItemBillsForm.resx">
+    <EmbeddedResource Include="Forms\Employees\EmployeesManageForm.resx">
+      <DependentUpon>EmployeesManageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Groups\GroupsForm.resx">
+      <DependentUpon>GroupsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Groups\GroupsManageForm.resx">
+      <DependentUpon>GroupsManageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Bills\ItemBillsForm.resx">
       <DependentUpon>ItemBillsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Items\ItemsForm.resx">
@@ -209,8 +287,14 @@
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Vouchers\VouchersCreateForm.resx">
+      <DependentUpon>VouchersCreateForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Vouchers\VouchersForm.resx">
       <DependentUpon>VouchersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Vouchers\VouchersManageForm.resx">
+      <DependentUpon>VouchersManageForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

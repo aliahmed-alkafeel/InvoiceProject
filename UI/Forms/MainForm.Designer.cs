@@ -36,7 +36,7 @@
             this.topBarControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.topBarControl1.Location = new System.Drawing.Point(0, 0);
             this.topBarControl1.Name = "topBarControl1";
-            this.topBarControl1.Size = new System.Drawing.Size(998, 60);
+            this.topBarControl1.Size = new System.Drawing.Size(998, 45);
             this.topBarControl1.TabIndex = 0;
             // 
             // MainForm

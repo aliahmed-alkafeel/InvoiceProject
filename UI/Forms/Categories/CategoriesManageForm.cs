@@ -25,8 +25,8 @@ namespace UI.Forms.Categories
         private readonly ICategoryService _categoryService;
         private CategoryDto _selectedCategory;
         private bool isEdit => _selectedCategory != null;
-        public CategoriesManageForm(IUnitOfWork unitOfWork,
-            ICategoryService categorysService, ICategoryService categoryService, CategoryDto selectedCategory = null)
+        public CategoriesManageForm(
+            ICategoryService categoryService, CategoryDto selectedCategory = null)
         {
             InitializeComponent();
             _categoryService = categoryService;
@@ -99,6 +99,11 @@ namespace UI.Forms.Categories
             {
                 ClearDetails();
                 return;
+            }
+            if (!isEdit)
+            {
+                lblTitle.Text = "إضافة فئة";
+                saveCancelControl21.SaveText = "إضافة";
             }
             txtName.Text = category.Name;
             chkIsActive.Checked = category.IsActive;

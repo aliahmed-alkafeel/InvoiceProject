@@ -43,7 +43,7 @@ namespace UI.Forms
             catch (Exception ex)
             {
                 XtraMessageBox.Show(
-                    $"فشل تحميل المنتجات.\n{ex.Message}",
+                    $"فشل تحميل المنتجات\n{ex.Message}",
                     "خطأ",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -72,8 +72,6 @@ namespace UI.Forms
                 _isLoadingItems = false;
             }
         }
-
-
 
         private async void ItemsToolbar_CreateClicked(
             object sender,
@@ -107,7 +105,7 @@ namespace UI.Forms
             if (selectedItem == null)
             {
                 XtraMessageBox.Show(
-                    "يرجى اختيار منتج لتعديله.",
+                    "يرجى اختيار منتج لتعديله",
                     "اختيار منتج",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
@@ -141,7 +139,7 @@ namespace UI.Forms
             if (item == null)
             {
                 XtraMessageBox.Show(
-                    "يرجى اختيار منتج أولاً.",
+                    "يرجى اختيار منتج أولاً",
                     "تنبيه",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
@@ -166,7 +164,7 @@ namespace UI.Forms
                 await LoadItemsAsync();
 
                 XtraMessageBox.Show(
-                    "تم حذف المنتج بنجاح.",
+                    "تم حذف المنتج بنجاح",
                     "نجاح",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
@@ -216,7 +214,7 @@ namespace UI.Forms
                 return false;
 
             XtraMessageBox.Show(
-                "جارٍ تحميل المنتجات، يرجى الانتظار حتى اكتمال التحميل.",
+                "جارٍ تحميل المنتجات، يرجى الانتظار حتى اكتمال التحميل",
                 "تحميل المنتجات",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);

@@ -6,12 +6,7 @@ using DevExpress.XtraEditors;
 using Models.DTOs;
 using Models.Entities;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.Entity;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +21,7 @@ namespace UI.Forms.Items
         private readonly ICategoryService _categoryService;
         private ItemDto _selectedItem;
         private bool isEdit => _selectedItem != null;
-        public ItemsEditForm(IUnitOfWork unitOfWork,
+        public ItemsEditForm(
             IItemService itemsService, ICategoryService categoryService, ItemDto selectedItem = null)
         {
             InitializeComponent();
@@ -126,7 +121,6 @@ namespace UI.Forms.Items
             cmbCategories.EditValue = item.Category.Id;
             chkIsActive.Checked = item.IsActive;
             txtNotes.Text = item.Notes;
-
         }
         private void ClearDetails()
         {

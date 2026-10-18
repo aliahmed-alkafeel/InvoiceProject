@@ -29,25 +29,30 @@
         private void InitializeComponent()
         {
             this.tileNavPane1 = new DevExpress.XtraBars.Navigation.TileNavPane();
-            this.navButton8 = new DevExpress.XtraBars.Navigation.NavButton();
-            this.navButton2 = new DevExpress.XtraBars.Navigation.NavButton();
-            this.navButton6 = new DevExpress.XtraBars.Navigation.NavButton();
-            this.navButton5 = new DevExpress.XtraBars.Navigation.NavButton();
+            this.btnEmployees = new DevExpress.XtraBars.Navigation.NavButton();
+            this.btnCurrencies = new DevExpress.XtraBars.Navigation.NavButton();
+            this.btnAccountsTree = new DevExpress.XtraBars.Navigation.NavButton();
+            this.btnVouchers = new DevExpress.XtraBars.Navigation.NavButton();
             this.navButton7 = new DevExpress.XtraBars.Navigation.NavButton();
-            this.navButton4 = new DevExpress.XtraBars.Navigation.NavButton();
+            this.btnBills = new DevExpress.XtraBars.Navigation.NavButton();
             this.btnCategories = new DevExpress.XtraBars.Navigation.NavButton();
             this.btnItems = new DevExpress.XtraBars.Navigation.NavButton();
+            this.btnGroups = new DevExpress.XtraBars.Navigation.NavButton();
             ((System.ComponentModel.ISupportInitialize)(this.tileNavPane1)).BeginInit();
             this.SuspendLayout();
             // 
             // tileNavPane1
             // 
-            this.tileNavPane1.Buttons.Add(this.navButton8);
-            this.tileNavPane1.Buttons.Add(this.navButton2);
-            this.tileNavPane1.Buttons.Add(this.navButton6);
-            this.tileNavPane1.Buttons.Add(this.navButton5);
+            this.tileNavPane1.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(76)))), ((int)(((byte)(129)))));
+            this.tileNavPane1.Appearance.Options.UseBackColor = true;
+            this.tileNavPane1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(76)))), ((int)(((byte)(129)))));
+            this.tileNavPane1.Buttons.Add(this.btnGroups);
+            this.tileNavPane1.Buttons.Add(this.btnEmployees);
+            this.tileNavPane1.Buttons.Add(this.btnCurrencies);
+            this.tileNavPane1.Buttons.Add(this.btnAccountsTree);
+            this.tileNavPane1.Buttons.Add(this.btnVouchers);
             this.tileNavPane1.Buttons.Add(this.navButton7);
-            this.tileNavPane1.Buttons.Add(this.navButton4);
+            this.tileNavPane1.Buttons.Add(this.btnBills);
             this.tileNavPane1.Buttons.Add(this.btnCategories);
             this.tileNavPane1.Buttons.Add(this.btnItems);
             // 
@@ -62,35 +67,40 @@
             this.tileNavPane1.Location = new System.Drawing.Point(0, 0);
             this.tileNavPane1.Margin = new System.Windows.Forms.Padding(0);
             this.tileNavPane1.Name = "tileNavPane1";
-            this.tileNavPane1.Size = new System.Drawing.Size(900, 60);
+            this.tileNavPane1.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
+            this.tileNavPane1.Size = new System.Drawing.Size(900, 45);
             this.tileNavPane1.TabIndex = 2;
             this.tileNavPane1.Text = "tileNavPane1";
             this.tileNavPane1.ToolTipShowMode = DevExpress.XtraBars.Navigation.ToolTipShowMode.NavBarItems;
             this.tileNavPane1.Click += new System.EventHandler(this.tileNavPane1_Click);
             // 
-            // navButton8
+            // btnEmployees
             // 
-            this.navButton8.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
-            this.navButton8.Caption = "الموظفين";
-            this.navButton8.Name = "navButton8";
+            this.btnEmployees.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
+            this.btnEmployees.Caption = "الموظفين";
+            this.btnEmployees.Name = "btnEmployees";
+            this.btnEmployees.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnEmployees_Click);
             // 
-            // navButton2
+            // btnCurrencies
             // 
-            this.navButton2.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
-            this.navButton2.Caption = "العملة";
-            this.navButton2.Name = "navButton2";
+            this.btnCurrencies.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
+            this.btnCurrencies.Caption = "العملة";
+            this.btnCurrencies.Name = "btnCurrencies";
+            this.btnCurrencies.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnCurrencies_Click);
             // 
-            // navButton6
+            // btnAccountsTree
             // 
-            this.navButton6.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
-            this.navButton6.Caption = "شجرة الحسابات";
-            this.navButton6.Name = "navButton6";
+            this.btnAccountsTree.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
+            this.btnAccountsTree.Caption = "شجرة الحسابات";
+            this.btnAccountsTree.Name = "btnAccountsTree";
+            this.btnAccountsTree.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnAccountsTree_Click);
             // 
-            // navButton5
+            // btnVouchers
             // 
-            this.navButton5.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
-            this.navButton5.Caption = "السندات";
-            this.navButton5.Name = "navButton5";
+            this.btnVouchers.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
+            this.btnVouchers.Caption = "السندات";
+            this.btnVouchers.Name = "btnVouchers";
+            this.btnVouchers.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnVouchers_Click);
             // 
             // navButton7
             // 
@@ -98,11 +108,12 @@
             this.navButton7.Caption = "تفاصيل الفواتير";
             this.navButton7.Name = "navButton7";
             // 
-            // navButton4
+            // btnBills
             // 
-            this.navButton4.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
-            this.navButton4.Caption = "الفواتير";
-            this.navButton4.Name = "navButton4";
+            this.btnBills.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
+            this.btnBills.Caption = "الفواتير";
+            this.btnBills.Name = "btnBills";
+            this.btnBills.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnBills_Click);
             // 
             // btnCategories
             // 
@@ -118,27 +129,35 @@
             this.btnItems.Name = "btnItems";
             this.btnItems.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnItems_Click);
             // 
+            // btnGroups
+            // 
+            this.btnGroups.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
+            this.btnGroups.Caption = "المجموعات";
+            this.btnGroups.Name = "btnGroups";
+            this.btnGroups.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnGroups_Click);
+            // 
             // TopBarControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tileNavPane1);
             this.Name = "TopBarControl";
-            this.Size = new System.Drawing.Size(900, 60);
+            this.Size = new System.Drawing.Size(900, 45);
             ((System.ComponentModel.ISupportInitialize)(this.tileNavPane1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private DevExpress.XtraBars.Navigation.NavButton navButton8;
-        private DevExpress.XtraBars.Navigation.NavButton navButton2;
-        private DevExpress.XtraBars.Navigation.NavButton navButton6;
-        private DevExpress.XtraBars.Navigation.NavButton navButton5;
+        private DevExpress.XtraBars.Navigation.NavButton btnEmployees;
+        private DevExpress.XtraBars.Navigation.NavButton btnCurrencies;
+        private DevExpress.XtraBars.Navigation.NavButton btnAccountsTree;
+        private DevExpress.XtraBars.Navigation.NavButton btnVouchers;
         private DevExpress.XtraBars.Navigation.NavButton navButton7;
-        private DevExpress.XtraBars.Navigation.NavButton navButton4;
+        private DevExpress.XtraBars.Navigation.NavButton btnBills;
         private DevExpress.XtraBars.Navigation.NavButton btnCategories;
         private DevExpress.XtraBars.Navigation.NavButton btnItems;
         private DevExpress.XtraBars.Navigation.TileNavPane tileNavPane1;
+        private DevExpress.XtraBars.Navigation.NavButton btnGroups;
     }
 }

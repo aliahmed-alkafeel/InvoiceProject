@@ -2,7 +2,6 @@
 using Data.Repositories.Implementations;
 using Data.Repositories.Interfaces;
 using Data.Seed;
-using Data.Services;
 using Data.Services.Implementations;
 using Data.Services.Interfaces;
 using Data.UnitOfWork;
@@ -10,17 +9,20 @@ using DevExpress.LookAndFeel;
 using DevExpress.Skins;
 using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
+using RestaurantManagement.Areas.Dashboard.Services;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using UI.Base.TopBar;
 using UI.Extentions;
 using UI.Forms;
+using UI.Forms.AccountsTree;
+using UI.Forms.Bills;
 using UI.Forms.Categories;
+using UI.Forms.Currencies;
+using UI.Forms.Employees;
+using UI.Forms.Groups;
 using UI.Forms.Items;
+using UI.Forms.Vouchers;
 using UI.Screens;
 
 namespace UI
@@ -103,12 +105,33 @@ Properties.Settings.Default.RememberedUsername;
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ILoginService, LoginService>();
-            services.AddTransient<ItemsForm>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IItemService, ItemService>();
+            services.AddScoped<ICurrencyService, CurrencyService>();
+            services.AddScoped<IAccountsTreeService, AccountsTreesService>();
+            services.AddScoped<IBillService, BillService>();
+            services.AddScoped<IVoucherService, VoucherService>();
+            services.AddScoped<IGroupService, GroupService>(); 
+            services.AddScoped<IEmployeeService, EmployeeService>();
+
             services.AddTransient<MainForm>();
             services.AddTransient<LogInForm>();
+            services.AddTransient<ItemsForm>();
             services.AddTransient<ItemsEditForm>();
             services.AddTransient<CategoriesForm>();
             services.AddTransient<CategoriesManageForm>();
+            services.AddTransient<CurrenciesForm>();
+            services.AddTransient<CurrenciesManageForm>();
+            services.AddTransient<AccountsTreeForm>();
+            services.AddTransient<AccountsTreeManageForm>();
+            services.AddTransient<BillsForm>();
+            services.AddTransient<BillsManageForm>();
+            services.AddTransient<VouchersForm>();
+            services.AddTransient<VouchersManageForm>();
+            services.AddTransient<GroupsForm>();
+            services.AddTransient<GroupsManageForm>();
+            services.AddTransient<EmployeesForm>();
+            services.AddTransient<EmployeesManageForm>();
         }
 
         public static void LoadPage(this XtraForm page)
