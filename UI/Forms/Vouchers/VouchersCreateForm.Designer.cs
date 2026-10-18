@@ -115,9 +115,9 @@
             this.lblTitle.Appearance.Options.UseFont = true;
             this.lblTitle.Location = new System.Drawing.Point(147, 30);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(91, 27);
+            this.lblTitle.Size = new System.Drawing.Size(86, 27);
             this.lblTitle.TabIndex = 93;
-            this.lblTitle.Text = "تعديل المنتج";
+            this.lblTitle.Text = "اضافة منتج";
             // 
             // cmbAccounts
             // 
@@ -195,7 +195,7 @@
             // 
             this.saveCancelControl21.Location = new System.Drawing.Point(104, 285);
             this.saveCancelControl21.Name = "saveCancelControl21";
-            this.saveCancelControl21.SaveText = "حفظ";
+            this.saveCancelControl21.SaveText = "اضافة";
             this.saveCancelControl21.Size = new System.Drawing.Size(191, 45);
             this.saveCancelControl21.TabIndex = 85;
             // 

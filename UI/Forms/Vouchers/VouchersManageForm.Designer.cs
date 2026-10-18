@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.saveCancelControl21 = new UI.Controls.SaveCancelControl2();
-            this.spnPrice = new DevExpress.XtraEditors.SpinEdit();
+            this.spnAmount = new DevExpress.XtraEditors.SpinEdit();
             this.lblTitle = new DevExpress.XtraEditors.LabelControl();
             this.cmbAccounts = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -37,11 +37,11 @@
             this.colId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
-            this.txtName = new DevExpress.XtraEditors.TextEdit();
+            this.txtVoucherNumber = new DevExpress.XtraEditors.TextEdit();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.txtNotes = new System.Windows.Forms.RichTextBox();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
-            this.spinEdit1 = new DevExpress.XtraEditors.SpinEdit();
+            this.spnCurrencyEqVal = new DevExpress.XtraEditors.SpinEdit();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.cmbVoucherTypes = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -49,15 +49,15 @@
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
-            this.dateTimeOffsetEdit1 = new DevExpress.XtraEditors.DateTimeOffsetEdit();
-            ((System.ComponentModel.ISupportInitialize)(this.spnPrice.Properties)).BeginInit();
+            this.dateEditVoucherDate = new DevExpress.XtraEditors.DateTimeOffsetEdit();
+            ((System.ComponentModel.ISupportInitialize)(this.spnAmount.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbAccounts.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtVoucherNumber.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spnCurrencyEqVal.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbVoucherTypes.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateTimeOffsetEdit1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEditVoucherDate.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // saveCancelControl21
@@ -68,19 +68,19 @@
             this.saveCancelControl21.Size = new System.Drawing.Size(191, 45);
             this.saveCancelControl21.TabIndex = 0;
             // 
-            // spnPrice
+            // spnAmount
             // 
-            this.spnPrice.EditValue = new decimal(new int[] {
+            this.spnAmount.EditValue = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            this.spnPrice.Location = new System.Drawing.Point(150, 191);
-            this.spnPrice.Name = "spnPrice";
-            this.spnPrice.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.spnAmount.Location = new System.Drawing.Point(150, 191);
+            this.spnAmount.Name = "spnAmount";
+            this.spnAmount.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.spnPrice.Size = new System.Drawing.Size(89, 20);
-            this.spnPrice.TabIndex = 77;
+            this.spnAmount.Size = new System.Drawing.Size(89, 20);
+            this.spnAmount.TabIndex = 77;
             // 
             // lblTitle
             // 
@@ -146,12 +146,12 @@
             this.labelControl4.TabIndex = 73;
             this.labelControl4.Text = ":رقم السند";
             // 
-            // txtName
+            // txtVoucherNumber
             // 
-            this.txtName.Location = new System.Drawing.Point(56, 75);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(183, 20);
-            this.txtName.TabIndex = 72;
+            this.txtVoucherNumber.Location = new System.Drawing.Point(56, 75);
+            this.txtVoucherNumber.Name = "txtVoucherNumber";
+            this.txtVoucherNumber.Size = new System.Drawing.Size(183, 20);
+            this.txtVoucherNumber.TabIndex = 72;
             // 
             // labelControl2
             // 
@@ -181,19 +181,19 @@
             this.labelControl3.TabIndex = 68;
             this.labelControl3.Text = ":الكمية";
             // 
-            // spinEdit1
+            // spnCurrencyEqVal
             // 
-            this.spinEdit1.EditValue = new decimal(new int[] {
+            this.spnCurrencyEqVal.EditValue = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            this.spinEdit1.Location = new System.Drawing.Point(150, 233);
-            this.spinEdit1.Name = "spinEdit1";
-            this.spinEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.spnCurrencyEqVal.Location = new System.Drawing.Point(150, 233);
+            this.spnCurrencyEqVal.Name = "spnCurrencyEqVal";
+            this.spnCurrencyEqVal.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.spinEdit1.Size = new System.Drawing.Size(89, 20);
-            this.spinEdit1.TabIndex = 79;
+            this.spnCurrencyEqVal.Size = new System.Drawing.Size(89, 20);
+            this.spnCurrencyEqVal.TabIndex = 79;
             // 
             // labelControl1
             // 
@@ -259,33 +259,33 @@
             this.labelControl7.TabIndex = 82;
             this.labelControl7.Text = ":التاريخ";
             // 
-            // dateTimeOffsetEdit1
+            // dateEditVoucherDate
             // 
-            this.dateTimeOffsetEdit1.EditValue = null;
-            this.dateTimeOffsetEdit1.Location = new System.Drawing.Point(56, 278);
-            this.dateTimeOffsetEdit1.Name = "dateTimeOffsetEdit1";
-            this.dateTimeOffsetEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.dateEditVoucherDate.EditValue = null;
+            this.dateEditVoucherDate.Location = new System.Drawing.Point(56, 278);
+            this.dateEditVoucherDate.Name = "dateEditVoucherDate";
+            this.dateEditVoucherDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dateTimeOffsetEdit1.Size = new System.Drawing.Size(183, 20);
-            this.dateTimeOffsetEdit1.TabIndex = 84;
+            this.dateEditVoucherDate.Size = new System.Drawing.Size(183, 20);
+            this.dateEditVoucherDate.TabIndex = 84;
             // 
             // VouchersManageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(376, 486);
-            this.Controls.Add(this.dateTimeOffsetEdit1);
+            this.Controls.Add(this.dateEditVoucherDate);
             this.Controls.Add(this.labelControl7);
             this.Controls.Add(this.cmbVoucherTypes);
             this.Controls.Add(this.labelControl6);
-            this.Controls.Add(this.spinEdit1);
+            this.Controls.Add(this.spnCurrencyEqVal);
             this.Controls.Add(this.labelControl1);
-            this.Controls.Add(this.spnPrice);
+            this.Controls.Add(this.spnAmount);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.cmbAccounts);
             this.Controls.Add(this.labelControl5);
             this.Controls.Add(this.labelControl4);
-            this.Controls.Add(this.txtName);
+            this.Controls.Add(this.txtVoucherNumber);
             this.Controls.Add(this.labelControl2);
             this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.labelControl3);
@@ -293,14 +293,14 @@
             this.Name = "VouchersManageForm";
             this.Text = "VouchersManageForm";
             this.Load += new System.EventHandler(this.VouchersManageForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.spnPrice.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spnAmount.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbAccounts.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtVoucherNumber.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spnCurrencyEqVal.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbVoucherTypes.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateTimeOffsetEdit1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEditVoucherDate.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -309,7 +309,7 @@
         #endregion
 
         private Controls.SaveCancelControl2 saveCancelControl21;
-        private DevExpress.XtraEditors.SpinEdit spnPrice;
+        private DevExpress.XtraEditors.SpinEdit spnAmount;
         private DevExpress.XtraEditors.LabelControl lblTitle;
         private DevExpress.XtraEditors.SearchLookUpEdit cmbAccounts;
         private DevExpress.XtraGrid.Views.Grid.GridView searchLookUpEdit1View;
@@ -317,11 +317,11 @@
         private DevExpress.XtraGrid.Columns.GridColumn colId;
         private DevExpress.XtraEditors.LabelControl labelControl5;
         private DevExpress.XtraEditors.LabelControl labelControl4;
-        private DevExpress.XtraEditors.TextEdit txtName;
+        private DevExpress.XtraEditors.TextEdit txtVoucherNumber;
         private DevExpress.XtraEditors.LabelControl labelControl2;
         private System.Windows.Forms.RichTextBox txtNotes;
         private DevExpress.XtraEditors.LabelControl labelControl3;
-        private DevExpress.XtraEditors.SpinEdit spinEdit1;
+        private DevExpress.XtraEditors.SpinEdit spnCurrencyEqVal;
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private DevExpress.XtraEditors.SearchLookUpEdit cmbVoucherTypes;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
@@ -329,6 +329,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
         private DevExpress.XtraEditors.LabelControl labelControl6;
         private DevExpress.XtraEditors.LabelControl labelControl7;
-        private DevExpress.XtraEditors.DateTimeOffsetEdit dateTimeOffsetEdit1;
+        private DevExpress.XtraEditors.DateTimeOffsetEdit dateEditVoucherDate;
     }
 }

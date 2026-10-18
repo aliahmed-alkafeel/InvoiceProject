@@ -82,7 +82,7 @@ namespace UI.Forms.Vouchers
                 return;
 
             using (var editForm = Program.ServiceProvider
-                .GetService(typeof(VouchersManageForm)) as VouchersManageForm)
+                .GetService(typeof(VouchersCreateForm)) as VouchersCreateForm)
             {
 
                 var result = editForm.ShowDialog(this);

@@ -128,6 +128,7 @@ Properties.Settings.Default.RememberedUsername;
             services.AddTransient<BillsManageForm>();
             services.AddTransient<VouchersForm>();
             services.AddTransient<VouchersManageForm>();
+            services.AddTransient<VouchersCreateForm>();
             services.AddTransient<GroupsForm>();
             services.AddTransient<GroupsManageForm>();
             services.AddTransient<EmployeesForm>();

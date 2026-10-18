@@ -4,8 +4,10 @@ using Data.Services.Interfaces;
 using Data.UnitOfWork;
 using DevExpress.XtraEditors;
 using Models.DTOs;
+using Models.Entities;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using UI.Extentions;
 
@@ -16,8 +18,6 @@ namespace UI.Forms.Vouchers
         private readonly IVoucherService _voucherService;
         private readonly IAccountsTreeService _accountsTreeService;
         private VoucherDto _selectedVoucher;
-        private bool isEdit => _selectedVoucher != null;
-
         public VouchersManageForm(
             IVoucherService vouchersService, IAccountsTreeService accountsTreeService,
             VoucherDto selectedVoucher = null)
@@ -36,7 +36,7 @@ namespace UI.Forms.Vouchers
         {
             var newVoucher = new VoucherDto()
             {
-                Id = isEdit ? _selectedVoucher.Id : Guid.NewGuid()
+                Id =_selectedVoucher.Id
             };
 
             if (!ValidationHelper.IsValid(
@@ -48,32 +48,8 @@ namespace UI.Forms.Vouchers
                 return;
             }
 
-            if (!isEdit)
-            {
-                var result = await _voucherService.CreateVoucherAsync(newVoucher);
-
-                if (result)
-                {
-                    MessageBox.Show(
-                        "تم إضافة السند بنجاح",
-                        "نجاح",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-
-                    DialogResult = DialogResult.OK;
-                    Close();
-                }
-                else
-                {
-                    MessageBox.Show(
-                        "فشل في إضافة السند",
-                        "خطأ",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
+          
+         
                 var result = await _voucherService.UpdateVoucherAsync(newVoucher);
 
                 if (result)
@@ -95,7 +71,7 @@ namespace UI.Forms.Vouchers
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }
-            }
+            
         }
 
         private void SaveCancelControl_CancelClicked()
@@ -103,42 +79,77 @@ namespace UI.Forms.Vouchers
             Close();
         }
 
-        private void VouchersManageForm_Load(object sender, EventArgs e)
+        private async void VouchersManageForm_Load(object sender, EventArgs e)
         {
-            LoadVoucherDetails(_selectedVoucher);
+            await LoadVoucherDetailsAsync(_selectedVoucher);
         }
 
-        private async void LoadVoucherDetails(VoucherDto voucher)
+        private async Task LoadVoucherDetailsAsync(VoucherDto voucher)
         {
             _selectedVoucher = voucher;
 
-            if (voucher == null)
-            {
-                ClearDetails();
-                return;
-            }
+            var accounts = (await _accountsTreeService.GetAllAccountsAsync())
+         .Where(a => a.IsLeaf && a.IsActive)
+         .Select(a => new
+         {
+             a.Id,
+             a.AccountName
+         })
+         .ToList();
 
-            var categories = (await _accountsTreeService.GetAllAccountsAsync())
-                .Select(c => new
-                {
-                    c.Id,
-                    c.AccountName
-                }).ToList();
-
-            cmbAccounts.Properties.DataSource = categories;
+            cmbAccounts.Properties.DataSource = accounts;
             cmbAccounts.Properties.DisplayMember = "AccountName";
             cmbAccounts.Properties.ValueMember = "Id";
             cmbAccounts.Properties.NullText = "اختر الحساب";
-            if (!isEdit)
-            {
-                lblTitle.Text = "إضافة سند";
-                saveCancelControl21.SaveText = "إضافة";
-            }
-        }
 
+            cmbAccounts.Properties.View.Columns.Clear();
+            cmbAccounts.Properties.View.Columns
+                .AddVisible("AccountName", "الحساب المحاسبي");
+
+            cmbAccounts.EditValue = null;
+
+            var voucherTypes = Enum.GetValues(typeof(VoucherType))
+                .Cast<VoucherType>()
+                .Select(type => new
+                {
+                    Value = type,
+                    Text = type.ToString()
+                })
+                .ToList();
+
+            cmbVoucherTypes.Properties.DataSource = voucherTypes;
+            cmbVoucherTypes.Properties.DisplayMember = "Text";
+            cmbVoucherTypes.Properties.ValueMember = "Value";
+            cmbVoucherTypes.Properties.NullText = "اختر نوع السند";
+
+            cmbVoucherTypes.Properties.View.Columns.Clear();
+            cmbVoucherTypes.Properties.View.Columns
+                .AddVisible("Text", "نوع السند");
+
+            cmbVoucherTypes.EditValue = null;
+
+            txtVoucherNumber.Text = voucher.VoucherNumber.ToString();
+
+            dateEditVoucherDate.EditValue = voucher.Date;
+
+            cmbAccounts.EditValue = voucher.AccountTreeGuid;
+            spnCurrencyEqVal.EditValue = voucher.CurrencyEqualValue;
+
+            spnAmount.EditValue = voucher.Amount;
+            cmbVoucherTypes.EditValue = voucher.VoucherType;
+            txtNotes.Text = voucher.Notes;
+        }
         private void ClearDetails()
         {
-            // مسح حقول السند هنا بحسب عناصر الواجهة
+            txtVoucherNumber.Text = string.Empty;
+
+            dateEditVoucherDate.EditValue = DateTime.Now;
+
+            cmbAccounts.EditValue = null;
+
+            spnAmount.Text = string.Empty;
+
+            txtNotes.Text = string.Empty;
         }
     }
 }
