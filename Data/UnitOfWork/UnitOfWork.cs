@@ -13,7 +13,7 @@ namespace Data.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private readonly InvoiceDbContext _context;
-        public IGenericRepository<AccountsTree> AccountsTree { get; }
+        public IGenericRepository<AccountsTree> AccountsTrees { get; }
         public IGenericRepository<Bill> Bills { get; }
         public IGenericRepository<BillItem> BillItems { get; }
         public IGenericRepository<Category> Categories { get; }
@@ -41,7 +41,7 @@ namespace Data.UnitOfWork
             )
         {
             _context = context;
-            AccountsTree = accountsTree;
+            AccountsTrees = accountsTrees;
             Bills = bills;
             BillItems = billItems;
             Categories = categories;

@@ -1,25 +1,49 @@
-﻿using System;
+﻿using FluentValidation;
+using Models.DTOs;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Models.DTOs
+namespace Data.Configurations.DTOsConfigurations
 {
-    public class EmployeeDto : BaseDto
+    public class EmployeeDtoConfiguration : BaseDtoConfiguration<EmployeeDto>
     {
-        public Guid GroupGuid { get; set; }
-        public string FirstName { get; set; }
+        public EmployeeDtoConfiguration()
+        {
+            RuleFor(x => x.GroupGuid).NotEmpty().WithMessage("اختر المجموعة");
 
-        public string LastName { get; set; }
+            RuleFor(x => x.FirstName)
+                .NotEmpty().WithMessage("الاسم الأول مطلوب")
+                .MaximumLength(50);
 
-        public string PhoneNumber { get; set; }
-        public DateTime EmployeeStartingDate { get; set; }
-        public DateTime? EmployeeEndingDate { get; set; }
+            RuleFor(x => x.LastName)
+                .NotEmpty().WithMessage("اسم العائلة مطلوب")
+                .MaximumLength(50);
 
-        public string Email { get; set; }
+            RuleFor(x => x.PhoneNumber)
+                .MaximumLength(20)
+                .Matches(@"^[0-9+\-\s]+$").When(x => !string.IsNullOrWhiteSpace(x.PhoneNumber))
+                .WithMessage("رقم الهاتف غير صحيح");
 
-        public string Username { get; set; }
+            RuleFor(x => x.Email)
+                .EmailAddress().When(x => !string.IsNullOrWhiteSpace(x.Email))
+                .WithMessage("الإيميل غير صحيح")
+                .MaximumLength(150);
 
-        public string Password { get; set; }
-        public GroupDto Group { get; set; }
+            RuleFor(x => x.Username)
+                .NotEmpty().WithMessage("اسم المستخدم مطلوب")
+                .MinimumLength(3).WithMessage("اسم المستخدم 3 أحرف على الأقل")
+                .MaximumLength(50);
+
+            RuleFor(x => x.Password)
+                .NotEmpty().WithMessage("كلمة المرور مطلوبة")
+                .MinimumLength(6).WithMessage("كلمة المرور 6 أحرف على الأقل");
+
+            RuleFor(x => x.EmployeeStartingDate).NotEmpty().WithMessage("تاريخ التعيين مطلوب");
+
+            RuleFor(x => x.EmployeeEndingDate)
+                .GreaterThanOrEqualTo(x => x.EmployeeStartingDate)
+                .When(x => x.EmployeeEndingDate.HasValue)
+                .WithMessage("تاريخ الانتهاء قبل تاريخ التعيين");
+        }
     }
 }

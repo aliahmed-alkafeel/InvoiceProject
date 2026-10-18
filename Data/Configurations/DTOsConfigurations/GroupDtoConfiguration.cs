@@ -1,13 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using Data.Configurations.DTOsConfigurations;
+using FluentValidation;
+using Models.DTOs;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Models.DTOs
+namespace Data.Configurations.DTOsConfigurations
 {
-    public class GroupDto : BaseDto
+    public class GroupDtoConfiguration : BaseDtoConfiguration<GroupDto>
     {
-        public string GroupName { get; set; }
-        public ICollection<EmployeeDto> Employees { get; set; } = new HashSet<EmployeeDto>();
-        public ICollection<GroupRoleDto> GroupRoles { get; set; } = new HashSet<GroupRoleDto>();
+        public GroupDtoConfiguration()
+        {
+            RuleFor(x => x.GroupName)
+                .NotEmpty().WithMessage("اسم المجموعة مطلوب")
+                .MaximumLength(100);
+        }
     }
-
 }

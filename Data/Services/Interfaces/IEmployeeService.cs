@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Data.Services.Interfaces
 {
-    public interface IEmployeesService
+    public interface IEmployeeService
     {
         Task<List<EmployeeDto>> GetAllEmployeesAsync();
         Task<EmployeeDto> GetEmployeeByIdAsync(Guid id);

@@ -1,12 +1,18 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using Data.Configurations.DTOsConfigurations;
+using FluentValidation;
 using Models.DTOs;
 using Models.Entities;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace Models.DTOs
+namespace Data.Configurations.DTOsConfigurations
 {
-    public class RoleDto : BaseDto
+    public class RoleDtoConfiguration : BaseDtoConfiguration<RoleDto>
     {
-        public UserRole RoleName { get; set; }
+        public RoleDtoConfiguration()
+        {
+            RuleFor(x => x.RoleName).NotNull().WithMessage("اسم الصلاحية مطلوب")
+                .IsInEnum().WithMessage("الصلاحية غير صحيحة");
+        }
     }
 }

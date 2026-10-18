@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace RestaurantManagement.Areas.Dashboard.Services
 {
-    public class GroupsService : IGroupService
+    public class GroupService : IGroupService
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public GroupsService(IUnitOfWork unitOfWork)
+        public GroupService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork
                 ?? throw new ArgumentNullException(
@@ -39,13 +39,15 @@ namespace RestaurantManagement.Areas.Dashboard.Services
             if (hasRepeatedName)
                 return false;
 
-            var roleNames = model.GroupRoles;
+            var roleIds = model.GroupRoles
+                .Select(gr => gr.RoleGuid)
+                .Distinct()
+                .ToList();
 
             var roles = await _unitOfWork.Roles
                 .Select()
-                .Where(r => roleNames.Contains(r.RoleName))
+                .Where(r => roleIds.Contains(r.Id))
                 .ToListAsync();
-
             var group = new Group
             {
                 Id = Guid.NewGuid(),
@@ -93,41 +95,24 @@ namespace RestaurantManagement.Areas.Dashboard.Services
         {
             var groups = await _unitOfWork.Groups
                 .NoTrackingSelect()
-                .Include("GroupRoles.Role")
+                .Include(g => g.GroupRoles.Select(gr => gr.Role))
                 .ToListAsync();
 
-            return groups
-                .Select(group => new GroupDto
-                {
-                    Id = group.Id,
-                    GroupName = group.GroupName,
-                    GroupRoles = group.GroupRoles
-                        .Where(gr => !gr.IsDeleted)
-                        .ToList()
-                })
-                .ToList();
+            return groups.Select(ToDto).ToList();
         }
 
         public async Task<GroupDto> GetGroupByIdAsync(Guid id)
         {
             var group = await _unitOfWork.Groups
                 .NoTrackingSelect()
-                .Include(g => g.GroupRoles)
-                .ThenInclude(gr => gr.GroupRole.Role)
+                .Include(g => g.GroupRoles.Select(gr => gr.Role))
                 .FirstOrDefaultAsync(g => g.Id == id);
 
             if (group is null)
                 throw new InvalidOperationException(
                     "المجموعة المطلوبة غير موجودة.");
 
-            return new GroupDto
-            {
-                Id = group.Id,
-                GroupName = group.GroupName,
-                GroupRoles = group.GroupRoles
-                    .Where(gr => !gr.IsDeleted)
-                    .ToList()
-            };
+            return ToDto(group);
         }
 
         public async Task<bool> UpdateGroupAsync(GroupDto model)
@@ -150,14 +135,12 @@ namespace RestaurantManagement.Areas.Dashboard.Services
             var administratorGroupName =
                 InitUserGroup.Administrator.ToString();
 
-            // منع تعديل اسم مجموعة المسؤول أو تحويل مجموعة أخرى إليها.
             if (group.GroupName == administratorGroupName ||
                 model.GroupName == administratorGroupName)
             {
                 return false;
             }
 
-            // منع تكرار اسم المجموعة مع استثناء المجموعة الحالية.
             var hasRepeatedName = await _unitOfWork.Groups
                 .NoTrackingSelect()
                 .AnyAsync(g =>
@@ -169,11 +152,14 @@ namespace RestaurantManagement.Areas.Dashboard.Services
 
             group.GroupName = model.GroupName;
 
-            var roleNames = model.GroupRoles.Role?.ToList() ?? new List<string>();
+            var roleIds = (model.GroupRoles)
+    .Select(gr => gr.RoleGuid)
+    .Distinct() 
+    .ToList();
 
             var roles = await _unitOfWork.Roles
                 .Select()
-                .Where(r => roleNames.Contains(r.RoleName))
+                .Where(r => roleIds.Contains(r.Id))
                 .ToListAsync();
 
             var oldGroupRoles = await _unitOfWork.GroupRoles
@@ -181,7 +167,6 @@ namespace RestaurantManagement.Areas.Dashboard.Services
                 .Where(gr => gr.GroupGuid == group.Id)
                 .ToListAsync();
 
-            // العلاقات التي لم تعد موجودة ضمن الصلاحيات المحددة.
             var rolesToDelete = oldGroupRoles
                 .Where(gr => !roles.Any(r => r.Id == gr.RoleGuid))
                 .ToList();
@@ -191,7 +176,6 @@ namespace RestaurantManagement.Areas.Dashboard.Services
                 _unitOfWork.GroupRoles.DeleteRange(rolesToDelete);
             }
 
-            // إضافة العلاقات الجديدة فقط.
             foreach (var role in roles)
             {
                 var exists = oldGroupRoles
@@ -199,7 +183,7 @@ namespace RestaurantManagement.Areas.Dashboard.Services
 
                 if (!exists)
                 {
-                    await _unitOfWork.GroupRoles.Add(new GroupRole
+                    _unitOfWork.GroupRoles.Add(new GroupRole
                     {
                         GroupGuid = group.Id,
                         RoleGuid = role.Id
@@ -211,5 +195,28 @@ namespace RestaurantManagement.Areas.Dashboard.Services
 
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
+        private static GroupDto ToDto(Group group)
+        {
+            return new GroupDto
+            {
+                Id = group.Id,
+                GroupName = group.GroupName,
+                GroupRoles = group.GroupRoles
+                    .Where(gr => !gr.IsDeleted)
+                    .Select(gr => new GroupRoleDto
+                    {
+                        Id = gr.Id,
+                        GroupGuid = gr.GroupGuid,
+                        RoleGuid = gr.RoleGuid,
+                        Role = gr.Role == null ? null : new RoleDto
+                        {
+                            Id = gr.Role.Id,
+                            RoleName = gr.Role.RoleName
+                        }
+                    })
+                    .ToList()
+            };
+        }
     }
+
 }

@@ -11,7 +11,7 @@ namespace Data.UnitOfWork
 {
     public interface IUnitOfWork: IDisposable
     {
-        IGenericRepository<AccountsTree> AccountsTree { get; }
+        IGenericRepository<AccountsTree> AccountsTrees { get; }
         IGenericRepository<Bill> Bills { get; }
         IGenericRepository<BillItem> BillItems { get; }
         IGenericRepository<Category> Categories { get; }

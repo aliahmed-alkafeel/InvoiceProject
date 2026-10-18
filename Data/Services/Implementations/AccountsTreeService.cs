@@ -11,18 +11,18 @@ using System.Threading.Tasks;
 
 namespace Data.Services.Implementations
 {
-    public class AccountsTreeService : IAccountsTreeService
+    public class AccountsTreesService : IAccountsTreeService
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public AccountsTreeService(IUnitOfWork unitOfWork)
+        public AccountsTreesService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
         public async Task<List<AccountsTreeDto>> GetAllAccountsAsync()
         {
-            return await _unitOfWork.AccountsTree
+            return await _unitOfWork.AccountsTrees
                 .Select()
                 .OrderBy(a => a.AccountCode)
                 .Select(a => new AccountsTreeDto
@@ -40,7 +40,7 @@ namespace Data.Services.Implementations
 
         public async Task<AccountsTreeDto> GetAccountByIdAsync(Guid id)
         {
-            var account = await _unitOfWork.AccountsTree
+            var account = await _unitOfWork.AccountsTrees
                 .Select()
                 .Where(a => a.Id == id)
                 .Select(a => new AccountsTreeDto
@@ -74,7 +74,7 @@ namespace Data.Services.Implementations
                 Notes = model.Notes
             };
 
-            _unitOfWork.AccountsTree.Add(account);
+            _unitOfWork.AccountsTrees.Add(account);
 
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
@@ -84,7 +84,7 @@ namespace Data.Services.Implementations
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات الحساب مطلوبة.");
 
-            var account = await _unitOfWork.AccountsTree
+            var account = await _unitOfWork.AccountsTrees
                 .Select()
                 .FirstOrDefaultAsync(a => a.Id == model.Id);
 
@@ -99,14 +99,14 @@ namespace Data.Services.Implementations
             account.IsActive = model.IsActive;
             account.Notes = model.Notes;
 
-            _unitOfWork.AccountsTree.Update(account);
+            _unitOfWork.AccountsTrees.Update(account);
 
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> DeleteAccountAsync(Guid modelId)
         {
-            var account = await _unitOfWork.AccountsTree
+            var account = await _unitOfWork.AccountsTrees
                 .Select()
                 .FirstOrDefaultAsync(a => a.Id == modelId);
 
@@ -114,7 +114,7 @@ namespace Data.Services.Implementations
                 throw new InvalidOperationException(
                     $"لم يتم العثور على الحساب بالمعرّف '{modelId}'.");
 
-            _unitOfWork.AccountsTree.Delete(account);
+            _unitOfWork.AccountsTrees.Delete(account);
 
             return await _unitOfWork.SaveChangesAsync() > 0;
         }

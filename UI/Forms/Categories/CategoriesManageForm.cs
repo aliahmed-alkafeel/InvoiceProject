@@ -1,4 +1,5 @@
-﻿using Data.Services.Implementations;
+﻿using Data.Configurations.DTOsConfigurations;
+using Data.Services.Implementations;
 using Data.Services.Interfaces;
 using Data.UnitOfWork;
 using DevExpress.XtraEditors;

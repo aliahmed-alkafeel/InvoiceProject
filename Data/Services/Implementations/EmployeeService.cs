@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Data.Services.Implementations
 {
-    public class EmployeesService : IEmployeesService
+    public class EmployeeService : IEmployeeService
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public EmployeesService(
+        public EmployeeService(
             IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork
@@ -35,18 +35,18 @@ namespace Data.Services.Implementations
                     FirstName = emp.FirstName,
                     LastName = emp.LastName,
                     PhoneNumber = emp.PhoneNumber,
-                    EmployeeStartingDate = emp.EmployeeStartingDate.ToUtc(),
+                    EmployeeStartingDate = emp.EmployeeStartingDate.ToLocalTime(),
                     EmployeeEndingDate = emp.EmployeeEndingDate.HasValue
-                        ? emp.EmployeeEndingDate.Value.ToUtc()
+                        ? (DateTime?)emp.EmployeeEndingDate.Value.ToLocalTime()
                         : null,
                     Username = emp.Username,
                     Email = emp.Email,
-                    Group = emp.Group!.GroupName
+                    GroupGuid = emp.GroupGuid,
                 })
                 .ToListAsync();
         }
 
-        public async Task<EmployeeDto> GetCreateEmployeeByIdAsync(
+        public async Task<EmployeeDto> GetEmployeeByIdAsync(
             Guid id)
         {
             var employee = await _unitOfWork.Employees
@@ -63,16 +63,7 @@ namespace Data.Services.Implementations
                     "الموظف المطلوب غير موجود أو أن مجموعته غير متاحة.");
             }
 
-            var groups = await _unitOfWork.Groups
-                .NoTrackingSelect()
-                .Select(g => new SelectListItem
-                {
-                    Value = g.Id.ToString(),
-                    Text = g.GroupName
-                })
-                .ToListAsync();
-
-            return new CreateEmployeeDto
+            return new EmployeeDto
             {
                 Id = employee.Id,
                 FirstName = employee.FirstName,
@@ -82,53 +73,11 @@ namespace Data.Services.Implementations
                 EmployeeEndingDate = employee.EmployeeEndingDate,
                 Username = employee.Username,
                 Email = employee.Email,
-                Group = employee.GroupId,
-                GroupName = employee.Group!.GroupName,
-                Groups = groups
+                GroupGuid = employee.GroupGuid,
             };
         }
 
-        public async Task<EmployeeDto> GetUpdateEmployeeByIdAsync(
-            Guid id)
-        {
-            var employee = await _unitOfWork.Employees
-                .NoTrackingSelect()
-                .Include(e => e.Group)
-                .FirstOrDefaultAsync(e =>
-                    e.Id == id &&
-                    e.Group != null &&
-                    !e.Group.IsDeleted);
 
-            if (employee is null)
-            {
-                throw new InvalidOperationException(
-                    "الموظف المطلوب تعديله غير موجود أو أن مجموعته غير متاحة.");
-            }
-
-            var groups = await _unitOfWork.Groups
-                .NoTrackingSelect()
-                .Select(g => new SelectListItem
-                {
-                    Value = g.Id.ToString(),
-                    Text = g.GroupName
-                })
-                .ToListAsync();
-
-            return new UpdateEmployeeDto
-            {
-                Id = employee.Id,
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                PhoneNumber = employee.PhoneNumber,
-                EmployeeStartingDate = employee.EmployeeStartingDate,
-                EmployeeEndingDate = employee.EmployeeEndingDate,
-                Username = employee.Username,
-                Email = employee.Email,
-                Group = employee.GroupId,
-                GroupName = employee.Group!.GroupName,
-                Groups = groups
-            };
-        }
 
         public async Task<bool> CreateEmployeeAsync(
             EmployeeDto model)
@@ -153,7 +102,7 @@ namespace Data.Services.Implementations
 
             var group = await _unitOfWork.Groups
                 .NoTrackingSelect()
-                .FirstOrDefaultAsync(g => g.Id == model.Group);
+                .FirstOrDefaultAsync(g => g.Id == model.GroupGuid);
 
             if (group is null)
                 return false;
@@ -167,7 +116,7 @@ namespace Data.Services.Implementations
                 LastName = model.LastName,
                 EmployeeStartingDate = DateTime.UtcNow,
                 PhoneNumber = model.PhoneNumber,
-                GroupId = model.Group
+                GroupGuid = model.GroupGuid
             };
 
             // لا تتم معالجة كلمة المرور في هذه الخدمة.
@@ -209,7 +158,7 @@ namespace Data.Services.Implementations
 
             var group = await _unitOfWork.Groups
                 .NoTrackingSelect()
-                .FirstOrDefaultAsync(g => g.Id == model.Group);
+                .FirstOrDefaultAsync(g => g.Id == model.GroupGuid);
 
             if (group is null)
                 return false;
@@ -222,7 +171,7 @@ namespace Data.Services.Implementations
             employee.EmployeeStartingDate = model.EmployeeStartingDate;
             employee.EmployeeEndingDate = model.EmployeeEndingDate;
             employee.PhoneNumber = model.PhoneNumber;
-            employee.GroupId = model.Group;
+            employee.GroupGuid = model.GroupGuid;
 
             // لا يتم تعديل كلمة المرور هنا.
 
@@ -271,13 +220,16 @@ namespace Data.Services.Implementations
             if (employee is null)
                 return false;
 
-            if (employee.Group!.GroupName ==
+            if (employee.Group?.GroupName ==
                 InitUserGroup.Administrator.ToString())
             {
                 return false;
             }
 
-            employee.EmployeeEndingDate ??= DateTime.UtcNow;
+            if (!employee.EmployeeEndingDate.HasValue)
+            {
+                employee.EmployeeEndingDate = DateTime.UtcNow;
+            }
 
             _unitOfWork.Employees.Delete(employee);
 

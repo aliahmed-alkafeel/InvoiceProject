@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.DTOs
+namespace Data.Configurations.DTOsConfigurations
 {
     public class ItemDtoConfiguration : BaseDtoConfiguration<ItemDto>
     {

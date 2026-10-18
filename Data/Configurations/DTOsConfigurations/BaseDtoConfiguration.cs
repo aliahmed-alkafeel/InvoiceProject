@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.DTOs
+namespace Data.Configurations.DTOsConfigurations
 {
     public abstract class BaseDtoConfiguration<T> : AbstractValidator<T> where T : BaseDto
     {
