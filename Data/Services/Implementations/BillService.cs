@@ -95,7 +95,7 @@ namespace Data.Services.Implementations
             return bill;
         }
 
-        public async Task<bool> CreateBillAsync(BillDto model)
+        public async Task<bool> CreateBillAsync(CreateBillDto model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات الفاتورة مطلوبة.");
@@ -127,7 +127,7 @@ namespace Data.Services.Implementations
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> UpdateBillAsync(BillDto model)
+        public async Task<bool> UpdateBillAsync(UpdateBillDto model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات الفاتورة مطلوبة.");

@@ -10,8 +10,8 @@ namespace Data.Services.Interfaces
     {
         Task<List<AccountsTreeDto>> GetAllAccountsAsync();
         Task<AccountsTreeDto> GetAccountByIdAsync(Guid id);
-        Task<bool> CreateAccountAsync(AccountsTreeDto model);
-        Task<bool> UpdateAccountAsync(AccountsTreeDto model);
+        Task<bool> CreateAccountAsync(CreateAccountsTreeDto model);
+        Task<bool> UpdateAccountAsync(UpdateAccountsTreeDto model);
         Task<bool> DeleteAccountAsync(Guid modelId);
     }
 }

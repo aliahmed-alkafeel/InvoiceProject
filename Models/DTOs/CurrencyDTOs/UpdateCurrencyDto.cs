@@ -1,0 +1,21 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Models.DTOs
+{
+    public class UpdateCurrencyDto : BaseDto
+    {
+        public string CurrencyName { get; set; }
+
+        public string CurrencySymbol { get; set; }
+
+        public decimal CurrencyEqual { get; set; }
+
+        public bool IsMain { get; set; }
+
+        public bool IsActive { get; set; } = true;
+    }
+}

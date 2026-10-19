@@ -22,7 +22,7 @@ namespace RestaurantManagement.Areas.Dashboard.Services
                     "وحدة العمل مطلوبة.");
         }
 
-        public async Task<bool> CreateGroupAsync(GroupDto model)
+        public async Task<bool> CreateGroupAsync(CreateGroupDto model)
         {
             if (model is null)
                 throw new ArgumentNullException(
@@ -51,7 +51,8 @@ namespace RestaurantManagement.Areas.Dashboard.Services
             var group = new Group
             {
                 Id = Guid.NewGuid(),
-                GroupName = model.GroupName
+                GroupName = model.GroupName,
+                Notes = model.Notes
             };
 
             foreach (var role in roles)
@@ -101,6 +102,24 @@ namespace RestaurantManagement.Areas.Dashboard.Services
             return groups.Select(ToDto).ToList();
         }
 
+        public async Task<List<RoleDto>> GetAllRolesAsync()
+        {
+            var roles = await _unitOfWork.Roles
+                .NoTrackingSelect()
+                .ToListAsync();
+
+            return roles
+                .GroupBy(r => r.RoleName)
+                .Select(g => g.First())
+                .Select(r => new RoleDto
+                {
+                    Id = r.Id,
+                    RoleName = r.RoleName,
+                    Notes = r.Notes
+                })
+                .ToList();
+        }
+
         public async Task<GroupDto> GetGroupByIdAsync(Guid id)
         {
             var group = await _unitOfWork.Groups
@@ -115,7 +134,7 @@ namespace RestaurantManagement.Areas.Dashboard.Services
             return ToDto(group);
         }
 
-        public async Task<bool> UpdateGroupAsync(GroupDto model)
+        public async Task<bool> UpdateGroupAsync(UpdateGroupDto model)
         {
             if (model is null)
                 throw new ArgumentNullException(
@@ -151,6 +170,7 @@ namespace RestaurantManagement.Areas.Dashboard.Services
                 return false;
 
             group.GroupName = model.GroupName;
+            group.Notes = model.Notes;
 
             var roleIds = (model.GroupRoles)
     .Select(gr => gr.RoleGuid)
@@ -193,28 +213,39 @@ namespace RestaurantManagement.Areas.Dashboard.Services
 
             _unitOfWork.Groups.Update(group);
 
-            return await _unitOfWork.SaveChangesAsync() > 0;
+            await _unitOfWork.SaveChangesAsync();
+
+            return true;
         }
         private static GroupDto ToDto(Group group)
         {
+            var groupRoles = group.GroupRoles
+                .Where(gr => !gr.IsDeleted)
+                .Select(gr => new GroupRoleDto
+                {
+                    Id = gr.Id,
+                    GroupGuid = gr.GroupGuid,
+                    RoleGuid = gr.RoleGuid,
+                    Role = gr.Role == null ? null : new RoleDto
+                    {
+                        Id = gr.Role.Id,
+                        RoleName = gr.Role.RoleName
+                    }
+                })
+                .ToList();
+
             return new GroupDto
             {
                 Id = group.Id,
                 GroupName = group.GroupName,
-                GroupRoles = group.GroupRoles
-                    .Where(gr => !gr.IsDeleted)
-                    .Select(gr => new GroupRoleDto
-                    {
-                        Id = gr.Id,
-                        GroupGuid = gr.GroupGuid,
-                        RoleGuid = gr.RoleGuid,
-                        Role = gr.Role == null ? null : new RoleDto
-                        {
-                            Id = gr.Role.Id,
-                            RoleName = gr.Role.RoleName
-                        }
-                    })
-                    .ToList()
+                Notes = group.Notes,
+                GroupRoles = groupRoles,
+                RolesText = string.Join(
+                    "، ",
+                    groupRoles
+                        .Where(gr => gr.Role != null)
+                        .Select(gr => gr.Role.RoleName.ToString())
+                        .Distinct())
             };
         }
     }

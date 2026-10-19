@@ -60,7 +60,7 @@ namespace Data.Services.Implementations
                 $"لم يتم العثور على المادة بالمعرّف '{id}'.");
         }
 
-        public async Task<bool> CreateItemAsync(ItemDto model)
+        public async Task<bool> CreateItemAsync(CreateItemDto model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات المادة مطلوبة.");
@@ -79,7 +79,7 @@ namespace Data.Services.Implementations
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> UpdateItemAsync(ItemDto model)
+        public async Task<bool> UpdateItemAsync(UpdateItemDto model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات المادة مطلوبة.");

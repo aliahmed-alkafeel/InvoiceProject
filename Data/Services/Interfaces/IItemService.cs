@@ -12,8 +12,8 @@ namespace Data.Services.Interfaces
     {
         Task<List<ItemDto>> GetAllItemsAsync();
         Task<ItemDto> GetItemByIdAsync(Guid id);
-        Task<bool> CreateItemAsync(ItemDto model);
-        Task<bool> UpdateItemAsync(ItemDto model);
+        Task<bool> CreateItemAsync(CreateItemDto model);
+        Task<bool> UpdateItemAsync(UpdateItemDto model);
         Task<bool> DeleteItemAsync(Guid modelId);
     }
 }

@@ -72,19 +72,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configurations\DTOsConfigurations\AccountsTreeDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\AccountsTreeDTOs\AccountsTreeDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\AccountsTreeDTOs\CreateAccountsTreeDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\AccountsTreeDTOs\UpdateAccountsTreeDtoConfiguration.cs" />
     <Compile Include="Configurations\DTOsConfigurations\BaseDtoConfiguration.cs" />
-    <Compile Include="Configurations\DTOsConfigurations\BillDtoConfiguration.cs" />
-    <Compile Include="Configurations\DTOsConfigurations\BillItemDtoConfiguration.cs" />
-    <Compile Include="Configurations\DTOsConfigurations\CategoryDtoConfiguration.cs" />
-    <Compile Include="Configurations\DTOsConfigurations\CreateVoucherDtoConfiguration.cs" />
-    <Compile Include="Configurations\DTOsConfigurations\CurrencyDtoConfiguration.cs" />
-    <Compile Include="Configurations\DTOsConfigurations\EmployeeDtoConfiguration.cs" />
-    <Compile Include="Configurations\DTOsConfigurations\GroupDtoConfiguration.cs" />
-    <Compile Include="Configurations\DTOsConfigurations\GroupRoleDtoConfiguration.cs" />
-    <Compile Include="Configurations\DTOsConfigurations\ItemDtoConfiguration.cs" />
-    <Compile Include="Configurations\DTOsConfigurations\RoleDtoConfiguration.cs" />
-    <Compile Include="Configurations\DTOsConfigurations\VoucherDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\BillDTOs\BillDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\BillDTOs\CreateBillDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\BillDTOs\UpdateBillDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\BillItemsDTOs\BillItemDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\BillItemsDTOs\CreateBillItemDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\BillItemsDTOs\UpdateBillItemDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\CategoryDTOs\CategoryDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\CategoryDTOs\CreateCategoryDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\CategoryDTOs\UpdateCategoryDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\CurrencyDTOs\CreateCurrencyDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\CurrencyDTOs\CurrencyDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\CurrencyDTOs\UpdateCurrencyDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\EmployeeDTOs\CreateEmployeeDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\EmployeeDTOs\EmployeeDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\EmployeeDTOs\UpdateEmployeeDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\GroupDTOs\CreateGroupDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\GroupDTOs\GroupDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\GroupDTOs\UpdateGroupDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\GroupRoleDTOs\CreateGroupRoleDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\GroupRoleDTOs\GroupRoleDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\GroupRoleDTOs\UpdateGroupRoleDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\ItemDTOs\CreateItemDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\ItemDTOs\ItemDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\ItemDTOs\UpdateItemDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\RoleDTOs\CreateRoleDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\RoleDTOs\RoleDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\RoleDTOs\UpdateRoleDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\VouchersDTOs\CreateVoucherDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\VouchersDTOs\UpdateVoucherDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\VouchersDTOs\VoucherDtoConfiguration.cs" />
     <Compile Include="Configurations\EntitiesConfigurations\AccountsTreeConfigration.cs" />
     <Compile Include="Configurations\EntitiesConfigurations\BillConfiguration.cs" />
     <Compile Include="Configurations\EntitiesConfigurations\BillItemsConfiguration.cs" />
@@ -128,9 +149,6 @@
     <Compile Include="Services\Interfaces\IVoucherService.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Configurations\DTOsConfigurations\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

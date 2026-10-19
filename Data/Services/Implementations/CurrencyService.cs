@@ -58,7 +58,7 @@ namespace Data.Services.Implementations
                 $"لم يتم العثور على العملة بالمعرّف '{id}'.");
         }
 
-        public async Task<bool> CreateCurrencyAsync(CurrencyDto model)
+        public async Task<bool> CreateCurrencyAsync(CreateCurrencyDto model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات العملة مطلوبة.");
@@ -78,7 +78,7 @@ namespace Data.Services.Implementations
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> UpdateCurrencyAsync(CurrencyDto model)
+        public async Task<bool> UpdateCurrencyAsync(UpdateCurrencyDto model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات العملة مطلوبة.");

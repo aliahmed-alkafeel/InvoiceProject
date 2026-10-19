@@ -80,7 +80,7 @@ namespace Data.Services.Implementations
 
 
         public async Task<bool> CreateEmployeeAsync(
-            EmployeeDto model)
+            CreateEmployeeDto model)
         {
             if (model is null)
             {
@@ -125,7 +125,7 @@ namespace Data.Services.Implementations
         }
 
         public async Task<bool> UpdateEmployeeAsync(
-            EmployeeDto model)
+            UpdateEmployeeDto model)
         {
             if (model is null)
             {

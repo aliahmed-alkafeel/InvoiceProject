@@ -59,7 +59,7 @@ namespace Data.Services.Implementations
                 $"لم يتم العثور على الحساب بالمعرّف '{id}'.");
         }
 
-        public async Task<bool> CreateAccountAsync(AccountsTreeDto model)
+        public async Task<bool> CreateAccountAsync(CreateAccountsTreeDto model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات الحساب مطلوبة.");
@@ -79,7 +79,7 @@ namespace Data.Services.Implementations
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> UpdateAccountAsync(AccountsTreeDto model)
+        public async Task<bool> UpdateAccountAsync(UpdateAccountsTreeDto model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات الحساب مطلوبة.");

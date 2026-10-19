@@ -12,7 +12,7 @@ namespace Data.Services.Interfaces
         Task<List<VoucherDto>> GetAllVouchersAsync();
         Task<VoucherDto> GetVoucherByIdAsync(Guid id);
         Task<bool> CreateVoucherAsync(CreateVoucherDto model);
-        Task<bool> UpdateVoucherAsync(VoucherDto model);
+        Task<bool> UpdateVoucherAsync(UpdateVoucherDto model);
         Task<bool> DeleteVoucherAsync(Guid modelId);
     }
 }

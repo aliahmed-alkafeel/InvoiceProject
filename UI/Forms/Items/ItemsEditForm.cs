@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using UI.Extentions;
+using UI.Extensions;
 
 namespace UI.Forms.Items
 {
@@ -34,22 +34,24 @@ namespace UI.Forms.Items
 
         private async void SaveCancelControl_SaveClicked()
         {
-                var newItem = new ItemDto()
+            if(!isEdit)
+            {
+                var newItem = new CreateItemDto()
                 {
-                    Id = isEdit ? _selectedItem.Id : Guid.NewGuid(),
+                    Id = Guid.NewGuid(),
                     Name = txtName.Text,
                     Price = string.IsNullOrWhiteSpace(spnPrice.Text) ? (decimal?)null : Convert.ToDecimal(spnPrice.EditValue),
                     CategoryGuid = cmbCategories.EditValue is Guid categoryId ? categoryId : Guid.Empty,
                     IsActive = chkIsActive.Checked,
-                Notes = txtNotes.Text
+                    Notes = txtNotes.Text
                 };
-                if (!ValidationHelper.IsValid(new ItemDtoConfiguration(), newItem, out var errors))
+
+                if (!ValidationHelper.IsValid(new CreateItemDtoConfiguration(), newItem, out var errors))
                 {
                     XtraMessageBox.Show(errors);
                     return;
                 }
-            if(!isEdit)
-            {
+
                 var result = await _itemsService.CreateItemAsync(newItem);
                 if(result)
                 {
@@ -64,6 +66,22 @@ namespace UI.Forms.Items
             }
             else
             {
+                var newItem = new UpdateItemDto()
+                {
+                    Id = _selectedItem.Id,
+                    Name = txtName.Text,
+                    Price = string.IsNullOrWhiteSpace(spnPrice.Text) ? (decimal?)null : Convert.ToDecimal(spnPrice.EditValue),
+                    CategoryGuid = cmbCategories.EditValue is Guid categoryId ? categoryId : Guid.Empty,
+                    IsActive = chkIsActive.Checked,
+                    Notes = txtNotes.Text
+                };
+
+                if (!ValidationHelper.IsValid(new UpdateItemDtoConfiguration(), newItem, out var errors))
+                {
+                    XtraMessageBox.Show(errors);
+                    return;
+                }
+
                 var result = await _itemsService.UpdateItemAsync(newItem);
                 if (result)
                 {

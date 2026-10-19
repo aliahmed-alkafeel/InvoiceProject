@@ -9,7 +9,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using UI.Extentions;
+using UI.Extensions;
 
 namespace UI.Forms.Vouchers
 {
@@ -35,7 +35,7 @@ namespace UI.Forms.Vouchers
 
         private async void SaveCancelControl_SaveClicked()
         {
-            var newVoucher = new VoucherDto()
+            var newVoucher = new UpdateVoucherDto()
             {
                 Id = _selectedVoucher.Id,
 
@@ -65,7 +65,7 @@ namespace UI.Forms.Vouchers
             };
 
             if (!ValidationHelper.IsValid(
-                new VoucherDtoConfiguration(),
+                new UpdateVoucherDtoConfiguration(),
                 newVoucher,
                 out var errors))
             {
@@ -180,18 +180,6 @@ namespace UI.Forms.Vouchers
             spnAmount.EditValue = voucher.Amount;
             cmbVoucherTypes.EditValue = voucher.VoucherType;
             txtNotes.Text = voucher.Notes;
-        }
-        private void ClearDetails()
-        {
-            txtVoucherNumber.Text = string.Empty;
-
-            dateEditVoucherDate.EditValue = DateTime.Now;
-
-            cmbAccounts.EditValue = null;
-
-            spnAmount.Text = string.Empty;
-
-            txtNotes.Text = string.Empty;
         }
     }
 }

@@ -13,8 +13,6 @@ namespace Models.DTOs
         public VoucherType? VoucherType { get; set; }
         public decimal? Amount { get; set; }
         public Guid CurrencyGuid { get; set; }
-        public AccountsTreeDto AccountTree { get; set; }
-        public CurrencyDto Currency { get; set; }
     }
 }
 

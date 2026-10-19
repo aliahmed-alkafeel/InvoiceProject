@@ -24,7 +24,9 @@ namespace Models.DTOs
         public decimal CurrencyEqualValue { get; set; }
 
         public DateTime Date { get; set; }
+
         public AccountsTreeDto AccountTree { get; set; }
+
         public CurrencyDto Currency { get; set; }
     }
 

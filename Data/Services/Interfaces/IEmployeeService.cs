@@ -9,8 +9,8 @@ namespace Data.Services.Interfaces
     {
         Task<List<EmployeeDto>> GetAllEmployeesAsync();
         Task<EmployeeDto> GetEmployeeByIdAsync(Guid id);
-        Task<bool> CreateEmployeeAsync(EmployeeDto model);
-        Task<bool> UpdateEmployeeAsync(EmployeeDto model);
+        Task<bool> CreateEmployeeAsync(CreateEmployeeDto model);
+        Task<bool> UpdateEmployeeAsync(UpdateEmployeeDto model);
         Task<bool> DeleteEmployeeAsync(Guid id);
     }
 }

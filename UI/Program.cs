@@ -13,7 +13,7 @@ using RestaurantManagement.Areas.Dashboard.Services;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using UI.Extentions;
+using UI.Extensions;
 using UI.Forms;
 using UI.Forms.AccountsTree;
 using UI.Forms.Bills;

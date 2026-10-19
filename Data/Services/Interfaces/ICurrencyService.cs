@@ -11,8 +11,8 @@ namespace Data.Services.Interfaces
     {
         Task<List<CurrencyDto>> GetAllCurrenciesAsync();
         Task<CurrencyDto> GetCurrencyByIdAsync(Guid id);
-        Task<bool> CreateCurrencyAsync(CurrencyDto model);
-        Task<bool> UpdateCurrencyAsync(CurrencyDto model);
+        Task<bool> CreateCurrencyAsync(CreateCurrencyDto model);
+        Task<bool> UpdateCurrencyAsync(UpdateCurrencyDto model);
         Task<bool> DeleteCurrencyAsync(Guid modelId);
     }
 }

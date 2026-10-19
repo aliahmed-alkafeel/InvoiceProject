@@ -42,6 +42,7 @@
             this.vouchersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.invoiceDbDataSet2 = new UI.InvoiceDbDataSet2();
             this.vouchersTableAdapter = new UI.InvoiceDbDataSet2TableAdapters.VouchersTableAdapter();
+            this.CurrencyType = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vouchersBindingSource)).BeginInit();
@@ -77,7 +78,8 @@
             this.colAmount,
             this.colCurrencyEqualValue,
             this.colDate,
-            this.colNotes});
+            this.colNotes,
+            this.CurrencyType});
             this.gridView1.GridControl = this.gridControl1;
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsBehavior.Editable = false;
@@ -115,7 +117,7 @@
             this.colAmount.FieldName = "Amount";
             this.colAmount.Name = "colAmount";
             this.colAmount.Visible = true;
-            this.colAmount.VisibleIndex = 3;
+            this.colAmount.VisibleIndex = 4;
             this.colAmount.Width = 74;
             // 
             // colCurrencyEqualValue
@@ -124,7 +126,7 @@
             this.colCurrencyEqualValue.FieldName = "CurrencyEqualValue";
             this.colCurrencyEqualValue.Name = "colCurrencyEqualValue";
             this.colCurrencyEqualValue.Visible = true;
-            this.colCurrencyEqualValue.VisibleIndex = 4;
+            this.colCurrencyEqualValue.VisibleIndex = 5;
             this.colCurrencyEqualValue.Width = 183;
             // 
             // colDate
@@ -133,7 +135,7 @@
             this.colDate.FieldName = "Date";
             this.colDate.Name = "colDate";
             this.colDate.Visible = true;
-            this.colDate.VisibleIndex = 5;
+            this.colDate.VisibleIndex = 6;
             this.colDate.Width = 105;
             // 
             // colNotes
@@ -142,7 +144,7 @@
             this.colNotes.FieldName = "Notes";
             this.colNotes.Name = "colNotes";
             this.colNotes.Visible = true;
-            this.colNotes.VisibleIndex = 6;
+            this.colNotes.VisibleIndex = 7;
             this.colNotes.Width = 271;
             // 
             // vouchersBindingSource
@@ -158,6 +160,14 @@
             // vouchersTableAdapter
             // 
             this.vouchersTableAdapter.ClearBeforeFill = true;
+            // 
+            // CurrencyType
+            // 
+            this.CurrencyType.Caption = "نوع العملة";
+            this.CurrencyType.FieldName = "Currency.CurrencyName";
+            this.CurrencyType.Name = "CurrencyType";
+            this.CurrencyType.Visible = true;
+            this.CurrencyType.VisibleIndex = 3;
             // 
             // VouchersForm
             // 
@@ -191,5 +201,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn colCurrencyEqualValue;
         private DevExpress.XtraGrid.Columns.GridColumn colDate;
         private DevExpress.XtraGrid.Columns.GridColumn colNotes;
+        private DevExpress.XtraGrid.Columns.GridColumn CurrencyType;
     }
 }

@@ -16,7 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using UI.Extentions;
+using UI.Extensions;
 
 namespace UI.Forms.Categories
 {
@@ -37,20 +37,22 @@ namespace UI.Forms.Categories
 
         private async void SaveCancelControl_SaveClicked()
         {
-            var newCategory = new CategoryDto()
-            {
-                Id = isEdit ? _selectedCategory.Id : Guid.NewGuid(),
-                Name = txtName.Text,
-                IsActive = chkIsActive.Checked,
-                Notes = txtNotes.Text
-            };
-            if (!ValidationHelper.IsValid(new CategoryDtoConfiguration(), newCategory, out var errors))
-            {
-                XtraMessageBox.Show(errors);
-                return;
-            }
             if (!isEdit)
             {
+                var newCategory = new CreateCategoryDto()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = txtName.Text,
+                    IsActive = chkIsActive.Checked,
+                    Notes = txtNotes.Text
+                };
+
+                if (!ValidationHelper.IsValid(new CreateCategoryDtoConfiguration(), newCategory, out var errors))
+                {
+                    XtraMessageBox.Show(errors);
+                    return;
+                }
+
                 var result = await _categoryService.CreateCategoryAsync(newCategory);
                 if (result)
                 {
@@ -65,6 +67,20 @@ namespace UI.Forms.Categories
             }
             else
             {
+                var newCategory = new UpdateCategoryDto()
+                {
+                    Id = _selectedCategory.Id,
+                    Name = txtName.Text,
+                    IsActive = chkIsActive.Checked,
+                    Notes = txtNotes.Text
+                };
+
+                if (!ValidationHelper.IsValid(new UpdateCategoryDtoConfiguration(), newCategory, out var errors))
+                {
+                    XtraMessageBox.Show(errors);
+                    return;
+                }
+
                 var result = await _categoryService.UpdateCategoryAsync(newCategory);
                 if (result)
                 {

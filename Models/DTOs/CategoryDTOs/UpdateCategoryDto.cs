@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.DTOs
 {
-    public class UpdateCategoryDto
+    public class UpdateCategoryDto : BaseDto
     {
         public string Name { get; set; }
         public bool IsActive { get; set; } = true;

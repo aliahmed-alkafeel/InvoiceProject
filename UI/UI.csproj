@@ -161,8 +161,8 @@
     <Compile Include="Forms\Employees\EmployeesForm.Designer.cs">
       <DependentUpon>EmployeesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extentions\GlobalExceptionHandler.cs" />
-    <Compile Include="Extentions\ValidationHelper.cs" />
+    <Compile Include="Extensions\GlobalExceptionHandler.cs" />
+    <Compile Include="Extensions\ValidationHelper.cs" />
     <Compile Include="Forms\Employees\EmployeesManageForm.cs">
       <SubType>Form</SubType>
     </Compile>

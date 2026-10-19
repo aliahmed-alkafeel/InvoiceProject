@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace UI.Extentions
+namespace UI.Extensions
 {
     public static class GlobalExceptionHandler
     {

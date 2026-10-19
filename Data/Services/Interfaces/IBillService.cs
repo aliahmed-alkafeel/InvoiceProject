@@ -10,8 +10,8 @@ namespace Data.Services.Interfaces
     {
         Task<List<BillDto>> GetAllBillsAsync();
         Task<BillDto> GetBillByIdAsync(Guid id);
-        Task<bool> CreateBillAsync(BillDto model);
-        Task<bool> UpdateBillAsync(BillDto model);
+        Task<bool> CreateBillAsync(CreateBillDto model);
+        Task<bool> UpdateBillAsync(UpdateBillDto model);
         Task<bool> DeleteBillAsync(Guid modelId);
     }
 }

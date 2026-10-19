@@ -9,8 +9,9 @@ namespace Data.Services.Interfaces
     {
         Task<List<GroupDto>> GetAllGroupsAsync();
         Task<GroupDto> GetGroupByIdAsync(Guid id);
-        Task<bool> CreateGroupAsync(GroupDto model);
-        Task<bool> UpdateGroupAsync(GroupDto model);
+        Task<List<RoleDto>> GetAllRolesAsync();
+        Task<bool> CreateGroupAsync(CreateGroupDto model);
+        Task<bool> UpdateGroupAsync(UpdateGroupDto model);
         Task<bool> DeleteGroupAsync(Guid modelId);
     }
 }

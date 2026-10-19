@@ -9,8 +9,8 @@ namespace Data.Services.Interfaces
     {
         Task<List<CategoryDto>> GetAllCategoriesAsync();
         Task<CategoryDto> GetCategoryByIdAsync(Guid id);
-        Task<bool> CreateCategoryAsync(CategoryDto model);
-        Task<bool> UpdateCategoryAsync(CategoryDto model);
+        Task<bool> CreateCategoryAsync(CreateCategoryDto model);
+        Task<bool> UpdateCategoryAsync(UpdateCategoryDto model);
         Task<bool> DeleteCategoryAsync(Guid modelId);
     }
 }

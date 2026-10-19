@@ -111,7 +111,7 @@ namespace Data.Services.Implementations
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> UpdateVoucherAsync(VoucherDto model)
+        public async Task<bool> UpdateVoucherAsync(UpdateVoucherDto model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات السند مطلوبة.");
@@ -125,9 +125,9 @@ namespace Data.Services.Implementations
                     $"لم يتم العثور على السند بالمعرّف '{model.Id}'.");
 
             voucher.VoucherNumber = model.VoucherNumber;
-            voucher.VoucherType = model.VoucherType;
-            voucher.AccountTreeGuid = model.AccountTreeGuid;
-            voucher.Amount = model.Amount;
+            voucher.VoucherType = model.VoucherType.Value;
+            voucher.AccountTreeGuid = model.AccountTreeGuid.Value;
+            voucher.Amount = model.Amount.Value;
             voucher.CurrencyGuid = model.CurrencyGuid;
             voucher.CurrencyEqualValue = model.CurrencyEqualValue;
             voucher.Date = model.Date;

@@ -51,7 +51,7 @@ namespace Data.Services.Implementations
                 $"لم يتم العثور على التصنيف بالمعرّف '{id}'.");
         }
 
-        public async Task<bool> CreateCategoryAsync(CategoryDto model)
+        public async Task<bool> CreateCategoryAsync(CreateCategoryDto model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات التصنيف مطلوبة.");
@@ -68,7 +68,7 @@ namespace Data.Services.Implementations
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> UpdateCategoryAsync(CategoryDto model)
+        public async Task<bool> UpdateCategoryAsync(UpdateCategoryDto model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات التصنيف مطلوبة.");

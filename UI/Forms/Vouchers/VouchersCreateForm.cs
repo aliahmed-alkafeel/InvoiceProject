@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using UI.Extentions;
+using UI.Extensions;
 
 namespace UI.Forms.Vouchers
 {
@@ -158,16 +158,6 @@ namespace UI.Forms.Vouchers
                 .AddVisible("CurrencyName", "العملة");
             cmbCurrencies.EditValue = null;
         }
-        private void ClearDetails()
-        {
-
-            cmbAccounts.EditValue = null;
-
-            spnAmount.Text = string.Empty;
-
-            txtNotes.Text = string.Empty;
-        }
-
         private async void VouchersCreateFormAsync_Load(object sender, EventArgs e)
         {
             await LoadVoucherDetailsAsync(_selectedVoucher);
