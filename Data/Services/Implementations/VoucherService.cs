@@ -1,10 +1,12 @@
-﻿using Data.Services.Interfaces;
+﻿using Data.Repositories.Interfaces;
+using Data.Services.Interfaces;
 using Data.UnitOfWork;
 using Models.DTOs;
 using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,20 +77,32 @@ namespace Data.Services.Implementations
                 $"لم يتم العثور على السند بالمعرّف '{id}'.");
         }
 
-        public async Task<bool> CreateVoucherAsync(VoucherDto model)
+        public async Task<bool> CreateVoucherAsync(CreateVoucherDto model)
         {
             if (model == null)
-                throw new ArgumentNullException(nameof(model), "بيانات السند مطلوبة.");
+                throw new ArgumentNullException(nameof(model), "بيانات السند مطلوبة");
+            var currency = await _unitOfWork.Currencies
+                          .Select()
+                          .FirstOrDefaultAsync(c => c.Id == model.CurrencyGuid);
 
+            if (currency == null)
+                throw new InvalidOperationException("العملة المحددة غير موجودة");
+
+            if (currency.CurrencyEqual <= 0)
+                throw new InvalidOperationException(
+                    "قيمة تحويل العملة يجب أن تكون أكبر من صفر");
+            var voucherNumber = await GenerateVoucherNumberAsync(
+            model.VoucherType.ToString(),
+            DateTime.Now.Year);
             var voucher = new Voucher
             {
-                VoucherNumber = model.VoucherNumber,
-                VoucherType = model.VoucherType,
-                AccountTreeGuid = model.AccountTreeGuid,
-                Amount = model.Amount,
+                VoucherNumber = voucherNumber,
+                VoucherType = model.VoucherType.Value,
+                AccountTreeGuid = model.AccountTreeGuid.Value,
+                Amount = model.Amount.Value,
                 CurrencyGuid = model.CurrencyGuid,
-                CurrencyEqualValue = model.CurrencyEqualValue,
-                Date = model.Date,
+                CurrencyEqualValue = currency.CurrencyEqual,
+                Date = DateTime.Now,
                 Notes = model.Notes
             };
 
@@ -137,6 +151,48 @@ namespace Data.Services.Implementations
             _unitOfWork.Vouchers.Delete(voucher);
 
             return await _unitOfWork.SaveChangesAsync() > 0;
+        }
+        private async Task<string> GenerateVoucherNumberAsync(
+    string voucherType,
+    int year)
+        {
+            if (string.IsNullOrWhiteSpace(voucherType))
+                throw new ArgumentException(
+                    "نوع السند مطلوب.",
+                    nameof(voucherType));
+
+            voucherType = voucherType.Trim().ToUpperInvariant();
+
+            var prefix = $"{voucherType}-{year}-";
+
+
+            var lastVoucherNumber = await _unitOfWork.Vouchers
+                .Select(DeletedStatus.All)
+                .Where(v => v.VoucherNumber.StartsWith(prefix))
+                .OrderByDescending(v => v.VoucherNumber)
+                .Select(v => v.VoucherNumber)
+                .FirstOrDefaultAsync();
+
+            var lastSequence = 0;
+
+            if (!string.IsNullOrEmpty(lastVoucherNumber))
+            {
+                var sequencePart = lastVoucherNumber.Substring(prefix.Length);
+
+                if (!int.TryParse(
+                        sequencePart,
+                        NumberStyles.None,
+                        CultureInfo.InvariantCulture,
+                        out lastSequence))
+                {
+                    throw new InvalidOperationException(
+                        $"رقم السند غير صالح: {lastVoucherNumber}");
+                }
+            }
+
+            var nextSequence = lastSequence + 1;
+
+            return $"{prefix}{nextSequence:D6}";
         }
     }
 }

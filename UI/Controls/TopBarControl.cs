@@ -115,14 +115,12 @@ namespace UI.Base.TopBar
             if (element == null || element == _activeElement)
                 return;
 
-            // رجّع الزر السابق لشكله الطبيعي
             if (_activeElement != null)
             {
                 _activeElement.Appearance.BackColor = Color.Empty;
                 _activeElement.Appearance.Options.UseBackColor = false;
             }
 
-            // غمّق الزر الحالي
             element.Appearance.BackColor = ActiveBackColor;
             element.Appearance.Options.UseBackColor = true;
 

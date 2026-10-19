@@ -33,7 +33,7 @@
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
-            this.spnPrice = new DevExpress.XtraEditors.SpinEdit();
+            this.spnAmount = new DevExpress.XtraEditors.SpinEdit();
             this.lblTitle = new DevExpress.XtraEditors.LabelControl();
             this.cmbAccounts = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -44,11 +44,18 @@
             this.txtNotes = new System.Windows.Forms.RichTextBox();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.saveCancelControl21 = new UI.Controls.SaveCancelControl2();
+            this.cmbCurrencies = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.cmbVoucherTypes.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spnPrice.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spnAmount.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbAccounts.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCurrencies.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // cmbVoucherTypes
@@ -95,19 +102,19 @@
             this.labelControl6.TabIndex = 97;
             this.labelControl6.Text = ":نوع السند";
             // 
-            // spnPrice
+            // spnAmount
             // 
-            this.spnPrice.EditValue = new decimal(new int[] {
+            this.spnAmount.EditValue = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            this.spnPrice.Location = new System.Drawing.Point(149, 162);
-            this.spnPrice.Name = "spnPrice";
-            this.spnPrice.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.spnAmount.Location = new System.Drawing.Point(147, 193);
+            this.spnAmount.Name = "spnAmount";
+            this.spnAmount.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.spnPrice.Size = new System.Drawing.Size(89, 20);
-            this.spnPrice.TabIndex = 94;
+            this.spnAmount.Size = new System.Drawing.Size(91, 20);
+            this.spnAmount.TabIndex = 94;
             // 
             // lblTitle
             // 
@@ -115,9 +122,9 @@
             this.lblTitle.Appearance.Options.UseFont = true;
             this.lblTitle.Location = new System.Drawing.Point(147, 30);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(86, 27);
+            this.lblTitle.Size = new System.Drawing.Size(79, 27);
             this.lblTitle.TabIndex = 93;
-            this.lblTitle.Text = "اضافة منتج";
+            this.lblTitle.Text = "اضافة سند";
             // 
             // cmbAccounts
             // 
@@ -157,7 +164,7 @@
             // 
             this.labelControl5.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelControl5.Appearance.Options.UseFont = true;
-            this.labelControl5.Location = new System.Drawing.Point(255, 209);
+            this.labelControl5.Location = new System.Drawing.Point(255, 240);
             this.labelControl5.Name = "labelControl5";
             this.labelControl5.Size = new System.Drawing.Size(65, 17);
             this.labelControl5.TabIndex = 91;
@@ -175,7 +182,7 @@
             // 
             // txtNotes
             // 
-            this.txtNotes.Location = new System.Drawing.Point(55, 206);
+            this.txtNotes.Location = new System.Drawing.Point(55, 237);
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.Size = new System.Drawing.Size(194, 59);
             this.txtNotes.TabIndex = 87;
@@ -185,28 +192,74 @@
             // 
             this.labelControl3.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelControl3.Appearance.Options.UseFont = true;
-            this.labelControl3.Location = new System.Drawing.Point(255, 166);
+            this.labelControl3.Location = new System.Drawing.Point(255, 197);
             this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Size = new System.Drawing.Size(41, 17);
+            this.labelControl3.Size = new System.Drawing.Size(39, 17);
             this.labelControl3.TabIndex = 86;
-            this.labelControl3.Text = ":الكمية";
+            this.labelControl3.Text = ":المبلغ";
             // 
             // saveCancelControl21
             // 
-            this.saveCancelControl21.Location = new System.Drawing.Point(104, 285);
+            this.saveCancelControl21.Location = new System.Drawing.Point(104, 316);
             this.saveCancelControl21.Name = "saveCancelControl21";
             this.saveCancelControl21.SaveText = "اضافة";
             this.saveCancelControl21.Size = new System.Drawing.Size(191, 45);
             this.saveCancelControl21.TabIndex = 85;
             // 
+            // cmbCurrencies
+            // 
+            this.cmbCurrencies.Location = new System.Drawing.Point(55, 157);
+            this.cmbCurrencies.Name = "cmbCurrencies";
+            this.cmbCurrencies.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbCurrencies.Properties.PopupView = this.gridView2;
+            this.cmbCurrencies.Size = new System.Drawing.Size(183, 20);
+            this.cmbCurrencies.TabIndex = 100;
+            // 
+            // gridView2
+            // 
+            this.gridView2.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn3,
+            this.gridColumn4});
+            this.gridView2.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridView2.Name = "gridView2";
+            this.gridView2.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridView2.OptionsView.ShowGroupPanel = false;
+            // 
+            // gridColumn3
+            // 
+            this.gridColumn3.Caption = "اسم الفئة";
+            this.gridColumn3.FieldName = "Name";
+            this.gridColumn3.Name = "gridColumn3";
+            this.gridColumn3.Visible = true;
+            this.gridColumn3.VisibleIndex = 0;
+            // 
+            // gridColumn4
+            // 
+            this.gridColumn4.Caption = "gridColumn1";
+            this.gridColumn4.FieldName = "Id";
+            this.gridColumn4.Name = "gridColumn4";
+            // 
+            // labelControl1
+            // 
+            this.labelControl1.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.labelControl1.Appearance.Options.UseFont = true;
+            this.labelControl1.Location = new System.Drawing.Point(255, 160);
+            this.labelControl1.Name = "labelControl1";
+            this.labelControl1.Size = new System.Drawing.Size(41, 17);
+            this.labelControl1.TabIndex = 99;
+            this.labelControl1.Text = ":العملة";
+            // 
             // VouchersCreateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(396, 347);
+            this.ClientSize = new System.Drawing.Size(391, 402);
+            this.Controls.Add(this.cmbCurrencies);
+            this.Controls.Add(this.labelControl1);
             this.Controls.Add(this.cmbVoucherTypes);
             this.Controls.Add(this.labelControl6);
-            this.Controls.Add(this.spnPrice);
+            this.Controls.Add(this.spnAmount);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.cmbAccounts);
             this.Controls.Add(this.labelControl5);
@@ -215,12 +268,15 @@
             this.Controls.Add(this.labelControl3);
             this.Controls.Add(this.saveCancelControl21);
             this.Name = "VouchersCreateForm";
-            this.Text = "VouchersCreateForm";
+            this.Text = "اضافة سند";
+            this.Load += new System.EventHandler(this.VouchersCreateFormAsync_Load);
             ((System.ComponentModel.ISupportInitialize)(this.cmbVoucherTypes.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spnPrice.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spnAmount.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbAccounts.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCurrencies.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -233,7 +289,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
         private DevExpress.XtraEditors.LabelControl labelControl6;
-        private DevExpress.XtraEditors.SpinEdit spnPrice;
+        private DevExpress.XtraEditors.SpinEdit spnAmount;
         private DevExpress.XtraEditors.LabelControl lblTitle;
         private DevExpress.XtraEditors.SearchLookUpEdit cmbAccounts;
         private DevExpress.XtraGrid.Views.Grid.GridView searchLookUpEdit1View;
@@ -244,5 +300,10 @@
         private System.Windows.Forms.RichTextBox txtNotes;
         private DevExpress.XtraEditors.LabelControl labelControl3;
         private Controls.SaveCancelControl2 saveCancelControl21;
+        private DevExpress.XtraEditors.SearchLookUpEdit cmbCurrencies;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
+        private DevExpress.XtraEditors.LabelControl labelControl1;
     }
 }

@@ -80,6 +80,7 @@
             this.colNotes});
             this.gridView1.GridControl = this.gridControl1;
             this.gridView1.Name = "gridView1";
+            this.gridView1.OptionsBehavior.Editable = false;
             // 
             // colAccountTree
             // 
@@ -110,7 +111,7 @@
             // 
             // colAmount
             // 
-            this.colAmount.Caption = "الكمية";
+            this.colAmount.Caption = "المبلغ";
             this.colAmount.FieldName = "Amount";
             this.colAmount.Name = "colAmount";
             this.colAmount.Visible = true;
@@ -166,7 +167,7 @@
             this.Controls.Add(this.gridControl1);
             this.Controls.Add(this.toolBarControl1);
             this.Name = "VouchersForm";
-            this.Text = "VouchersForm";
+            this.Text = "السندات";
             this.Load += new System.EventHandler(this.VouchersForm_LoadAsync);
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();

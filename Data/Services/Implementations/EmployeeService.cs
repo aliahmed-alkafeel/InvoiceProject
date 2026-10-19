@@ -119,8 +119,6 @@ namespace Data.Services.Implementations
                 GroupGuid = model.GroupGuid
             };
 
-            // لا تتم معالجة كلمة المرور في هذه الخدمة.
-
              _unitOfWork.Employees.Add(employee);
 
             return await _unitOfWork.SaveChangesAsync() > 0;
@@ -173,7 +171,6 @@ namespace Data.Services.Implementations
             employee.PhoneNumber = model.PhoneNumber;
             employee.GroupGuid = model.GroupGuid;
 
-            // لا يتم تعديل كلمة المرور هنا.
 
             _unitOfWork.Employees.Update(employee);
 

@@ -17,13 +17,14 @@ namespace UI.Forms.Vouchers
     {
         private readonly IVoucherService _voucherService;
         private readonly IAccountsTreeService _accountsTreeService;
+        private readonly ICurrencyService _currencyService;
         private VoucherDto _selectedVoucher;
         public VouchersManageForm(
-            IVoucherService vouchersService, IAccountsTreeService accountsTreeService,
+            IVoucherService vouchersService, IAccountsTreeService accountsTreeService, ICurrencyService currencyService,
             VoucherDto selectedVoucher = null)
         {
             InitializeComponent();
-
+            _currencyService = currencyService;
             _voucherService = vouchersService;
             _accountsTreeService = accountsTreeService;
             _selectedVoucher = selectedVoucher;
@@ -36,7 +37,31 @@ namespace UI.Forms.Vouchers
         {
             var newVoucher = new VoucherDto()
             {
-                Id =_selectedVoucher.Id
+                Id = _selectedVoucher.Id,
+
+                AccountTreeGuid = cmbAccounts.EditValue == null
+            ? Guid.Empty
+            : (Guid)cmbAccounts.EditValue,
+
+                VoucherNumber = txtVoucherNumber.EditValue == null ? "" : txtVoucherNumber.EditValue.ToString(),
+
+                Amount = spnAmount.EditValue == null
+            ? 0m
+            : Convert.ToDecimal(spnAmount.EditValue),
+
+                VoucherType = cmbVoucherTypes.EditValue == null
+            ? default(VoucherType)
+            : (VoucherType)cmbVoucherTypes.EditValue,
+
+                CurrencyGuid = cmbCurrencies.EditValue == null
+            ? Guid.Empty
+            : (Guid)cmbCurrencies.EditValue,
+
+                CurrencyEqualValue = _selectedVoucher.CurrencyEqualValue,
+
+                Date = _selectedVoucher.Date,
+
+                Notes = txtNotes.Text
             };
 
             if (!ValidationHelper.IsValid(
@@ -108,6 +133,24 @@ namespace UI.Forms.Vouchers
 
             cmbAccounts.EditValue = null;
 
+            var currencies = (await _currencyService.GetAllCurrenciesAsync())
+         .Select(a => new
+         {
+             a.Id,
+             a.CurrencyName
+         })
+         .ToList();
+
+            cmbCurrencies.Properties.DataSource = currencies;
+            cmbCurrencies.Properties.DisplayMember = "CurrencyName";
+            cmbCurrencies.Properties.ValueMember = "Id";
+            cmbCurrencies.Properties.NullText = "اختر العملة";
+
+            cmbCurrencies.Properties.View.Columns.Clear();
+            cmbCurrencies.Properties.View.Columns
+                .AddVisible("CurrencyName", "العملة");
+            cmbCurrencies.EditValue = null;
+
             var voucherTypes = Enum.GetValues(typeof(VoucherType))
                 .Cast<VoucherType>()
                 .Select(type => new
@@ -133,7 +176,6 @@ namespace UI.Forms.Vouchers
             dateEditVoucherDate.EditValue = voucher.Date;
 
             cmbAccounts.EditValue = voucher.AccountTreeGuid;
-            spnCurrencyEqVal.EditValue = voucher.CurrencyEqualValue;
 
             spnAmount.EditValue = voucher.Amount;
             cmbVoucherTypes.EditValue = voucher.VoucherType;

@@ -77,6 +77,7 @@
     <Compile Include="Configurations\DTOsConfigurations\BillDtoConfiguration.cs" />
     <Compile Include="Configurations\DTOsConfigurations\BillItemDtoConfiguration.cs" />
     <Compile Include="Configurations\DTOsConfigurations\CategoryDtoConfiguration.cs" />
+    <Compile Include="Configurations\DTOsConfigurations\CreateVoucherDtoConfiguration.cs" />
     <Compile Include="Configurations\DTOsConfigurations\CurrencyDtoConfiguration.cs" />
     <Compile Include="Configurations\DTOsConfigurations\EmployeeDtoConfiguration.cs" />
     <Compile Include="Configurations\DTOsConfigurations\GroupDtoConfiguration.cs" />
@@ -128,7 +129,9 @@
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Configurations\DTOsConfigurations\NewFolder1\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{30c013cb-fe84-4fd7-afc5-f99f8eccc2a7}</Project>
