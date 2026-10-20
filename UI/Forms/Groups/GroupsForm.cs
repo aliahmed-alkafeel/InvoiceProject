@@ -3,8 +3,11 @@ using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
 using Models.DTOs;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Extensions;
 using UI.Forms.Groups;
 
 namespace UI.Forms
@@ -51,7 +54,7 @@ namespace UI.Forms
             {
                 var groups = await _groupService.GetAllGroupsAsync();
 
-                gridControl1.DataSource = groups;
+                gridControl1.DataSource = groups.Select(ToGridRow).ToList();
 
                 if (gridView1.RowCount > 0)
                 {
@@ -62,6 +65,30 @@ namespace UI.Forms
             {
                 _isLoadingGroups = false;
             }
+        }
+
+        private static GroupGridRow ToGridRow(GroupDto group)
+        {
+            return new GroupGridRow
+            {
+                Group = group,
+                GroupName = Translator.TranslateGroup(group.GroupName),
+                Notes = group.Notes,
+                RolesText = string.Join(
+                    "، ",
+                    (group.GroupRoles ?? new List<GroupRoleDto>())
+                        .Where(gr => gr.Role != null)
+                        .Select(gr => Translator.Translate(gr.Role.RoleName))
+                        .Distinct())
+            };
+        }
+
+        private class GroupGridRow
+        {
+            public GroupDto Group { get; set; }
+            public string GroupName { get; set; }
+            public string RolesText { get; set; }
+            public string Notes { get; set; }
         }
 
         private async void GroupsToolbar_CreateClicked(
@@ -90,9 +117,9 @@ namespace UI.Forms
             if (CheckGroupsLoading())
                 return;
 
-            var selectedGroup = gridView1.GetFocusedRow() as GroupDto;
+            var selectedRow = gridView1.GetFocusedRow() as GroupGridRow;
 
-            if (selectedGroup == null)
+            if (selectedRow == null)
             {
                 XtraMessageBox.Show(
                     "يرجى اختيار مجموعة لتعديلها.",
@@ -106,7 +133,7 @@ namespace UI.Forms
             using (var manageForm =
                 ActivatorUtilities.CreateInstance<GroupsManageForm>(
                     Program.CurrentScopeProvider,
-                    selectedGroup))
+                    selectedRow.Group))
             {
                 var result = manageForm.ShowDialog(this);
 
@@ -124,9 +151,9 @@ namespace UI.Forms
             if (CheckGroupsLoading())
                 return;
 
-            var group = gridView1.GetFocusedRow() as GroupDto;
+            var selectedRow = gridView1.GetFocusedRow() as GroupGridRow;
 
-            if (group == null)
+            if (selectedRow == null)
             {
                 XtraMessageBox.Show(
                     "يرجى اختيار مجموعة أولاً",
@@ -137,8 +164,10 @@ namespace UI.Forms
                 return;
             }
 
+            var group = selectedRow.Group;
+
             var confirmResult = XtraMessageBox.Show(
-                $"هل أنت متأكد من حذف المجموعة '{group.GroupName}'؟",
+                $"هل أنت متأكد من حذف المجموعة '{selectedRow.GroupName}'؟",
                 "تأكيد الحذف",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);

@@ -12,14 +12,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UI.Controls;
+using UI.Extensions;
 
 namespace UI.Forms.Vouchers
 {
     public partial class VouchersForm : DevExpress.XtraEditors.XtraForm
     {
-
         private readonly IVoucherService _vouchersService;
-
         //public Guid CurrentUserId { get; set; }
         private bool _isLoadingVouchers;
 
@@ -61,7 +60,7 @@ namespace UI.Forms.Vouchers
             {
                 var vouchers = await _vouchersService.GetAllVouchersAsync();
 
-                gridControl1.DataSource = vouchers;
+                gridControl1.DataSource = vouchers.Select(ToGridRow).ToList();
 
                 if (gridView1.RowCount > 0)
                 {
@@ -72,6 +71,35 @@ namespace UI.Forms.Vouchers
             {
                 _isLoadingVouchers = false;
             }
+        }
+
+        private static VoucherGridRow ToGridRow(VoucherDto voucher)
+        {
+            return new VoucherGridRow
+            {
+                Voucher = voucher,
+                VoucherNumber = voucher.VoucherNumber,
+                VoucherTypeText = Translator.Translate(voucher.VoucherType),
+                Amount = voucher.Amount,
+                CurrencyEqualValue = voucher.CurrencyEqualValue,
+                Date = voucher.Date,
+                Notes = voucher.Notes,
+                AccountTree = voucher.AccountTree,
+                Currency = voucher.Currency
+            };
+        }
+
+        private class VoucherGridRow
+        {
+            public VoucherDto Voucher { get; set; }
+            public string VoucherNumber { get; set; }
+            public string VoucherTypeText { get; set; }
+            public decimal Amount { get; set; }
+            public decimal CurrencyEqualValue { get; set; }
+            public DateTime Date { get; set; }
+            public string Notes { get; set; }
+            public AccountsTreeDto AccountTree { get; set; }
+            public CurrencyDto Currency { get; set; }
         }
 
         private async void VouchersToolbar_CreateClicked(
@@ -101,9 +129,9 @@ namespace UI.Forms.Vouchers
             if (CheckVouchersLoading())
                 return;
 
-            var selectedVoucher = gridView1.GetFocusedRow() as VoucherDto;
+            var selectedRow = gridView1.GetFocusedRow() as VoucherGridRow;
 
-            if (selectedVoucher == null)
+            if (selectedRow == null)
             {
                 XtraMessageBox.Show(
                     "يرجى اختيار سند لتعديله",
@@ -117,7 +145,7 @@ namespace UI.Forms.Vouchers
             using (var editForm =
                 ActivatorUtilities.CreateInstance<VouchersManageForm>(
                     Program.CurrentScopeProvider,
-                    selectedVoucher))
+                    selectedRow.Voucher))
             {
                 var result = editForm.ShowDialog(this);
 
@@ -135,9 +163,9 @@ namespace UI.Forms.Vouchers
             if (CheckVouchersLoading())
                 return;
 
-            var voucher = gridView1.GetFocusedRow() as VoucherDto;
+            var selectedRow = gridView1.GetFocusedRow() as VoucherGridRow;
 
-            if (voucher == null)
+            if (selectedRow == null)
             {
                 XtraMessageBox.Show(
                     "يرجى اختيار سند أولاً",
@@ -147,6 +175,8 @@ namespace UI.Forms.Vouchers
 
                 return;
             }
+
+            var voucher = selectedRow.Voucher;
 
             var result = XtraMessageBox.Show(
                 $"هل أنت متأكد من حذف السند؟",

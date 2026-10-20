@@ -126,7 +126,7 @@ namespace UI.Forms.Vouchers
                 .Select(type => new
                 {
                     Value = type,
-                    Text = type.ToString()
+                    Text = Translator.Translate(type)
                 })
                 .ToList();
 

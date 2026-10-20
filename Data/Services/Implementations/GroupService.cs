@@ -239,13 +239,7 @@ namespace RestaurantManagement.Areas.Dashboard.Services
                 Id = group.Id,
                 GroupName = group.GroupName,
                 Notes = group.Notes,
-                GroupRoles = groupRoles,
-                RolesText = string.Join(
-                    "، ",
-                    groupRoles
-                        .Where(gr => gr.Role != null)
-                        .Select(gr => gr.Role.RoleName.ToString())
-                        .Distinct())
+                GroupRoles = groupRoles
             };
         }
     }

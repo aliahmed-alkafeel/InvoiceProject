@@ -156,7 +156,7 @@ namespace UI.Forms.Vouchers
                 .Select(type => new
                 {
                     Value = type,
-                    Text = type.ToString()
+                    Text = Translator.Translate(type)
                 })
                 .ToList();
 
@@ -168,15 +168,11 @@ namespace UI.Forms.Vouchers
             cmbVoucherTypes.Properties.View.Columns.Clear();
             cmbVoucherTypes.Properties.View.Columns
                 .AddVisible("Text", "نوع السند");
-
             cmbVoucherTypes.EditValue = null;
-
             txtVoucherNumber.Text = voucher.VoucherNumber.ToString();
-
             dateEditVoucherDate.EditValue = voucher.Date;
-
             cmbAccounts.EditValue = voucher.AccountTreeGuid;
-
+            cmbCurrencies.EditValue = voucher.CurrencyGuid;
             spnAmount.EditValue = voucher.Amount;
             cmbVoucherTypes.EditValue = voucher.VoucherType;
             txtNotes.Text = voucher.Notes;

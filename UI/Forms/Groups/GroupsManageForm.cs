@@ -59,7 +59,7 @@ namespace UI.Forms.Groups
                     checkedListBoxControl1.Items.Add(
                         new CheckedListBoxItem(
                             role.Id,
-                            role.RoleName.ToString()));
+                            Translator.Translate(role.RoleName)));
                 }
             }
             finally

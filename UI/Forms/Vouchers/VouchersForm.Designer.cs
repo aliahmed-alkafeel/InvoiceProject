@@ -105,7 +105,7 @@
             // colVoucherType
             // 
             this.colVoucherType.Caption = "نوع السند";
-            this.colVoucherType.FieldName = "VoucherType";
+            this.colVoucherType.FieldName = "VoucherTypeText";
             this.colVoucherType.Name = "colVoucherType";
             this.colVoucherType.Visible = true;
             this.colVoucherType.VisibleIndex = 1;

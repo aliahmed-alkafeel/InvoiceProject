@@ -107,6 +107,7 @@
     <Compile Include="Controls\ToolBarControl.Designer.cs">
       <DependentUpon>ToolBarControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Translator.cs" />
     <Compile Include="Forms\AccountsTree\AccountsTreeForm.cs">
       <SubType>Form</SubType>
     </Compile>
