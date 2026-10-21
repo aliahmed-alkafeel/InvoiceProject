@@ -13,7 +13,8 @@ namespace Data.Configurations.DTOsConfigurations
                 .NotEmpty().WithMessage("رقم السند مطلوب")
                 .MaximumLength(50).WithMessage("الحد الاقصى لطول رقم السند هو 50");
 
-            RuleFor(x => x.VoucherType).NotNull().WithMessage("نوع السند مطلوب").IsInEnum().WithMessage("نوع السند غير صحيح");
+            RuleFor(x => x.VoucherType).NotNull().WithMessage("نوع السند مطلوب")
+                .Must(v => v == VoucherType.Receipt || v == VoucherType.Payment).WithMessage("نوع السند غير صحيح");
 
             RuleFor(x => x.AccountTreeGuid).NotEmpty().WithMessage("اختر الحساب");
             RuleFor(x => x.CurrencyGuid).NotEmpty().WithMessage("اختر العملة");

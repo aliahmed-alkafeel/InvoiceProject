@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Models.DTOs;
 using Models.Entities;
+using System.Linq;
 
 namespace Data.Configurations.DTOsConfigurations
 {
@@ -9,7 +10,7 @@ namespace Data.Configurations.DTOsConfigurations
         public UpdateRoleDtoConfiguration()
         {
             RuleFor(x => x.RoleName).NotNull().WithMessage("اسم الصلاحية مطلوب")
-                .IsInEnum().WithMessage("الصلاحية غير صحيحة");
+                .Must(v => UserRole.All.Contains(v)).WithMessage("الصلاحية غير صحيحة");
         }
     }
 }

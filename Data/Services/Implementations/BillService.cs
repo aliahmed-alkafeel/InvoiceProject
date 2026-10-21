@@ -65,7 +65,19 @@ namespace Data.Services.Implementations
                     CurrencyGuid = b.CurrencyGuid,
                     CurrencyEqualValue = b.CurrencyEqualValue,
                     Date = b.Date,
-                    Notes = b.Notes
+                    Notes = b.Notes,
+                    AccountTree = new AccountsTreeDto
+                    {
+                        Id = b.AccountTree.Id,
+                        AccountCode = b.AccountTree.AccountCode,
+                        AccountName = b.AccountTree.AccountName
+                    },
+                    Currency = new CurrencyDto
+                    {
+                        Id = b.Currency.Id,
+                        CurrencyName = b.Currency.CurrencyName,
+                        CurrencySymbol = b.Currency.CurrencySymbol
+                    }
                 })
                 .FirstOrDefaultAsync();
 
@@ -73,9 +85,60 @@ namespace Data.Services.Implementations
                 throw new InvalidOperationException(
                     $"لم يتم العثور على الفاتورة بالمعرّف '{id}'.");
 
-            bill.BillItems = await _unitOfWork.BillItems
+            bill.BillItems = await GetBillItemsAsync(id);
+
+            return bill;
+        }
+
+        public async Task<BillDto> GetBillByNumberAsync(string billNumber)
+        {
+            if (string.IsNullOrWhiteSpace(billNumber))
+                throw new ArgumentException("رقم الفاتورة مطلوب.", nameof(billNumber));
+
+            var normalizedNumber = billNumber.Trim();
+
+            var bill = await _unitOfWork.Bills
                 .Select()
-                .Where(bi => bi.BillGuid == id)
+                .Where(b => b.BillNumber == normalizedNumber)
+                .OrderByDescending(b => b.Date)
+                .Select(b => new BillDto
+                {
+                    Id = b.Id,
+                    BillNumber = b.BillNumber,
+                    BillType = b.BillType,
+                    AccountTreeGuid = b.AccountTreeGuid,
+                    CurrencyGuid = b.CurrencyGuid,
+                    CurrencyEqualValue = b.CurrencyEqualValue,
+                    Date = b.Date,
+                    Notes = b.Notes,
+                    AccountTree = new AccountsTreeDto
+                    {
+                        Id = b.AccountTree.Id,
+                        AccountCode = b.AccountTree.AccountCode,
+                        AccountName = b.AccountTree.AccountName
+                    },
+                    Currency = new CurrencyDto
+                    {
+                        Id = b.Currency.Id,
+                        CurrencyName = b.Currency.CurrencyName,
+                        CurrencySymbol = b.Currency.CurrencySymbol
+                    }
+                })
+                .FirstOrDefaultAsync();
+
+            if (bill == null)
+                return null;
+
+            bill.BillItems = await GetBillItemsAsync(bill.Id);
+
+            return bill;
+        }
+
+        private async Task<List<BillItemDto>> GetBillItemsAsync(Guid billId)
+        {
+            return await _unitOfWork.BillItems
+                .Select()
+                .Where(bi => bi.BillGuid == billId)
                 .Select(bi => new BillItemDto
                 {
                     Id = bi.Id,
@@ -91,8 +154,6 @@ namespace Data.Services.Implementations
                     }
                 })
                 .ToListAsync();
-
-            return bill;
         }
 
         public async Task<bool> CreateBillAsync(CreateBillDto model)

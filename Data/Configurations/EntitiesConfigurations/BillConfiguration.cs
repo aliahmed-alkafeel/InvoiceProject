@@ -16,6 +16,10 @@ namespace Data.Configurations.EntitiesConfigurations
                 .IsRequired()
                 .HasMaxLength(50);
 
+            Property(x => x.BillType)
+                .IsRequired()
+                .HasMaxLength(50);
+
             Property(x => x.CurrencyEqualValue)
                 .IsRequired()
                 .HasPrecision(18, 6);

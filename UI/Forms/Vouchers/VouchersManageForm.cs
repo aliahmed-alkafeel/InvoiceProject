@@ -49,9 +49,7 @@ namespace UI.Forms.Vouchers
             ? 0m
             : Convert.ToDecimal(spnAmount.EditValue),
 
-                VoucherType = cmbVoucherTypes.EditValue == null
-            ? default(VoucherType)
-            : (VoucherType)cmbVoucherTypes.EditValue,
+                VoucherType = cmbVoucherTypes.EditValue?.ToString(),
 
                 CurrencyGuid = cmbCurrencies.EditValue == null
             ? Guid.Empty
@@ -127,9 +125,9 @@ namespace UI.Forms.Vouchers
             cmbAccounts.Properties.ValueMember = "Id";
             cmbAccounts.Properties.NullText = "اختر الحساب";
 
-            cmbAccounts.Properties.View.Columns.Clear();
-            cmbAccounts.Properties.View.Columns
-                .AddVisible("AccountName", "الحساب المحاسبي");
+            //cmbAccounts.Properties.View.Columns.Clear();
+            //cmbAccounts.Properties.View.Columns
+            //    .AddVisible("AccountName", "الحساب المحاسبي");
 
             cmbAccounts.EditValue = null;
 
@@ -146,17 +144,16 @@ namespace UI.Forms.Vouchers
             cmbCurrencies.Properties.ValueMember = "Id";
             cmbCurrencies.Properties.NullText = "اختر العملة";
 
-            cmbCurrencies.Properties.View.Columns.Clear();
-            cmbCurrencies.Properties.View.Columns
-                .AddVisible("CurrencyName", "العملة");
+            //cmbCurrencies.Properties.View.Columns.Clear();
+            //cmbCurrencies.Properties.View.Columns
+            //    .AddVisible("CurrencyName", "العملة");
             cmbCurrencies.EditValue = null;
 
-            var voucherTypes = Enum.GetValues(typeof(VoucherType))
-                .Cast<VoucherType>()
+            var voucherTypes = VoucherType.All
                 .Select(type => new
                 {
                     Value = type,
-                    Text = Translator.Translate(type)
+                    Text = type
                 })
                 .ToList();
 
@@ -165,9 +162,9 @@ namespace UI.Forms.Vouchers
             cmbVoucherTypes.Properties.ValueMember = "Value";
             cmbVoucherTypes.Properties.NullText = "اختر نوع السند";
 
-            cmbVoucherTypes.Properties.View.Columns.Clear();
-            cmbVoucherTypes.Properties.View.Columns
-                .AddVisible("Text", "نوع السند");
+            //cmbVoucherTypes.Properties.View.Columns.Clear();
+            //cmbVoucherTypes.Properties.View.Columns
+            //    .AddVisible("Text", "نوع السند");
             cmbVoucherTypes.EditValue = null;
             txtVoucherNumber.Text = voucher.VoucherNumber.ToString();
             dateEditVoucherDate.EditValue = voucher.Date;

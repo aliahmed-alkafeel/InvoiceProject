@@ -113,6 +113,23 @@ namespace Data.Services.Implementations
                 throw new InvalidOperationException(
                     $"لم يتم العثور على العملة بالمعرّف '{modelId}'.");
 
+            if (currency.IsMain)
+                return false;
+
+            var isUsed = await _unitOfWork.Bills
+                .NoTrackingSelect()
+                .AnyAsync(b => b.CurrencyGuid == modelId);
+
+            if (isUsed)
+                return false;
+
+            var isUsedInVouchers = await _unitOfWork.Vouchers
+                .NoTrackingSelect()
+                .AnyAsync(v => v.CurrencyGuid == modelId);
+
+            if (isUsedInVouchers)
+                return false;
+
             _unitOfWork.Currencies.Delete(currency);
 
             return await _unitOfWork.SaveChangesAsync() > 0;

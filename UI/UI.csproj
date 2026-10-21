@@ -48,6 +48,7 @@
     <Reference Include="DevExpress.XtraGrid.v24.2, Version=24.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v24.2, Version=24.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraNavBar.v24.2, Version=24.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraTreeList.v24.2, Version=24.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraPrinting.v24.2, Version=24.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.2\lib\net45\EntityFramework.dll</HintPath>
@@ -107,7 +108,6 @@
     <Compile Include="Controls\ToolBarControl.Designer.cs">
       <DependentUpon>ToolBarControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\Translator.cs" />
     <Compile Include="Forms\AccountsTree\AccountsTreeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +119,12 @@
     </Compile>
     <Compile Include="Forms\AccountsTree\AccountsTreeManageForm.Designer.cs">
       <DependentUpon>AccountsTreeManageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AccountsTree\XtraForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AccountsTree\XtraForm1.Designer.cs">
+      <DependentUpon>XtraForm1.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Bills\BillsForm.cs">
       <SubType>Form</SubType>
@@ -249,8 +255,17 @@
     <EmbeddedResource Include="Forms\AccountsTree\AccountsTreeForm.resx">
       <DependentUpon>AccountsTreeForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AccountsTree\AccountsTreeManageForm.resx">
+      <DependentUpon>AccountsTreeManageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AccountsTree\XtraForm1.resx">
+      <DependentUpon>XtraForm1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Bills\BillsForm.resx">
       <DependentUpon>BillsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Bills\BillsManageForm.resx">
+      <DependentUpon>BillsManageForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Categories\CategoriesForm.resx">
       <DependentUpon>CategoriesForm.cs</DependentUpon>

@@ -92,12 +92,12 @@ namespace Data.Services.Implementations
                 throw new InvalidOperationException(
                     "قيمة تحويل العملة يجب أن تكون أكبر من صفر");
             var voucherNumber = await GenerateVoucherNumberAsync(
-            model.VoucherType.ToString(),
+            model.VoucherType,
             DateTime.Now.Year);
             var voucher = new Voucher
             {
                 VoucherNumber = voucherNumber,
-                VoucherType = model.VoucherType.Value,
+                VoucherType = model.VoucherType,
                 AccountTreeGuid = model.AccountTreeGuid.Value,
                 Amount = model.Amount.Value,
                 CurrencyGuid = model.CurrencyGuid,
@@ -125,7 +125,7 @@ namespace Data.Services.Implementations
                     $"لم يتم العثور على السند بالمعرّف '{model.Id}'.");
 
             voucher.VoucherNumber = model.VoucherNumber;
-            voucher.VoucherType = model.VoucherType.Value;
+            voucher.VoucherType = model.VoucherType;
             voucher.AccountTreeGuid = model.AccountTreeGuid.Value;
             voucher.Amount = model.Amount.Value;
             voucher.CurrencyGuid = model.CurrencyGuid;

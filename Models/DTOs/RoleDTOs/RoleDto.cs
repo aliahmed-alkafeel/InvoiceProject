@@ -7,6 +7,6 @@ namespace Models.DTOs
 {
     public class RoleDto : BaseDto
     {
-        public UserRole RoleName { get; set; }
+        public string RoleName { get; set; }
     }
 }

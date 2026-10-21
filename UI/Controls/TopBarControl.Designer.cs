@@ -107,6 +107,7 @@
             this.navButton7.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
             this.navButton7.Caption = "تفاصيل الفواتير";
             this.navButton7.Name = "navButton7";
+            this.navButton7.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.navButton7_Click);
             // 
             // btnBills
             // 

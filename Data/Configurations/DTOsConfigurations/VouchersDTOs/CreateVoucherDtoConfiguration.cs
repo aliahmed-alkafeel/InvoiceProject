@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Models.DTOs;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace Data.Configurations.DTOsConfigurations
     {
         public CreateVoucherDtoConfiguration() 
         { 
-            RuleFor(x => x.VoucherType).NotNull().WithMessage("نوع السند مطلوب").IsInEnum().WithMessage("نوع السند غير صحيح");
+            RuleFor(x => x.VoucherType).NotNull().WithMessage("نوع السند مطلوب")
+                .Must(v => v == VoucherType.Receipt || v == VoucherType.Payment).WithMessage("نوع السند غير صحيح");
 
             RuleFor(x => x.AccountTreeGuid).NotEmpty().WithMessage("اختر الحساب");
             RuleFor(x => x.CurrencyGuid).NotEmpty().WithMessage("اختر العملة");

@@ -13,7 +13,7 @@ namespace Models.DTOs
 
         public string VoucherNumber { get; set; }
 
-        public VoucherType? VoucherType { get; set; }
+        public string VoucherType { get; set; }
 
         public decimal? Amount { get; set; }
 

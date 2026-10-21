@@ -91,6 +91,16 @@ namespace UI.Base.TopBar
             vouchersForm.LoadPage();
         }
 
+        private void navButton7_Click(object sender, NavElementEventArgs e)
+        {
+            SetActiveElement(e.Element);
+
+            var itemBillsForm =
+                Program.CurrentScopeProvider.GetRequiredService<ItemBillsForm>();
+
+            itemBillsForm.LoadPage();
+        }
+
         private void btnGroups_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);

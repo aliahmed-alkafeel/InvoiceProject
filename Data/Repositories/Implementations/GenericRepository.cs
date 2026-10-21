@@ -21,7 +21,7 @@ namespace Data.Repositories.Implementations
         }
 
 
-        public IQueryable<T> Select(DeletedStatus status = DeletedStatus.NotDeleted)
+        public IQueryable<T> Select(string status = DeletedStatus.NotDeleted)
         {
             if (status == DeletedStatus.All)
             {
@@ -30,7 +30,7 @@ namespace Data.Repositories.Implementations
             var isDeleted = status == DeletedStatus.Deleted;
             return _dbSet.AsQueryable().Where(m => m.IsDeleted == isDeleted);
         }
-        public IQueryable<T> NoTrackingSelect(DeletedStatus status = DeletedStatus.NotDeleted)
+        public IQueryable<T> NoTrackingSelect(string status = DeletedStatus.NotDeleted)
         {
             if (status == DeletedStatus.All)
             {
@@ -41,7 +41,7 @@ namespace Data.Repositories.Implementations
         }
 
 
-        public async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken = default, DeletedStatus status = DeletedStatus.NotDeleted)
+        public async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken = default, string status = DeletedStatus.NotDeleted)
         {
             if (status == DeletedStatus.All)
             {
@@ -51,7 +51,7 @@ namespace Data.Repositories.Implementations
             return await _dbSet.FirstOrDefaultAsync(x => x.Id == id && x.IsDeleted == isDeleted, cancellationToken);
         }
         public async Task<bool> ExistsByIdAsync(Guid id, CancellationToken cancellationToken = default,
-            DeletedStatus status = DeletedStatus.NotDeleted)
+            string status = DeletedStatus.NotDeleted)
         {
             return await GetByIdAsync(id, cancellationToken, status) != null;
         }

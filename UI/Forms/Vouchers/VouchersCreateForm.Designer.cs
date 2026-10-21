@@ -38,7 +38,7 @@
             this.cmbAccounts = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colName = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colId = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.Id = new DevExpress.XtraGrid.Columns.GridColumn();
             this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.txtNotes = new System.Windows.Forms.RichTextBox();
@@ -49,6 +49,7 @@
             this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+            this.colId = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.cmbVoucherTypes.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spnAmount.Properties)).BeginInit();
@@ -60,7 +61,7 @@
             // 
             // cmbVoucherTypes
             // 
-            this.cmbVoucherTypes.Location = new System.Drawing.Point(55, 79);
+            this.cmbVoucherTypes.Location = new System.Drawing.Point(55, 78);
             this.cmbVoucherTypes.Name = "cmbVoucherTypes";
             this.cmbVoucherTypes.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -81,7 +82,7 @@
             // gridColumn1
             // 
             this.gridColumn1.Caption = "اسم الفئة";
-            this.gridColumn1.FieldName = "Name";
+            this.gridColumn1.FieldName = "Value";
             this.gridColumn1.Name = "gridColumn1";
             this.gridColumn1.Visible = true;
             this.gridColumn1.VisibleIndex = 0;
@@ -89,7 +90,7 @@
             // gridColumn2
             // 
             this.gridColumn2.Caption = "gridColumn1";
-            this.gridColumn2.FieldName = "Id";
+            this.gridColumn2.FieldName = "Value";
             this.gridColumn2.Name = "gridColumn2";
             // 
             // labelControl6
@@ -109,11 +110,11 @@
             0,
             0,
             0});
-            this.spnAmount.Location = new System.Drawing.Point(147, 193);
+            this.spnAmount.Location = new System.Drawing.Point(55, 193);
             this.spnAmount.Name = "spnAmount";
             this.spnAmount.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.spnAmount.Size = new System.Drawing.Size(91, 20);
+            this.spnAmount.Size = new System.Drawing.Size(183, 20);
             this.spnAmount.TabIndex = 94;
             // 
             // lblTitle
@@ -140,7 +141,7 @@
             // 
             this.searchLookUpEdit1View.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colName,
-            this.colId});
+            this.Id});
             this.searchLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.searchLookUpEdit1View.Name = "searchLookUpEdit1View";
             this.searchLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
@@ -149,16 +150,16 @@
             // colName
             // 
             this.colName.Caption = "اسم الفئة";
-            this.colName.FieldName = "Name";
+            this.colName.FieldName = "AccountName";
             this.colName.Name = "colName";
             this.colName.Visible = true;
             this.colName.VisibleIndex = 0;
             // 
-            // colId
+            // Id
             // 
-            this.colId.Caption = "gridColumn1";
-            this.colId.FieldName = "Id";
-            this.colId.Name = "colId";
+            this.Id.Caption = "gridColumn5";
+            this.Id.FieldName = "Id";
+            this.Id.Name = "Id";
             // 
             // labelControl5
             // 
@@ -229,7 +230,7 @@
             // gridColumn3
             // 
             this.gridColumn3.Caption = "اسم الفئة";
-            this.gridColumn3.FieldName = "Name";
+            this.gridColumn3.FieldName = "CurrencyName";
             this.gridColumn3.Name = "gridColumn3";
             this.gridColumn3.Visible = true;
             this.gridColumn3.VisibleIndex = 0;
@@ -249,6 +250,12 @@
             this.labelControl1.Size = new System.Drawing.Size(41, 17);
             this.labelControl1.TabIndex = 99;
             this.labelControl1.Text = ":العملة";
+            // 
+            // colId
+            // 
+            this.colId.Caption = "gridColumn1";
+            this.colId.FieldName = "Id";
+            this.colId.Name = "colId";
             // 
             // VouchersCreateForm
             // 
@@ -294,7 +301,6 @@
         private DevExpress.XtraEditors.SearchLookUpEdit cmbAccounts;
         private DevExpress.XtraGrid.Views.Grid.GridView searchLookUpEdit1View;
         private DevExpress.XtraGrid.Columns.GridColumn colName;
-        private DevExpress.XtraGrid.Columns.GridColumn colId;
         private DevExpress.XtraEditors.LabelControl labelControl5;
         private DevExpress.XtraEditors.LabelControl labelControl2;
         private System.Windows.Forms.RichTextBox txtNotes;
@@ -305,5 +311,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
         private DevExpress.XtraEditors.LabelControl labelControl1;
+        private DevExpress.XtraGrid.Columns.GridColumn colId;
+        private DevExpress.XtraGrid.Columns.GridColumn Id;
     }
 }

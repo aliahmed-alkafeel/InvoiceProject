@@ -25,25 +25,13 @@ namespace Data.Services.Implementations
 
         public async Task<List<EmployeeDto>> GetAllEmployeesAsync()
         {
-            return await _unitOfWork.Employees
+            var employees = await _unitOfWork.Employees
                 .NoTrackingSelect()
                 .Include(e => e.Group)
                 .Where(e => e.Group != null && !e.Group.IsDeleted)
-                .Select(emp => new EmployeeDto
-                {
-                    Id = emp.Id,
-                    FirstName = emp.FirstName,
-                    LastName = emp.LastName,
-                    PhoneNumber = emp.PhoneNumber,
-                    EmployeeStartingDate = emp.EmployeeStartingDate.ToLocalTime(),
-                    EmployeeEndingDate = emp.EmployeeEndingDate.HasValue
-                        ? (DateTime?)emp.EmployeeEndingDate.Value.ToLocalTime()
-                        : null,
-                    Username = emp.Username,
-                    Email = emp.Email,
-                    GroupGuid = emp.GroupGuid,
-                })
                 .ToListAsync();
+
+            return employees.Select(e => ToDto(e)).ToList();
         }
 
         public async Task<EmployeeDto> GetEmployeeByIdAsync(
@@ -63,6 +51,11 @@ namespace Data.Services.Implementations
                     "الموظف المطلوب غير موجود أو أن مجموعته غير متاحة.");
             }
 
+            return ToDto(employee);
+        }
+
+        private static EmployeeDto ToDto(Employee employee)
+        {
             return new EmployeeDto
             {
                 Id = employee.Id,
@@ -74,6 +67,11 @@ namespace Data.Services.Implementations
                 Username = employee.Username,
                 Email = employee.Email,
                 GroupGuid = employee.GroupGuid,
+                Group = employee.Group == null ? null : new GroupDto
+                {
+                    Id = employee.Group.Id,
+                    GroupName = employee.Group.GroupName
+                },
             };
         }
 
@@ -110,11 +108,14 @@ namespace Data.Services.Implementations
 
             var employee = new Employee
             {
+                Id = model.Id,
                 Username = model.Username,
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                EmployeeStartingDate = DateTime.UtcNow,
+                Password = model.Password,
+                EmployeeStartingDate = model.EmployeeStartingDate.Date,
+                EmployeeEndingDate = model.EmployeeEndingDate?.Date,
                 PhoneNumber = model.PhoneNumber,
                 GroupGuid = model.GroupGuid
             };
@@ -166,10 +167,15 @@ namespace Data.Services.Implementations
             employee.Email = model.Email;
             employee.FirstName = model.FirstName;
             employee.LastName = model.LastName;
-            employee.EmployeeStartingDate = model.EmployeeStartingDate;
-            employee.EmployeeEndingDate = model.EmployeeEndingDate;
+            employee.EmployeeStartingDate = model.EmployeeStartingDate.Date;
+            employee.EmployeeEndingDate = model.EmployeeEndingDate?.Date;
             employee.PhoneNumber = model.PhoneNumber;
             employee.GroupGuid = model.GroupGuid;
+
+            if (!string.IsNullOrWhiteSpace(model.Password))
+            {
+                employee.Password = model.Password;
+            }
 
 
             _unitOfWork.Employees.Update(employee);
@@ -191,7 +197,7 @@ namespace Data.Services.Implementations
                 return false;
 
             if (employee.Group.GroupName ==
-                InitUserGroup.Administrator.ToString())
+                InitUserGroup.Administrator)
             {
                 return false;
             }
@@ -199,7 +205,7 @@ namespace Data.Services.Implementations
             if (employee.EmployeeEndingDate.HasValue)
                 return false;
 
-            employee.EmployeeEndingDate = DateTime.UtcNow;
+            employee.EmployeeEndingDate = DateTime.Now.Date;
 
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
@@ -218,14 +224,14 @@ namespace Data.Services.Implementations
                 return false;
 
             if (employee.Group?.GroupName ==
-                InitUserGroup.Administrator.ToString())
+                InitUserGroup.Administrator)
             {
                 return false;
             }
 
             if (!employee.EmployeeEndingDate.HasValue)
             {
-                employee.EmployeeEndingDate = DateTime.UtcNow;
+                employee.EmployeeEndingDate = DateTime.Now.Date;
             }
 
             _unitOfWork.Employees.Delete(employee);

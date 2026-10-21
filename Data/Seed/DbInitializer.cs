@@ -17,7 +17,7 @@ namespace Data.Seed
                 var adminId = Guid.NewGuid();
                 var now = DateTime.Now;
                 var existingRoles = await context.Roles.Select(r => r.RoleName).ToListAsync();
-                var rolesToAdd = ((UserRole[])Enum.GetValues(typeof(UserRole)))
+                var rolesToAdd = UserRole.All
                     .Where(r => !existingRoles.Contains(r)).Select(r => new Role
                 {
                     RoleName = r,
@@ -31,10 +31,10 @@ namespace Data.Seed
                 }
 
                 var existingGroups = await context.Groups.Select(r => r.GroupName).ToListAsync();
-                var groupsToAdd = ((InitUserGroup[])Enum.GetValues(typeof(InitUserGroup))).Where(r => !existingGroups.Contains(r.ToString()))
+                var groupsToAdd = InitUserGroup.All.Where(r => !existingGroups.Contains(r))
                     .Select(r => new Group
                     {
-                        GroupName = r.ToString(),
+                        GroupName = r,
                         CreatedById = adminId,
                         CreatedAt = now
                     }).ToList();

@@ -26,7 +26,7 @@ namespace Data.Configurations.DTOsConfigurations
             RuleFor(x => x.Email)
                 .EmailAddress().When(x => !string.IsNullOrWhiteSpace(x.Email))
                 .WithMessage("الإيميل غير صحيح")
-                .MaximumLength(150);
+                .MaximumLength(100);
 
             RuleFor(x => x.Username)
                 .NotEmpty().WithMessage("اسم المستخدم مطلوب")
@@ -34,8 +34,8 @@ namespace Data.Configurations.DTOsConfigurations
                 .MaximumLength(50);
 
             RuleFor(x => x.Password)
-                .NotEmpty().WithMessage("كلمة المرور مطلوبة")
-                .MinimumLength(6).WithMessage("كلمة المرور 6 أحرف على الأقل");
+                .MinimumLength(6).When(x => !string.IsNullOrWhiteSpace(x.Password))
+                .WithMessage("كلمة المرور 6 أحرف على الأقل");
 
             RuleFor(x => x.EmployeeStartingDate).NotEmpty().WithMessage("تاريخ التعيين مطلوب");
 

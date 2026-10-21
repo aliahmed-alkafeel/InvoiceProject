@@ -77,7 +77,7 @@ namespace RestaurantManagement.Areas.Dashboard.Services
                 throw new InvalidOperationException(
                     "المجموعة المطلوب حذفها غير موجودة.");
 
-            if (group.GroupName == InitUserGroup.Administrator.ToString())
+            if (group.GroupName == InitUserGroup.Administrator)
                 return false;
 
             var hasEmployees = await _unitOfWork.Employees
@@ -152,7 +152,7 @@ namespace RestaurantManagement.Areas.Dashboard.Services
                     "المجموعة المطلوب تعديلها غير موجودة.");
 
             var administratorGroupName =
-                InitUserGroup.Administrator.ToString();
+                InitUserGroup.Administrator;
 
             if (group.GroupName == administratorGroupName ||
                 model.GroupName == administratorGroupName)

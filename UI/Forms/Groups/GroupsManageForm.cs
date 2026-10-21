@@ -59,7 +59,7 @@ namespace UI.Forms.Groups
                     checkedListBoxControl1.Items.Add(
                         new CheckedListBoxItem(
                             role.Id,
-                            Translator.Translate(role.RoleName)));
+                            role.RoleName));
                 }
             }
             finally
@@ -161,14 +161,13 @@ namespace UI.Forms.Groups
             txtName.Text = group.GroupName;
             txtNotes.Text = group.Notes;
 
-            var roleIds = (group.GroupRoles ?? new List<GroupRoleDto>())
-                .Where(gr => gr.Role != null)
+            var roleIds = group.GroupRoles
                 .Select(gr => gr.RoleGuid)
                 .ToList();
 
             for (int i = 0; i < checkedListBoxControl1.Items.Count; i++)
             {
-                var item = (CheckedListBoxItem)checkedListBoxControl1.Items[i];
+                var item = checkedListBoxControl1.Items[i];
 
                 checkedListBoxControl1.SetItemChecked(
                     i,

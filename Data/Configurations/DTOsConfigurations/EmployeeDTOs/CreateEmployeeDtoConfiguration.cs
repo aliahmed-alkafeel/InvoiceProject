@@ -26,7 +26,7 @@ namespace Data.Configurations.DTOsConfigurations
             RuleFor(x => x.Email)
                 .EmailAddress().When(x => !string.IsNullOrWhiteSpace(x.Email))
                 .WithMessage("الإيميل غير صحيح")
-                .MaximumLength(150);
+                .MaximumLength(100);
 
             RuleFor(x => x.Username)
                 .NotEmpty().WithMessage("اسم المستخدم مطلوب")

@@ -10,7 +10,7 @@ namespace Models.DTOs
     public class CreateVoucherDto : BaseDto
     {
         public Guid? AccountTreeGuid { get; set; }
-        public VoucherType? VoucherType { get; set; }
+        public string VoucherType { get; set; }
         public decimal? Amount { get; set; }
         public Guid CurrencyGuid { get; set; }
     }

@@ -14,7 +14,7 @@ namespace Data.Configurations.DTOsConfigurations
                 .MaximumLength(50).WithMessage("الحد الاقصى لطول رقم الفاتورة هو 50");
 
             RuleFor(x => x.BillType).NotEmpty().WithMessage("نوع الفاتورة مطلوب")
-                .IsInEnum().WithMessage("نوع الفاتورة غير صحيح");
+                .Must(v => v == BillType.In || v == BillType.Out).WithMessage("نوع الفاتورة غير صحيح");
 
             RuleFor(x => x.AccountTreeGuid).NotEmpty().WithMessage("اختر الحساب");
             RuleFor(x => x.CurrencyGuid).NotEmpty().WithMessage("اختر العملة");

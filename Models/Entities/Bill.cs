@@ -13,7 +13,7 @@ namespace Models.Entities
     {
         public string BillNumber { get; set; }
 
-        public BillType BillType { get; set; } 
+        public string BillType { get; set; } 
 
         public Guid AccountTreeGuid { get; set; }
 
@@ -30,9 +30,11 @@ namespace Models.Entities
         public Currency Currency { get; set; }
         public ICollection<BillItem> BillItems { get; set; } = new HashSet<BillItem>();
     }
-    public enum BillType
+    public static class BillType
     {
-        In = 0,
-        Out = 1
+        public const string In = "وارد";
+        public const string Out = "صادر";
+
+        public static readonly string[] All = { In, Out };
     }
 }

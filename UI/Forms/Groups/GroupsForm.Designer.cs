@@ -57,6 +57,7 @@
             this.gridControl1.TabIndex = 1;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
+            this.gridControl1.Click += new System.EventHandler(this.gridControl1_Click);
             // 
             // gridView1
             // 
@@ -70,6 +71,7 @@
             // 
             // colGroupName
             // 
+            this.colGroupName.Caption = "اسم المجموعة";
             this.colGroupName.FieldName = "GroupName";
             this.colGroupName.Name = "colGroupName";
             this.colGroupName.Visible = true;
@@ -87,6 +89,7 @@
             // 
             // colNotes
             // 
+            this.colNotes.Caption = "الملاحظات";
             this.colNotes.FieldName = "Notes";
             this.colNotes.Name = "colNotes";
             this.colNotes.Visible = true;

@@ -16,6 +16,10 @@ namespace Data.Configurations.EntitiesConfigurations
                 .IsRequired()
                 .HasMaxLength(50);
 
+            Property(x => x.VoucherType)
+                .IsRequired()
+                .HasMaxLength(50);
+
             Property(x => x.Amount)
                 .IsRequired()
                 .HasPrecision(18, 2);

@@ -21,5 +21,9 @@ namespace Models.DTOs
 
         public string Password { get; set; }
         public GroupDto Group { get; set; }
+
+        public string FullName => $"{FirstName} {LastName}".Trim();
+
+        public string GroupName => Group?.GroupName;
     }
 }

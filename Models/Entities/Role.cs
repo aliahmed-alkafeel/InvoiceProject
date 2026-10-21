@@ -6,26 +6,47 @@ namespace Models.Entities
 {
     public class Role : BaseEntity
     {
-        public UserRole RoleName { get; set; }
+        public string RoleName { get; set; }
     }
-    public enum UserRole
+    public static class UserRole
     {
-        Unclassified = 0,
-        ManageBills,
-        AccessBills,
+        public const string Unclassified = "غير مصنف";
+        public const string ManageBills = "إدارة الفواتير";
+        public const string AccessBills = "عرض الفواتير";
 
-        AccessVoucher,
-        ManageVoucher,
+        public const string AccessVoucher = "عرض السندات";
+        public const string ManageVoucher = "إدارة السندات";
 
-        AccessCategories,
-        ManageCategories,
+        public const string AccessCategories = "عرض الفئات";
+        public const string ManageCategories = "إدارة الفئات";
 
-        AccessItems,
-        ManageItems,
+        public const string AccessItems = "عرض الأصناف";
+        public const string ManageItems = "إدارة الأصناف";
 
-        AccessAccountsTree,
-        ManageAccountsTree,
-        AccessCurrency,
-        ManageCurrency,
+        public const string AccessAccountsTree = "عرض شجرة الحسابات";
+        public const string ManageAccountsTree = "إدارة شجرة الحسابات";
+        public const string AccessCurrency = "عرض العملات";
+        public const string ManageCurrency = "إدارة العملات";
+
+        public static readonly string[] All =
+        {
+            Unclassified,
+            ManageBills,
+            AccessBills,
+
+            AccessVoucher,
+            ManageVoucher,
+
+            AccessCategories,
+            ManageCategories,
+
+            AccessItems,
+            ManageItems,
+
+            AccessAccountsTree,
+            ManageAccountsTree,
+            AccessCurrency,
+            ManageCurrency,
+        };
     }
 }

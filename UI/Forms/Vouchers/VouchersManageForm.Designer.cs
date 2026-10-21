@@ -79,11 +79,11 @@
             0,
             0,
             0});
-            this.spnAmount.Location = new System.Drawing.Point(150, 233);
+            this.spnAmount.Location = new System.Drawing.Point(56, 233);
             this.spnAmount.Name = "spnAmount";
             this.spnAmount.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.spnAmount.Size = new System.Drawing.Size(89, 20);
+            this.spnAmount.Size = new System.Drawing.Size(183, 20);
             this.spnAmount.TabIndex = 77;
             // 
             // lblTitle
@@ -119,7 +119,7 @@
             // colName
             // 
             this.colName.Caption = "اسم الفئة";
-            this.colName.FieldName = "Name";
+            this.colName.FieldName = "AccountName";
             this.colName.Name = "colName";
             this.colName.Visible = true;
             this.colName.VisibleIndex = 0;
@@ -208,7 +208,7 @@
             // gridColumn1
             // 
             this.gridColumn1.Caption = "اسم الفئة";
-            this.gridColumn1.FieldName = "Name";
+            this.gridColumn1.FieldName = "Text";
             this.gridColumn1.Name = "gridColumn1";
             this.gridColumn1.Visible = true;
             this.gridColumn1.VisibleIndex = 0;
@@ -216,7 +216,7 @@
             // gridColumn2
             // 
             this.gridColumn2.Caption = "gridColumn1";
-            this.gridColumn2.FieldName = "Id";
+            this.gridColumn2.FieldName = "Value";
             this.gridColumn2.Name = "gridColumn2";
             // 
             // labelControl6
@@ -282,7 +282,7 @@
             // gridColumn3
             // 
             this.gridColumn3.Caption = "اسم الفئة";
-            this.gridColumn3.FieldName = "Name";
+            this.gridColumn3.FieldName = "CurrencyName";
             this.gridColumn3.Name = "gridColumn3";
             this.gridColumn3.Visible = true;
             this.gridColumn3.VisibleIndex = 0;

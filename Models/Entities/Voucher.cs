@@ -14,7 +14,7 @@ namespace Models.Entities
 
         public string VoucherNumber { get; set; }
 
-        public VoucherType VoucherType { get; set; }
+        public string VoucherType { get; set; }
 
         public decimal Amount { get; set; }
 
@@ -28,9 +28,11 @@ namespace Models.Entities
         [ForeignKey(nameof(CurrencyGuid))]
         public Currency Currency { get; set; }
     }
-    public enum VoucherType
+    public static class VoucherType
     {
-        Receipt = 0,
-        Payment = 1
+        public const string Receipt = "سند قبض";
+        public const string Payment = "سند صرف";
+
+        public static readonly string[] All = { Receipt, Payment };
     }
 }
