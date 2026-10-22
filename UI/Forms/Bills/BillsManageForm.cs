@@ -2,7 +2,6 @@
 using Data.Services.Interfaces;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraEditors.Repository;
 using Models.DTOs;
 using Models.Entities;
 using System;
@@ -21,7 +20,8 @@ namespace UI.Forms.Bills
         private readonly IAccountsTreeService _accountsTreeService;
         private readonly ICurrencyService _currencyService;
         private readonly IItemService _itemService;
-        private readonly BindingList<BillItemDto> _billItems = new BindingList<BillItemDto>();
+        private readonly BindingList<BillItemRow> _billItems = new BindingList<BillItemRow>();
+        private IDictionary<Guid, ItemDto> _itemLookup = new Dictionary<Guid, ItemDto>();
         private BillDto _selectedBill;
 
         private bool isEdit => _selectedBill != null;
@@ -100,33 +100,12 @@ namespace UI.Forms.Bills
 
             var items = (await _itemService.GetAllItemsAsync())
                 .Where(i => i.IsActive)
-                .Select(i => new
-                {
-                    i.Id,
-                    i.Name
-                })
                 .ToList();
 
-            var itemLookup = new RepositoryItemGridLookUpEdit();
-            itemLookup.DisplayMember = "Name";
-            itemLookup.ValueMember = "Id";
-            itemLookup.AutoComplete = true;
-            itemLookup.NullText = "اختر المادة";
-            itemLookup.DataSource = items;
+            _itemLookup = BillItemsGridHelper.ConfigureItemColumn(colItem, items);
 
-            colItem.ColumnEdit = itemLookup;
-
-            var qtyEditor = new RepositoryItemSpinEdit();
-            qtyEditor.IsFloatValue = true;
-            qtyEditor.MinValue = 0m;
-            qtyEditor.MaxValue = 1000000m;
-            colQty.ColumnEdit = qtyEditor;
-
-            var priceEditor = new RepositoryItemSpinEdit();
-            priceEditor.IsFloatValue = true;
-            priceEditor.MinValue = 0m;
-            priceEditor.MaxValue = 1000000m;
-            colPrice.ColumnEdit = priceEditor;
+            BillItemsGridHelper.ConfigureNumericColumn(colQty, 0m, 1000000m);
+            BillItemsGridHelper.ConfigureNumericColumn(colPrice, 0m, 1000000m);
         }
 
         private void LoadBillDetails(BillDto bill)
@@ -138,7 +117,7 @@ namespace UI.Forms.Bills
                 lblTitle.Text = "إضافة فاتورة";
                 saveCancelControl21.SaveText = "إضافة";
 
-                txtBillNumber.Text = string.Empty;
+                spinBillNumber.EditValue = null;
                 cmbBillType.EditValue = null;
                 cmbAccountTree.EditValue = null;
                 cmbCurrency.EditValue = null;
@@ -155,7 +134,7 @@ namespace UI.Forms.Bills
             lblTitle.Text = "تعديل الفاتورة";
             saveCancelControl21.SaveText = "تعديل";
 
-            txtBillNumber.Text = bill.BillNumber ?? string.Empty;
+            spinBillNumber.EditValue = bill.BillNumber;
             cmbBillType.EditValue = bill.BillType;
             cmbAccountTree.EditValue = bill.AccountTreeGuid;
             cmbCurrency.EditValue = bill.CurrencyGuid;
@@ -169,7 +148,10 @@ namespace UI.Forms.Bills
             {
                 foreach (var billItem in bill.BillItems)
                 {
-                    _billItems.Add(billItem);
+                    var row = BillItemRow.FromDto(billItem);
+
+                    if (row != null)
+                        _billItems.Add(row);
                 }
             }
 
@@ -180,6 +162,7 @@ namespace UI.Forms.Bills
         {
             var billItems = _billItems
                 .Where(bi => bi.ItemGuid != Guid.Empty)
+                .Select(bi => bi.ToDto())
                 .ToList();
 
             var accountTreeGuid = cmbAccountTree.EditValue is Guid accountGuid ? accountGuid : Guid.Empty;
@@ -189,7 +172,7 @@ namespace UI.Forms.Bills
                 ? 0m
                 : Convert.ToDecimal(spnCurrencyEqualValue.EditValue);
             var billType = cmbBillType.EditValue as string;
-            var billNumber = txtBillNumber.Text.Trim();
+            var billNumber = GetBillNumberFromInput();
 
             if (!isEdit)
             {
@@ -290,16 +273,67 @@ namespace UI.Forms.Bills
             Close();
         }
 
+        /// <summary>
+        /// قراءة رقم الفاتورة من حقل الإدخال (0 عند تركه فارغاً).
+        /// </summary>
+        private int GetBillNumberFromInput()
+        {
+            var value = spinBillNumber.EditValue;
+
+            if (value == null)
+                return 0;
+
+            if (value is int number)
+                return number;
+
+            if (value is long longNumber)
+                return (int)longNumber;
+
+            if (value is decimal decimalNumber)
+                return (int)decimalNumber;
+
+            int parsed;
+            return int.TryParse(value.ToString(), out parsed) ? parsed : 0;
+        }
+
         private void gridViewItems_CellValueChanged(
             object sender,
             DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
         {
+            var row = gridViewItems.GetRow(e.RowHandle) as BillItemRow;
+
+            if (row != null && e.Column == colItem)
+            {
+                // عند تغيير المادة داخل الشبكة: تحديث اسم المادة والسعر الافتراضي.
+                BillItemsGridHelper.ApplyItemToRow(row, _itemLookup);
+            }
+
             UpdateTotal();
         }
 
         private void gridViewItems_RowCountChanged(object sender, EventArgs e)
         {
             UpdateTotal();
+        }
+
+        /// <summary>
+        /// إضافة بند جديد إلى الشبكة وفتح خلية المادة للتعديل المباشر.
+        /// </summary>
+        private void btnAddItem_Click(object sender, EventArgs e)
+        {
+            gridViewItems.AddNewRow();
+            gridViewItems.ShowEditor();
+        }
+
+        /// <summary>
+        /// حذف البند المحدد من الشبكة.
+        /// </summary>
+        private void btnDeleteItem_Click(object sender, EventArgs e)
+        {
+            if (gridViewItems.FocusedRowHandle < 0)
+                return;
+
+            gridViewItems.DeleteRow(gridViewItems.FocusedRowHandle);
         }
 
         private void UpdateTotal()

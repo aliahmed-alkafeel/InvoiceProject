@@ -13,8 +13,7 @@ namespace Data.Configurations.EntitiesConfigurations
         public BillConfiguration()
         {
             Property(x => x.BillNumber)
-                .IsRequired()
-                .HasMaxLength(50);
+                .IsRequired();
 
             Property(x => x.BillType)
                 .IsRequired()

@@ -37,7 +37,7 @@
             this.labelDate = new DevExpress.XtraEditors.LabelControl();
             this.labelNotes = new DevExpress.XtraEditors.LabelControl();
             this.labelItems = new DevExpress.XtraEditors.LabelControl();
-            this.txtBillNumber = new DevExpress.XtraEditors.TextEdit();
+            this.spinBillNumber = new DevExpress.XtraEditors.SpinEdit();
             this.cmbBillType = new DevExpress.XtraEditors.ComboBoxEdit();
             this.cmbAccountTree = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.gridViewAccountTree = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -55,9 +55,12 @@
             this.colItem = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colQty = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTotal = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.btnAddItem = new DevExpress.XtraEditors.SimpleButton();
+            this.btnDeleteItem = new DevExpress.XtraEditors.SimpleButton();
             this.lblTotal = new DevExpress.XtraEditors.LabelControl();
             this.saveCancelControl21 = new UI.Controls.SaveCancelControl2();
-            ((System.ComponentModel.ISupportInitialize)(this.txtBillNumber.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinBillNumber.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbBillType.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbAccountTree.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewAccountTree)).BeginInit();
@@ -177,12 +180,17 @@
             this.labelItems.TabIndex = 8;
             this.labelItems.Text = ":مواد الفاتورة";
             //
-            // txtBillNumber
+            // spinBillNumber
             //
-            this.txtBillNumber.Location = new System.Drawing.Point(420, 68);
-            this.txtBillNumber.Name = "txtBillNumber";
-            this.txtBillNumber.Size = new System.Drawing.Size(290, 22);
-            this.txtBillNumber.TabIndex = 9;
+            this.spinBillNumber.Location = new System.Drawing.Point(420, 68);
+            this.spinBillNumber.Name = "spinBillNumber";
+            this.spinBillNumber.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
+            this.spinBillNumber.Properties.IsFloatValue = false;
+            this.spinBillNumber.Properties.MaxValue = 2147483647m;
+            this.spinBillNumber.Properties.MinValue = 0m;
+            this.spinBillNumber.Properties.NullText = "أدخل رقم الفاتورة";
+            this.spinBillNumber.Size = new System.Drawing.Size(290, 22);
+            this.spinBillNumber.TabIndex = 9;
             //
             // cmbBillType
             //
@@ -310,10 +318,13 @@
             this.gridViewItems.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colItem,
             this.colQty,
-            this.colPrice});
+            this.colPrice,
+            this.colTotal});
             this.gridViewItems.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridViewItems.GridControl = this.gridControlItems;
             this.gridViewItems.Name = "gridViewItems";
+            this.gridViewItems.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+            this.gridViewItems.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
             this.gridViewItems.OptionsBehavior.Editable = true;
             this.gridViewItems.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.gridViewItems.OptionsView.ShowGroupPanel = false;
@@ -347,6 +358,41 @@
             this.colPrice.VisibleIndex = 2;
             this.colPrice.Width = 140;
             //
+            // colTotal
+            //
+            this.colTotal.Caption = "الإجمالي";
+            this.colTotal.FieldName = "Total";
+            this.colTotal.Name = "colTotal";
+            this.colTotal.OptionsColumn.AllowEdit = false;
+            this.colTotal.OptionsColumn.ReadOnly = true;
+            this.colTotal.Visible = true;
+            this.colTotal.VisibleIndex = 3;
+            this.colTotal.Width = 140;
+            //
+            // btnAddItem
+            //
+            this.btnAddItem.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
+            this.btnAddItem.Appearance.Options.UseFont = true;
+            this.btnAddItem.Location = new System.Drawing.Point(610, 352);
+            this.btnAddItem.Name = "btnAddItem";
+            this.btnAddItem.Size = new System.Drawing.Size(110, 24);
+            this.btnAddItem.TabIndex = 17;
+            this.btnAddItem.Text = "إضافة مادة";
+            this.btnAddItem.ToolTip = "إضافة بند جديد إلى الفاتورة";
+            this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click);
+            //
+            // btnDeleteItem
+            //
+            this.btnDeleteItem.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
+            this.btnDeleteItem.Appearance.Options.UseFont = true;
+            this.btnDeleteItem.Location = new System.Drawing.Point(490, 352);
+            this.btnDeleteItem.Name = "btnDeleteItem";
+            this.btnDeleteItem.Size = new System.Drawing.Size(110, 24);
+            this.btnDeleteItem.TabIndex = 18;
+            this.btnDeleteItem.Text = "حذف المادة";
+            this.btnDeleteItem.ToolTip = "حذف البند المحدد من الفاتورة";
+            this.btnDeleteItem.Click += new System.EventHandler(this.btnDeleteItem_Click);
+            //
             // lblTotal
             //
             this.lblTotal.Appearance.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold);
@@ -356,7 +402,7 @@
             this.lblTotal.Location = new System.Drawing.Point(60, 560);
             this.lblTotal.Name = "lblTotal";
             this.lblTotal.Size = new System.Drawing.Size(300, 24);
-            this.lblTotal.TabIndex = 17;
+            this.lblTotal.TabIndex = 19;
             this.lblTotal.Text = "الإجمالي: 0";
             //
             // saveCancelControl21
@@ -365,7 +411,7 @@
             this.saveCancelControl21.Name = "saveCancelControl21";
             this.saveCancelControl21.SaveText = "حفظ";
             this.saveCancelControl21.Size = new System.Drawing.Size(191, 45);
-            this.saveCancelControl21.TabIndex = 18;
+            this.saveCancelControl21.TabIndex = 20;
             //
             // BillsManageForm
             //
@@ -381,7 +427,7 @@
             this.Controls.Add(this.labelDate);
             this.Controls.Add(this.labelNotes);
             this.Controls.Add(this.labelItems);
-            this.Controls.Add(this.txtBillNumber);
+            this.Controls.Add(this.spinBillNumber);
             this.Controls.Add(this.cmbBillType);
             this.Controls.Add(this.cmbAccountTree);
             this.Controls.Add(this.cmbCurrency);
@@ -391,13 +437,15 @@
             this.Controls.Add(this.gridControlItems);
             this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.saveCancelControl21);
+            this.Controls.Add(this.btnAddItem);
+            this.Controls.Add(this.btnDeleteItem);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "BillsManageForm";
             this.Text = "الفواتير";
             this.Load += new System.EventHandler(this.BillsManageForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.txtBillNumber.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinBillNumber.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbBillType.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbAccountTree.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewAccountTree)).EndInit();
@@ -423,7 +471,7 @@
         private DevExpress.XtraEditors.LabelControl labelDate;
         private DevExpress.XtraEditors.LabelControl labelNotes;
         private DevExpress.XtraEditors.LabelControl labelItems;
-        private DevExpress.XtraEditors.TextEdit txtBillNumber;
+        private DevExpress.XtraEditors.SpinEdit spinBillNumber;
         private DevExpress.XtraEditors.ComboBoxEdit cmbBillType;
         private DevExpress.XtraEditors.SearchLookUpEdit cmbAccountTree;
         private DevExpress.XtraGrid.Views.Grid.GridView gridViewAccountTree;
@@ -441,6 +489,9 @@
         private DevExpress.XtraGrid.Columns.GridColumn colItem;
         private DevExpress.XtraGrid.Columns.GridColumn colQty;
         private DevExpress.XtraGrid.Columns.GridColumn colPrice;
+        private DevExpress.XtraGrid.Columns.GridColumn colTotal;
+        private DevExpress.XtraEditors.SimpleButton btnAddItem;
+        private DevExpress.XtraEditors.SimpleButton btnDeleteItem;
         private DevExpress.XtraEditors.LabelControl lblTotal;
         private Controls.SaveCancelControl2 saveCancelControl21;
     }

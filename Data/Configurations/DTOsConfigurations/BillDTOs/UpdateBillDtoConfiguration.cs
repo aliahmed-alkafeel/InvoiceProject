@@ -10,8 +10,7 @@ namespace Data.Configurations.DTOsConfigurations
         public UpdateBillDtoConfiguration()
         {
             RuleFor(x => x.BillNumber)
-                .NotEmpty().WithMessage("رقم الفاتورة مطلوب")
-                .MaximumLength(50).WithMessage("الحد الاقصى لطول رقم الفاتورة هو 50");
+                .GreaterThan(0).WithMessage("رقم الفاتورة مطلوب ويجب أن يكون أكبر من صفر");
 
             RuleFor(x => x.BillType).NotEmpty().WithMessage("نوع الفاتورة مطلوب")
                 .Must(v => v == BillType.In || v == BillType.Out).WithMessage("نوع الفاتورة غير صحيح");

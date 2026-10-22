@@ -126,6 +126,7 @@
     <Compile Include="Forms\AccountsTree\XtraForm1.Designer.cs">
       <DependentUpon>XtraForm1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Bills\BillItemRow.cs" />
     <Compile Include="Forms\Bills\BillsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -168,6 +169,7 @@
     <Compile Include="Forms\Employees\EmployeesForm.Designer.cs">
       <DependentUpon>EmployeesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\BillItemsGridHelper.cs" />
     <Compile Include="Extensions\GlobalExceptionHandler.cs" />
     <Compile Include="Extensions\ValidationHelper.cs" />
     <Compile Include="Forms\Employees\EmployeesManageForm.cs">

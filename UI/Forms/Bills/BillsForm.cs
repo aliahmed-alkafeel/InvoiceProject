@@ -230,9 +230,9 @@ namespace UI.Forms
             ShowBillItems(GetSelectedBill()?.BillNumber);
         }
 
-        private void ShowBillItems(string billNumber)
+        private void ShowBillItems(int? billNumber)
         {
-            if (string.IsNullOrWhiteSpace(billNumber))
+            if (!billNumber.HasValue || billNumber.Value <= 0)
             {
                 XtraMessageBox.Show(
                     "يرجى اختيار فاتورة أولاً",
@@ -249,7 +249,7 @@ namespace UI.Forms
                 if (itemBillsForm == null)
                     return;
 
-                itemBillsForm.BillNumber = billNumber;
+                itemBillsForm.BillNumber = billNumber.Value;
 
                 itemBillsForm.ShowDialog(this);
             }

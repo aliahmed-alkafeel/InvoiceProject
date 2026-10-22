@@ -118,6 +118,10 @@
     <Compile Include="Migrations\202610200725179_notedeleted1.Designer.cs">
       <DependentUpon>202610200725179_notedeleted1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202610220626534_BillNumberToInt.cs" />
+    <Compile Include="Migrations\202610220626534_BillNumberToInt.Designer.cs">
+      <DependentUpon>202610220626534_BillNumberToInt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Implementations\GenericRepository.cs" />
@@ -163,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202610200725179_notedeleted1.resx">
       <DependentUpon>202610200725179_notedeleted1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202610220626534_BillNumberToInt.resx">
+      <DependentUpon>202610220626534_BillNumberToInt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

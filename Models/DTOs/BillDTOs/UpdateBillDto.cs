@@ -9,7 +9,7 @@ namespace Models.DTOs
 {
     public class UpdateBillDto : BaseDto
     {
-        public string BillNumber { get; set; }
+        public int BillNumber { get; set; }
         public string BillType { get; set; }
         public Guid AccountTreeGuid { get; set; }
         public Guid CurrencyGuid { get; set; }

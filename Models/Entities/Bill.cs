@@ -11,7 +11,7 @@ namespace Models.Entities
 {
     public class Bill : BaseEntity
     {
-        public string BillNumber { get; set; }
+        public int BillNumber { get; set; }
 
         public string BillType { get; set; } 
 

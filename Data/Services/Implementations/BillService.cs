@@ -90,16 +90,14 @@ namespace Data.Services.Implementations
             return bill;
         }
 
-        public async Task<BillDto> GetBillByNumberAsync(string billNumber)
+        public async Task<BillDto> GetBillByNumberAsync(int billNumber)
         {
-            if (string.IsNullOrWhiteSpace(billNumber))
+            if (billNumber <= 0)
                 throw new ArgumentException("رقم الفاتورة مطلوب.", nameof(billNumber));
-
-            var normalizedNumber = billNumber.Trim();
 
             var bill = await _unitOfWork.Bills
                 .Select()
-                .Where(b => b.BillNumber == normalizedNumber)
+                .Where(b => b.BillNumber == billNumber)
                 .OrderByDescending(b => b.Date)
                 .Select(b => new BillDto
                 {
