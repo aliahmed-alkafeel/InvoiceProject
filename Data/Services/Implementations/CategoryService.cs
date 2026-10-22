@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Data.Services.Implementations
@@ -19,7 +20,7 @@ namespace Data.Services.Implementations
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<CategoryDto>> GetAllCategoriesAsync()
+        public async Task<List<CategoryDto>> GetAllCategoriesAsync(CancellationToken cts)
         {
             return await _unitOfWork.Categories
                 .Select()
@@ -30,7 +31,7 @@ namespace Data.Services.Implementations
                     IsActive = c.IsActive,
                     Notes = c.Notes
                 })
-                .ToListAsync();
+                .ToListAsync(cts);
         }
 
         public async Task<CategoryDto> GetCategoryByIdAsync(Guid id)

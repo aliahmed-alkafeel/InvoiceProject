@@ -117,7 +117,9 @@ namespace UI.Forms.Bills
                 lblTitle.Text = "إضافة فاتورة";
                 saveCancelControl21.SaveText = "إضافة";
 
+                spinBillNumber.Enabled = false;
                 spinBillNumber.EditValue = null;
+                spinBillNumber.Properties.NullText = "يتم التوليد تلقائياً";
                 cmbBillType.EditValue = null;
                 cmbAccountTree.EditValue = null;
                 cmbCurrency.EditValue = null;
@@ -134,6 +136,8 @@ namespace UI.Forms.Bills
             lblTitle.Text = "تعديل الفاتورة";
             saveCancelControl21.SaveText = "تعديل";
 
+            spinBillNumber.Enabled = true;
+            spinBillNumber.Properties.NullText = "أدخل رقم الفاتورة";
             spinBillNumber.EditValue = bill.BillNumber;
             cmbBillType.EditValue = bill.BillType;
             cmbAccountTree.EditValue = bill.AccountTreeGuid;
@@ -179,7 +183,7 @@ namespace UI.Forms.Bills
                 var newBill = new CreateBillDto
                 {
                     Id = Guid.NewGuid(),
-                    BillNumber = billNumber,
+                    BillNumber = 0,
                     BillType = billType,
                     AccountTreeGuid = accountTreeGuid,
                     CurrencyGuid = currencyGuid,

@@ -11,6 +11,7 @@ using System;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Extensions;
 
 
 namespace UI.Forms.Categories
@@ -58,7 +59,9 @@ namespace UI.Forms.Categories
             _isLoadingCategories = true;
             try
             {
-                var categorys = await _categoryService.GetAllCategoriesAsync();
+                var categorys =  this.WithLoading(
+                    cts => _categoryService.GetAllCategoriesAsync(cts),
+                    "جارٍ تحميل الفئات، يرجى الانتظار...");
 
                 gridControl1.DataSource = categorys;
 
@@ -187,7 +190,7 @@ namespace UI.Forms.Categories
         {
             if (CheckCategoriesLoading())
                 return;
-
+  
             UseWaitCursor = true;
 
             try

@@ -13,6 +13,8 @@ namespace UI.Extensions
 
             Application.ThreadException += (sender, e) =>
             {
+                if (e.Exception is OperationCanceledException)
+                    return;
                 ShowError(e.Exception);
             };
 

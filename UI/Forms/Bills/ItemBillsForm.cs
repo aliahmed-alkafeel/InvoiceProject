@@ -164,10 +164,15 @@ namespace UI.Forms
             if (_currentIndex < 0 || _bills.Count == 0)
                 return;
 
+            if (_bills.Count == 0)
+                return;
+
             var targetIndex = _currentIndex + offset;
 
-            if (targetIndex < 0 || targetIndex >= _bills.Count)
-                return;
+            if (targetIndex < 0)
+                targetIndex = _bills.Count - 1;
+            else if (targetIndex >= _bills.Count)
+                targetIndex = 0;
 
             var target = _bills[targetIndex];
 
@@ -556,8 +561,8 @@ namespace UI.Forms
         {
             var hasCurrentBill = _currentIndex >= 0 && _currentIndex < _bills.Count;
 
-            btnPrev.Enabled = _currentIndex > 0;
-            btnNext.Enabled = hasCurrentBill && _currentIndex < _bills.Count - 1;
+            btnPrev.Enabled = _bills.Count > 1 && hasCurrentBill;
+            btnNext.Enabled = _bills.Count > 1 && hasCurrentBill;
             btnAddItems.Enabled = hasCurrentBill;
 
             btnAddItem.Enabled = hasCurrentBill;

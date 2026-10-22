@@ -107,7 +107,8 @@ namespace UI.Forms.Items
 
         private async void ItemsEditForm_Load(object sender, EventArgs e)
         {
-            var categories = (await _categoryService.GetAllCategoriesAsync())
+            var categories = ( this.WithLoading(
+            cts => _categoryService.GetAllCategoriesAsync(cts)))
                 .Select(c => new
                 {
                     c.Id,

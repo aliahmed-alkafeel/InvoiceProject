@@ -159,9 +159,16 @@ namespace Data.Services.Implementations
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات الفاتورة مطلوبة.");
 
+            var lastBillNumber = await _unitOfWork.Bills
+                .Select()
+                .Where(b => b.BillNumber >= 1)
+                .OrderByDescending(b => b.BillNumber)
+                .Select(b => (int?)b.BillNumber)
+                .FirstOrDefaultAsync();
+
             var bill = new Bill
             {
-                BillNumber = model.BillNumber,
+                BillNumber = (lastBillNumber ?? 0) + 1,
                 BillType = model.BillType,
                 AccountTreeGuid = model.AccountTreeGuid,
                 CurrencyGuid = model.CurrencyGuid,

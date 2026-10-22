@@ -108,6 +108,7 @@
     <Compile Include="Controls\ToolBarControl.Designer.cs">
       <DependentUpon>ToolBarControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\LoadingExtensions.cs" />
     <Compile Include="Forms\AccountsTree\AccountsTreeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -208,6 +209,12 @@
     <Compile Include="Forms\Items\ItemsEditForm.Designer.cs">
       <DependentUpon>ItemsEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LoadingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LoadingForm.Designer.cs">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -301,6 +308,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Items\ItemsEditForm.resx">
       <DependentUpon>ItemsEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LoadingForm.resx">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

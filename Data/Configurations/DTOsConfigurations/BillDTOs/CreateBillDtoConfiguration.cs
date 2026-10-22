@@ -10,7 +10,7 @@ namespace Data.Configurations.DTOsConfigurations
         public CreateBillDtoConfiguration()
         {
             RuleFor(x => x.BillNumber)
-                .GreaterThan(0).WithMessage("رقم الفاتورة مطلوب ويجب أن يكون أكبر من صفر");
+                .GreaterThanOrEqualTo(0);
 
             RuleFor(x => x.BillType).NotEmpty().WithMessage("نوع الفاتورة مطلوب")
                 .Must(v => v == BillType.In || v == BillType.Out).WithMessage("نوع الفاتورة غير صحيح");
