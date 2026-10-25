@@ -28,11 +28,6 @@ namespace UI.Forms.AccountsTree
             saveCancelControl21.CancelClicked += SaveCancelControl_CancelClicked;
         }
 
-        /// <summary>
-        /// الحساب الأب المقترح عند الإضافة (العنصر المحدد في شجرة الحسابات).
-        /// </summary>
-        public AccountsTreeDto PreselectedParent { get; set; }
-
         private async void AccountsTreeManageForm_Load(object sender, EventArgs e)
         {
             try
@@ -65,21 +60,9 @@ namespace UI.Forms.AccountsTree
                 .ToList();
 
             cmbParent.Properties.DataSource = parents;
-            cmbParent.Properties.DisplayMember = "AccountName";
-            cmbParent.Properties.ValueMember = "Id";
-            cmbParent.Properties.NullText = "حساب رئيسي (بدون أب)";
-
-            cmbParent.Properties.View.Columns.Clear();
-            cmbParent.Properties.View.Columns
-                .AddVisible("AccountCode", "رمز الحساب");
-            cmbParent.Properties.View.Columns
-                .AddVisible("AccountName", "اسم الحساب");
         }
 
-        /// <summary>
-        /// الحسابات التي يمكن أن يكون الحساب الحالي تابعاً لها،
-        /// مع استبعاد الحساب نفسه وكل الحسابات التابعة له منعاً للتداخل.
-        /// </summary>
+
         private List<AccountsTreeDto> GetParentCandidates()
         {
             var excludedIds = new HashSet<Guid>();
@@ -243,7 +226,7 @@ namespace UI.Forms.AccountsTree
             chkIsLeaf.Checked = false;
             chkIsActive.Checked = true;
             txtNotes.Text = string.Empty;
-            cmbParent.EditValue = PreselectedParent?.Id;
+            cmbParent.EditValue = null;
         }
     }
 }

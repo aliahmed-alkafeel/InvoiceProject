@@ -55,10 +55,11 @@
             // 
             this.lblTitle.Appearance.Font = new System.Drawing.Font("Times New Roman", 18F);
             this.lblTitle.Appearance.Options.UseFont = true;
+            this.lblTitle.Appearance.Options.UseTextOptions = true;
             this.lblTitle.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.lblTitle.Location = new System.Drawing.Point(185, 22);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(190, 27);
+            this.lblTitle.Size = new System.Drawing.Size(106, 27);
             this.lblTitle.TabIndex = 20;
             this.lblTitle.Text = "تعديل الحساب";
             // 
@@ -66,11 +67,11 @@
             // 
             this.labelControl3.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelControl3.Appearance.Options.UseFont = true;
+            this.labelControl3.Appearance.Options.UseTextOptions = true;
             this.labelControl3.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelControl3.AutoSize = false;
             this.labelControl3.Location = new System.Drawing.Point(380, 68);
             this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Size = new System.Drawing.Size(140, 17);
+            this.labelControl3.Size = new System.Drawing.Size(83, 17);
             this.labelControl3.TabIndex = 14;
             this.labelControl3.Text = ":اسم الحساب";
             // 
@@ -78,11 +79,11 @@
             // 
             this.labelControl4.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelControl4.Appearance.Options.UseFont = true;
+            this.labelControl4.Appearance.Options.UseTextOptions = true;
             this.labelControl4.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelControl4.AutoSize = false;
             this.labelControl4.Location = new System.Drawing.Point(380, 104);
             this.labelControl4.Name = "labelControl4";
-            this.labelControl4.Size = new System.Drawing.Size(140, 17);
+            this.labelControl4.Size = new System.Drawing.Size(74, 17);
             this.labelControl4.TabIndex = 15;
             this.labelControl4.Text = ":رمز الحساب";
             // 
@@ -90,11 +91,11 @@
             // 
             this.labelControl5.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelControl5.Appearance.Options.UseFont = true;
+            this.labelControl5.Appearance.Options.UseTextOptions = true;
             this.labelControl5.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelControl5.AutoSize = false;
             this.labelControl5.Location = new System.Drawing.Point(380, 140);
             this.labelControl5.Name = "labelControl5";
-            this.labelControl5.Size = new System.Drawing.Size(140, 17);
+            this.labelControl5.Size = new System.Drawing.Size(79, 17);
             this.labelControl5.TabIndex = 16;
             this.labelControl5.Text = ":الحساب الأب";
             // 
@@ -102,11 +103,11 @@
             // 
             this.labelControl6.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelControl6.Appearance.Options.UseFont = true;
+            this.labelControl6.Appearance.Options.UseTextOptions = true;
             this.labelControl6.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelControl6.AutoSize = false;
             this.labelControl6.Location = new System.Drawing.Point(380, 244);
             this.labelControl6.Name = "labelControl6";
-            this.labelControl6.Size = new System.Drawing.Size(140, 17);
+            this.labelControl6.Size = new System.Drawing.Size(65, 17);
             this.labelControl6.TabIndex = 19;
             this.labelControl6.Text = ":الملاحظات";
             // 
@@ -130,7 +131,9 @@
             this.cmbParent.Name = "cmbParent";
             this.cmbParent.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbParent.Properties.DisplayMember = "AccountName";
             this.cmbParent.Properties.PopupView = this.gridView1;
+            this.cmbParent.Properties.ValueMember = "Id";
             this.cmbParent.Size = new System.Drawing.Size(285, 20);
             this.cmbParent.TabIndex = 11;
             // 
@@ -177,7 +180,7 @@
             this.chkIsActive.Name = "chkIsActive";
             this.chkIsActive.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.chkIsActive.Properties.Appearance.Options.UseFont = true;
-            this.chkIsActive.Properties.Caption = "فعالة";
+            this.chkIsActive.Properties.Caption = "فعال";
             this.chkIsActive.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.chkIsActive.Size = new System.Drawing.Size(105, 21);
             this.chkIsActive.TabIndex = 9;

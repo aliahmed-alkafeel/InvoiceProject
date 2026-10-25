@@ -6,6 +6,7 @@ using Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -50,6 +51,13 @@ namespace UI.Forms
         /// رقم الفاتورة التي سيتم تحميلها عند فتح النموذج، و null لعرض أول فاتورة تلقائياً.
         /// </summary>
         public int? BillNumber { get; set; }
+
+        public ItemBillsForm()
+        {
+            InitializeComponent();
+
+            gridControl1.DataSource = _billItems;
+        }
 
         public ItemBillsForm(IBillService billService, IItemService itemService)
         {
@@ -162,9 +170,6 @@ namespace UI.Forms
         private async Task NavigateAsync(int offset)
         {
             if (_currentIndex < 0 || _bills.Count == 0)
-                return;
-
-            if (_bills.Count == 0)
                 return;
 
             var targetIndex = _currentIndex + offset;

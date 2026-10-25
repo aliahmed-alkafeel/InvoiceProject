@@ -83,8 +83,6 @@ namespace UI.Forms
                 if (manageForm == null)
                     return;
 
-                manageForm.PreselectedParent = selectedAccount;
-
                 var result = manageForm.ShowDialog(this);
 
                 if (result == DialogResult.OK)
