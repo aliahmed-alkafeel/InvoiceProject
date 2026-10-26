@@ -65,34 +65,35 @@ namespace UI.Forms.AccountsTree
 
         private List<AccountsTreeDto> GetParentCandidates()
         {
+            if (_selectedAccount == null)
+                return _accounts.ToList();
+
+            var childrenByParent = _accounts
+                .Where(a => a.ParentGuid.HasValue)
+                .ToLookup(a => a.ParentGuid.Value);
+
             var excludedIds = new HashSet<Guid>();
+            var stack = new Stack<Guid>();
 
-            if (_selectedAccount != null)
+            stack.Push(_selectedAccount.Id);
+
+            while (stack.Count > 0)
             {
-                excludedIds.Add(_selectedAccount.Id);
+                var id = stack.Pop();
 
-                bool foundChild = true;
-                while (foundChild)
-                {
-                    foundChild = false;
+                if (!excludedIds.Add(id))
+                    continue;
 
-                    foreach (var account in _accounts)
-                    {
-                        if (account.ParentGuid.HasValue &&
-                            excludedIds.Contains(account.ParentGuid.Value) &&
-                            !excludedIds.Contains(account.Id))
-                        {
-                            excludedIds.Add(account.Id);
-                            foundChild = true;
-                        }
-                    }
-                }
+                foreach (var child in childrenByParent[id])
+                    stack.Push(child.Id);
             }
 
             return _accounts
                 .Where(a => !excludedIds.Contains(a.Id))
                 .ToList();
         }
+
+
 
         private async void SaveCancelControl_SaveClicked()
         {
@@ -227,6 +228,11 @@ namespace UI.Forms.AccountsTree
             chkIsActive.Checked = true;
             txtNotes.Text = string.Empty;
             cmbParent.EditValue = null;
+        }
+
+        private void cmbParent_EditValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -46,6 +46,7 @@
             DevExpress.XtraLayout.ColumnDefinition columnDefinition11 = new DevExpress.XtraLayout.ColumnDefinition();
             DevExpress.XtraLayout.ColumnDefinition columnDefinition12 = new DevExpress.XtraLayout.ColumnDefinition();
             DevExpress.XtraLayout.ColumnDefinition columnDefinition13 = new DevExpress.XtraLayout.ColumnDefinition();
+            DevExpress.XtraLayout.ColumnDefinition columnDefinition14 = new DevExpress.XtraLayout.ColumnDefinition();
             DevExpress.XtraLayout.RowDefinition rowDefinition6 = new DevExpress.XtraLayout.RowDefinition();
             this.layoutSearch = new DevExpress.XtraLayout.LayoutControl();
             this.spinBillNumber = new DevExpress.XtraEditors.SpinEdit();
@@ -71,7 +72,6 @@
             this.itemDate = new DevExpress.XtraLayout.LayoutControlItem();
             this.itemCurrency = new DevExpress.XtraLayout.LayoutControlItem();
             this.itemNotes = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lblTotal = new DevExpress.XtraEditors.LabelControl();
             this.layoutItemsActions = new DevExpress.XtraLayout.LayoutControl();
             this.btnAddItem = new DevExpress.XtraEditors.SimpleButton();
             this.btnDeleteItem = new DevExpress.XtraEditors.SimpleButton();
@@ -86,6 +86,8 @@
             this.colQty = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTotal = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.lblTotal = new DevExpress.XtraEditors.LabelControl();
+            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutSearch)).BeginInit();
             this.layoutSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spinBillNumber.Properties)).BeginInit();
@@ -111,6 +113,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.itemSaveItems)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             this.SuspendLayout();
             // 
             // layoutSearch
@@ -282,7 +285,7 @@
             this.layoutBillInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.layoutBillInfo.Location = new System.Drawing.Point(0, 84);
             this.layoutBillInfo.Name = "layoutBillInfo";
-            this.layoutBillInfo.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2808, 268, 650, 400);
+            this.layoutBillInfo.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2407, 355, 650, 400);
             this.layoutBillInfo.Root = this.Root_BillInfo;
             this.layoutBillInfo.Size = new System.Drawing.Size(1000, 110);
             this.layoutBillInfo.TabIndex = 1;
@@ -402,7 +405,7 @@
             this.itemType.AppearanceItemCaption.Options.UseFont = true;
             this.itemType.AppearanceItemCaption.Options.UseTextOptions = true;
             this.itemType.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.itemType.ContentHorzAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.itemType.ContentHorzAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.itemType.ContentVertAlignment = DevExpress.Utils.VertAlignment.Center;
             this.itemType.Control = this.lblTypeValue;
             this.itemType.Location = new System.Drawing.Point(730, 0);
@@ -497,27 +500,16 @@
             this.itemNotes.Text = ":الملاحظات";
             this.itemNotes.TextLocation = DevExpress.Utils.Locations.Right;
             // 
-            // lblTotal
-            // 
-            this.lblTotal.Appearance.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold);
-            this.lblTotal.Appearance.Options.UseFont = true;
-            this.lblTotal.Appearance.Options.UseTextOptions = true;
-            this.lblTotal.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.lblTotal.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblTotal.Location = new System.Drawing.Point(0, 582);
-            this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(126, 18);
-            this.lblTotal.TabIndex = 2;
-            this.lblTotal.Text = "إجمالي الفاتورة: 0";
-            // 
             // layoutItemsActions
             // 
+            this.layoutItemsActions.Controls.Add(this.lblTotal);
             this.layoutItemsActions.Controls.Add(this.btnAddItem);
             this.layoutItemsActions.Controls.Add(this.btnDeleteItem);
             this.layoutItemsActions.Controls.Add(this.btnSaveItems);
             this.layoutItemsActions.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.layoutItemsActions.Location = new System.Drawing.Point(0, 546);
+            this.layoutItemsActions.Location = new System.Drawing.Point(0, 564);
             this.layoutItemsActions.Name = "layoutItemsActions";
+            this.layoutItemsActions.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1270, 361, 650, 400);
             this.layoutItemsActions.Root = this.Root_ItemsActions;
             this.layoutItemsActions.Size = new System.Drawing.Size(1000, 36);
             this.layoutItemsActions.TabIndex = 3;
@@ -568,25 +560,29 @@
             this.Root_ItemsActions.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.itemAddItem,
             this.itemDeleteItem,
-            this.itemSaveItems});
+            this.itemSaveItems,
+            this.layoutControlItem1});
             this.Root_ItemsActions.LayoutMode = DevExpress.XtraLayout.Utils.LayoutMode.Table;
-            this.Root_ItemsActions.Name = "Root_ItemsActions";
-            columnDefinition9.SizeType = System.Windows.Forms.SizeType.Percent;
-            columnDefinition9.Width = 100D;
-            columnDefinition10.SizeType = System.Windows.Forms.SizeType.Absolute;
-            columnDefinition10.Width = 130D;
+            this.Root_ItemsActions.Name = "Root";
+            columnDefinition9.SizeType = System.Windows.Forms.SizeType.Absolute;
+            columnDefinition9.Width = 20D;
+            columnDefinition10.SizeType = System.Windows.Forms.SizeType.Percent;
+            columnDefinition10.Width = 100D;
             columnDefinition11.SizeType = System.Windows.Forms.SizeType.Absolute;
-            columnDefinition11.Width = 110D;
+            columnDefinition11.Width = 130D;
             columnDefinition12.SizeType = System.Windows.Forms.SizeType.Absolute;
             columnDefinition12.Width = 110D;
             columnDefinition13.SizeType = System.Windows.Forms.SizeType.Absolute;
-            columnDefinition13.Width = 20D;
+            columnDefinition13.Width = 110D;
+            columnDefinition14.SizeType = System.Windows.Forms.SizeType.Absolute;
+            columnDefinition14.Width = 20D;
             this.Root_ItemsActions.OptionsTableLayoutGroup.ColumnDefinitions.AddRange(new DevExpress.XtraLayout.ColumnDefinition[] {
             columnDefinition9,
             columnDefinition10,
             columnDefinition11,
             columnDefinition12,
-            columnDefinition13});
+            columnDefinition13,
+            columnDefinition14});
             rowDefinition6.Height = 100D;
             rowDefinition6.SizeType = System.Windows.Forms.SizeType.Percent;
             this.Root_ItemsActions.OptionsTableLayoutGroup.RowDefinitions.AddRange(new DevExpress.XtraLayout.RowDefinition[] {
@@ -601,7 +597,7 @@
             this.itemAddItem.Control = this.btnAddItem;
             this.itemAddItem.Location = new System.Drawing.Point(870, 0);
             this.itemAddItem.Name = "itemAddItem";
-            this.itemAddItem.OptionsTableLayoutItem.ColumnIndex = 3;
+            this.itemAddItem.OptionsTableLayoutItem.ColumnIndex = 4;
             this.itemAddItem.Size = new System.Drawing.Size(110, 36);
             this.itemAddItem.TextVisible = false;
             // 
@@ -611,7 +607,7 @@
             this.itemDeleteItem.Control = this.btnDeleteItem;
             this.itemDeleteItem.Location = new System.Drawing.Point(760, 0);
             this.itemDeleteItem.Name = "itemDeleteItem";
-            this.itemDeleteItem.OptionsTableLayoutItem.ColumnIndex = 2;
+            this.itemDeleteItem.OptionsTableLayoutItem.ColumnIndex = 3;
             this.itemDeleteItem.Size = new System.Drawing.Size(110, 36);
             this.itemDeleteItem.TextVisible = false;
             // 
@@ -621,7 +617,7 @@
             this.itemSaveItems.Control = this.btnSaveItems;
             this.itemSaveItems.Location = new System.Drawing.Point(630, 0);
             this.itemSaveItems.Name = "itemSaveItems";
-            this.itemSaveItems.OptionsTableLayoutItem.ColumnIndex = 1;
+            this.itemSaveItems.OptionsTableLayoutItem.ColumnIndex = 2;
             this.itemSaveItems.Size = new System.Drawing.Size(130, 36);
             this.itemSaveItems.TextVisible = false;
             // 
@@ -632,7 +628,7 @@
             this.gridControl1.MainView = this.gridView1;
             this.gridControl1.Name = "gridControl1";
             this.gridControl1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.gridControl1.Size = new System.Drawing.Size(1000, 352);
+            this.gridControl1.Size = new System.Drawing.Size(1000, 370);
             this.gridControl1.TabIndex = 3;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -692,6 +688,30 @@
             this.colTotal.VisibleIndex = 3;
             this.colTotal.Width = 160;
             // 
+            // lblTotal
+            // 
+            this.lblTotal.Appearance.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold);
+            this.lblTotal.Appearance.Options.UseFont = true;
+            this.lblTotal.Appearance.Options.UseTextOptions = true;
+            this.lblTotal.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.lblTotal.Location = new System.Drawing.Point(22, 9);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(126, 18);
+            this.lblTotal.StyleController = this.layoutItemsActions;
+            this.lblTotal.TabIndex = 4;
+            this.lblTotal.Text = "إجمالي الفاتورة: 0";
+            // 
+            // layoutControlItem1
+            // 
+            this.layoutControlItem1.ContentHorzAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.layoutControlItem1.ContentVertAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.layoutControlItem1.Control = this.lblTotal;
+            this.layoutControlItem1.Location = new System.Drawing.Point(20, 0);
+            this.layoutControlItem1.Name = "layoutControlItem1";
+            this.layoutControlItem1.OptionsTableLayoutItem.ColumnIndex = 1;
+            this.layoutControlItem1.Size = new System.Drawing.Size(610, 36);
+            this.layoutControlItem1.TextVisible = false;
+            // 
             // ItemBillsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -699,7 +719,6 @@
             this.ClientSize = new System.Drawing.Size(1000, 600);
             this.Controls.Add(this.gridControl1);
             this.Controls.Add(this.layoutItemsActions);
-            this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.layoutBillInfo);
             this.Controls.Add(this.layoutSearch);
             this.Name = "ItemBillsForm";
@@ -730,8 +749,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.itemSaveItems)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -759,7 +778,6 @@
         private DevExpress.XtraLayout.LayoutControlItem itemDate;
         private DevExpress.XtraLayout.LayoutControlItem itemCurrency;
         private DevExpress.XtraLayout.LayoutControlItem itemNotes;
-        private DevExpress.XtraEditors.LabelControl lblTotal;
         private DevExpress.XtraLayout.LayoutControl layoutItemsActions;
         private DevExpress.XtraEditors.SimpleButton btnAddItem;
         private DevExpress.XtraEditors.SimpleButton btnDeleteItem;
@@ -776,5 +794,7 @@
         private DevExpress.XtraLayout.LayoutControlGroup Root_Search;
         private DevExpress.XtraLayout.LayoutControlGroup Root_BillInfo;
         private DevExpress.XtraLayout.LayoutControlGroup Root_ItemsActions;
+        private DevExpress.XtraEditors.LabelControl lblTotal;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
     }
 }

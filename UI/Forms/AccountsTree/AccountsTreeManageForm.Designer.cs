@@ -37,11 +37,11 @@
             this.txtAccountCode = new DevExpress.XtraEditors.TextEdit();
             this.cmbParent = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.chkIsLeaf = new DevExpress.XtraEditors.CheckEdit();
             this.chkIsActive = new DevExpress.XtraEditors.CheckEdit();
             this.txtNotes = new System.Windows.Forms.RichTextBox();
+            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.saveCancelControl21 = new UI.Controls.SaveCancelControl2();
             ((System.ComponentModel.ISupportInitialize)(this.txtAccountName.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAccountCode.Properties)).BeginInit();
@@ -136,6 +136,7 @@
             this.cmbParent.Properties.ValueMember = "Id";
             this.cmbParent.Size = new System.Drawing.Size(285, 20);
             this.cmbParent.TabIndex = 11;
+            this.cmbParent.EditValueChanged += new System.EventHandler(this.cmbParent_EditValueChanged);
             // 
             // gridView1
             // 
@@ -146,22 +147,6 @@
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.gridView1.OptionsView.ShowGroupPanel = false;
-            // 
-            // gridColumn1
-            // 
-            this.gridColumn1.Caption = "رمز الحساب";
-            this.gridColumn1.FieldName = "AccountCode";
-            this.gridColumn1.Name = "gridColumn1";
-            this.gridColumn1.Visible = true;
-            this.gridColumn1.VisibleIndex = 0;
-            // 
-            // gridColumn2
-            // 
-            this.gridColumn2.Caption = "اسم الحساب";
-            this.gridColumn2.FieldName = "AccountName";
-            this.gridColumn2.Name = "gridColumn2";
-            this.gridColumn2.Visible = true;
-            this.gridColumn2.VisibleIndex = 1;
             // 
             // chkIsLeaf
             // 
@@ -192,6 +177,22 @@
             this.txtNotes.Size = new System.Drawing.Size(285, 59);
             this.txtNotes.TabIndex = 8;
             this.txtNotes.Text = "";
+            // 
+            // gridColumn1
+            // 
+            this.gridColumn1.Caption = "رمز الحساب";
+            this.gridColumn1.FieldName = "AccountCode";
+            this.gridColumn1.Name = "gridColumn1";
+            this.gridColumn1.Visible = true;
+            this.gridColumn1.VisibleIndex = 0;
+            // 
+            // gridColumn2
+            // 
+            this.gridColumn2.Caption = "اسم الحساب";
+            this.gridColumn2.FieldName = "AccountName";
+            this.gridColumn2.Name = "gridColumn2";
+            this.gridColumn2.Visible = true;
+            this.gridColumn2.VisibleIndex = 1;
             // 
             // saveCancelControl21
             // 

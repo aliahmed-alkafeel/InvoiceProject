@@ -68,151 +68,160 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridViewCurrency)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spnCurrencyEqualValue.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deDate.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.deDate.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlItems)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewItems)).BeginInit();
             this.SuspendLayout();
-            //
+            // 
             // lblTitle
-            //
+            // 
             this.lblTitle.Appearance.Font = new System.Drawing.Font("Times New Roman", 18F);
             this.lblTitle.Appearance.Options.UseFont = true;
+            this.lblTitle.Appearance.Options.UseTextOptions = true;
             this.lblTitle.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.lblTitle.AutoSize = false;
-            this.lblTitle.Location = new System.Drawing.Point(330, 12);
+            this.lblTitle.Location = new System.Drawing.Point(330, 9);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(260, 30);
+            this.lblTitle.Size = new System.Drawing.Size(99, 27);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "إضافة فاتورة";
-            //
+            // 
             // labelBillNumber
-            //
+            // 
             this.labelBillNumber.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelBillNumber.Appearance.Options.UseFont = true;
+            this.labelBillNumber.Appearance.Options.UseTextOptions = true;
             this.labelBillNumber.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelBillNumber.AutoSize = false;
-            this.labelBillNumber.Location = new System.Drawing.Point(730, 70);
+            this.labelBillNumber.Location = new System.Drawing.Point(730, 53);
             this.labelBillNumber.Name = "labelBillNumber";
-            this.labelBillNumber.Size = new System.Drawing.Size(150, 20);
+            this.labelBillNumber.Size = new System.Drawing.Size(70, 17);
             this.labelBillNumber.TabIndex = 1;
             this.labelBillNumber.Text = ":رقم الفاتورة";
-            //
+            // 
             // labelBillType
-            //
+            // 
             this.labelBillType.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelBillType.Appearance.Options.UseFont = true;
+            this.labelBillType.Appearance.Options.UseTextOptions = true;
             this.labelBillType.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelBillType.AutoSize = false;
-            this.labelBillType.Location = new System.Drawing.Point(730, 106);
+            this.labelBillType.Location = new System.Drawing.Point(730, 89);
             this.labelBillType.Name = "labelBillType";
-            this.labelBillType.Size = new System.Drawing.Size(150, 20);
+            this.labelBillType.Size = new System.Drawing.Size(67, 17);
             this.labelBillType.TabIndex = 2;
             this.labelBillType.Text = ":نوع الفاتورة";
-            //
+            // 
             // labelAccountTree
-            //
+            // 
             this.labelAccountTree.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelAccountTree.Appearance.Options.UseFont = true;
+            this.labelAccountTree.Appearance.Options.UseTextOptions = true;
             this.labelAccountTree.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelAccountTree.AutoSize = false;
-            this.labelAccountTree.Location = new System.Drawing.Point(730, 142);
+            this.labelAccountTree.Location = new System.Drawing.Point(730, 125);
             this.labelAccountTree.Name = "labelAccountTree";
-            this.labelAccountTree.Size = new System.Drawing.Size(150, 20);
+            this.labelAccountTree.Size = new System.Drawing.Size(119, 17);
             this.labelAccountTree.TabIndex = 3;
             this.labelAccountTree.Text = ":الحساب المحاسبي";
-            //
+            // 
             // labelCurrency
-            //
+            // 
             this.labelCurrency.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelCurrency.Appearance.Options.UseFont = true;
+            this.labelCurrency.Appearance.Options.UseTextOptions = true;
             this.labelCurrency.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelCurrency.AutoSize = false;
-            this.labelCurrency.Location = new System.Drawing.Point(730, 178);
+            this.labelCurrency.Location = new System.Drawing.Point(730, 161);
             this.labelCurrency.Name = "labelCurrency";
-            this.labelCurrency.Size = new System.Drawing.Size(150, 20);
+            this.labelCurrency.Size = new System.Drawing.Size(41, 17);
             this.labelCurrency.TabIndex = 4;
             this.labelCurrency.Text = ":العملة";
-            //
+            // 
             // labelCurrencyEqualValue
-            //
+            // 
             this.labelCurrencyEqualValue.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelCurrencyEqualValue.Appearance.Options.UseFont = true;
+            this.labelCurrencyEqualValue.Appearance.Options.UseTextOptions = true;
             this.labelCurrencyEqualValue.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelCurrencyEqualValue.AutoSize = false;
-            this.labelCurrencyEqualValue.Location = new System.Drawing.Point(730, 214);
+            this.labelCurrencyEqualValue.Location = new System.Drawing.Point(730, 197);
             this.labelCurrencyEqualValue.Name = "labelCurrencyEqualValue";
-            this.labelCurrencyEqualValue.Size = new System.Drawing.Size(150, 20);
+            this.labelCurrencyEqualValue.Size = new System.Drawing.Size(72, 17);
             this.labelCurrencyEqualValue.TabIndex = 5;
             this.labelCurrencyEqualValue.Text = ":سعر الصرف";
-            //
+            // 
             // labelDate
-            //
+            // 
             this.labelDate.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelDate.Appearance.Options.UseFont = true;
+            this.labelDate.Appearance.Options.UseTextOptions = true;
             this.labelDate.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelDate.AutoSize = false;
-            this.labelDate.Location = new System.Drawing.Point(730, 250);
+            this.labelDate.Location = new System.Drawing.Point(730, 233);
             this.labelDate.Name = "labelDate";
-            this.labelDate.Size = new System.Drawing.Size(150, 20);
+            this.labelDate.Size = new System.Drawing.Size(40, 17);
             this.labelDate.TabIndex = 6;
             this.labelDate.Text = ":التاريخ";
-            //
+            // 
             // labelNotes
-            //
+            // 
             this.labelNotes.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelNotes.Appearance.Options.UseFont = true;
+            this.labelNotes.Appearance.Options.UseTextOptions = true;
             this.labelNotes.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelNotes.AutoSize = false;
-            this.labelNotes.Location = new System.Drawing.Point(730, 290);
+            this.labelNotes.Location = new System.Drawing.Point(730, 273);
             this.labelNotes.Name = "labelNotes";
-            this.labelNotes.Size = new System.Drawing.Size(150, 20);
+            this.labelNotes.Size = new System.Drawing.Size(65, 17);
             this.labelNotes.TabIndex = 7;
             this.labelNotes.Text = ":الملاحظات";
-            //
+            // 
             // labelItems
-            //
+            // 
             this.labelItems.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelItems.Appearance.Options.UseFont = true;
+            this.labelItems.Appearance.Options.UseTextOptions = true;
             this.labelItems.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelItems.AutoSize = false;
             this.labelItems.Location = new System.Drawing.Point(730, 356);
             this.labelItems.Name = "labelItems";
-            this.labelItems.Size = new System.Drawing.Size(150, 20);
+            this.labelItems.Size = new System.Drawing.Size(72, 17);
             this.labelItems.TabIndex = 8;
             this.labelItems.Text = ":مواد الفاتورة";
-            //
+            // 
             // spinBillNumber
-            //
-            this.spinBillNumber.Location = new System.Drawing.Point(420, 68);
+            // 
+            this.spinBillNumber.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.spinBillNumber.Location = new System.Drawing.Point(420, 51);
             this.spinBillNumber.Name = "spinBillNumber";
             this.spinBillNumber.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
             this.spinBillNumber.Properties.IsFloatValue = false;
-            this.spinBillNumber.Properties.MaxValue = 2147483647m;
-            this.spinBillNumber.Properties.MinValue = 0m;
+            this.spinBillNumber.Properties.MaxValue = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
             this.spinBillNumber.Properties.NullText = "أدخل رقم الفاتورة";
-            this.spinBillNumber.Size = new System.Drawing.Size(290, 22);
+            this.spinBillNumber.Size = new System.Drawing.Size(290, 20);
             this.spinBillNumber.TabIndex = 9;
-            //
+            // 
             // cmbBillType
-            //
-            this.cmbBillType.Location = new System.Drawing.Point(420, 104);
+            // 
+            this.cmbBillType.Location = new System.Drawing.Point(420, 87);
             this.cmbBillType.Name = "cmbBillType";
             this.cmbBillType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cmbBillType.Size = new System.Drawing.Size(290, 22);
+            this.cmbBillType.Size = new System.Drawing.Size(290, 20);
             this.cmbBillType.TabIndex = 10;
-            //
+            // 
             // cmbAccountTree
-            //
-            this.cmbAccountTree.Location = new System.Drawing.Point(420, 140);
+            // 
+            this.cmbAccountTree.Location = new System.Drawing.Point(420, 123);
             this.cmbAccountTree.Name = "cmbAccountTree";
             this.cmbAccountTree.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.cmbAccountTree.Properties.PopupView = this.gridViewAccountTree;
-            this.cmbAccountTree.Size = new System.Drawing.Size(290, 22);
+            this.cmbAccountTree.Size = new System.Drawing.Size(290, 20);
             this.cmbAccountTree.TabIndex = 11;
-            //
+            // 
             // gridViewAccountTree
-            //
+            // 
             this.gridViewAccountTree.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colAccountName,
             this.colAccountId});
@@ -220,33 +229,33 @@
             this.gridViewAccountTree.Name = "gridViewAccountTree";
             this.gridViewAccountTree.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.gridViewAccountTree.OptionsView.ShowGroupPanel = false;
-            //
+            // 
             // colAccountName
-            //
+            // 
             this.colAccountName.Caption = "اسم الحساب";
             this.colAccountName.FieldName = "AccountName";
             this.colAccountName.Name = "colAccountName";
             this.colAccountName.Visible = true;
             this.colAccountName.VisibleIndex = 0;
-            //
+            // 
             // colAccountId
-            //
+            // 
             this.colAccountId.Caption = "Id";
             this.colAccountId.FieldName = "Id";
             this.colAccountId.Name = "colAccountId";
-            //
+            // 
             // cmbCurrency
-            //
-            this.cmbCurrency.Location = new System.Drawing.Point(420, 176);
+            // 
+            this.cmbCurrency.Location = new System.Drawing.Point(420, 159);
             this.cmbCurrency.Name = "cmbCurrency";
             this.cmbCurrency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.cmbCurrency.Properties.PopupView = this.gridViewCurrency;
-            this.cmbCurrency.Size = new System.Drawing.Size(290, 22);
+            this.cmbCurrency.Size = new System.Drawing.Size(290, 20);
             this.cmbCurrency.TabIndex = 12;
-            //
+            // 
             // gridViewCurrency
-            //
+            // 
             this.gridViewCurrency.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colCurrencyName,
             this.colCurrencyId});
@@ -254,56 +263,63 @@
             this.gridViewCurrency.Name = "gridViewCurrency";
             this.gridViewCurrency.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.gridViewCurrency.OptionsView.ShowGroupPanel = false;
-            //
+            // 
             // colCurrencyName
-            //
+            // 
             this.colCurrencyName.Caption = "اسم العملة";
             this.colCurrencyName.FieldName = "CurrencyName";
             this.colCurrencyName.Name = "colCurrencyName";
             this.colCurrencyName.Visible = true;
             this.colCurrencyName.VisibleIndex = 0;
-            //
+            // 
             // colCurrencyId
-            //
+            // 
             this.colCurrencyId.Caption = "Id";
             this.colCurrencyId.FieldName = "Id";
             this.colCurrencyId.Name = "colCurrencyId";
-            //
+            // 
             // spnCurrencyEqualValue
-            //
+            // 
             this.spnCurrencyEqualValue.EditValue = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            this.spnCurrencyEqualValue.Location = new System.Drawing.Point(420, 212);
+            this.spnCurrencyEqualValue.Location = new System.Drawing.Point(420, 195);
             this.spnCurrencyEqualValue.Name = "spnCurrencyEqualValue";
-            this.spnCurrencyEqualValue.Properties.IsFloatValue = true;
-            this.spnCurrencyEqualValue.Properties.MinValue = 0m;
-            this.spnCurrencyEqualValue.Properties.MaxValue = 1000000m;
-            this.spnCurrencyEqualValue.Properties.Increment = 0.01m;
-            this.spnCurrencyEqualValue.Size = new System.Drawing.Size(290, 22);
+            this.spnCurrencyEqualValue.Properties.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.spnCurrencyEqualValue.Properties.MaxValue = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.spnCurrencyEqualValue.Size = new System.Drawing.Size(290, 20);
             this.spnCurrencyEqualValue.TabIndex = 13;
-            //
+            // 
             // deDate
-            //
+            // 
             this.deDate.EditValue = null;
-            this.deDate.Location = new System.Drawing.Point(420, 248);
+            this.deDate.Location = new System.Drawing.Point(420, 231);
             this.deDate.Name = "deDate";
-            this.deDate.Size = new System.Drawing.Size(290, 22);
+            this.deDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.deDate.Size = new System.Drawing.Size(290, 20);
             this.deDate.TabIndex = 14;
-            //
+            // 
             // txtNotes
-            //
-            this.txtNotes.Location = new System.Drawing.Point(420, 286);
+            // 
+            this.txtNotes.Location = new System.Drawing.Point(420, 269);
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.Size = new System.Drawing.Size(290, 60);
             this.txtNotes.TabIndex = 15;
             this.txtNotes.Text = "";
-            //
+            // 
             // gridControlItems
-            //
-            this.gridControlItems.Dock = System.Windows.Forms.DockStyle.None;
+            // 
             this.gridControlItems.Location = new System.Drawing.Point(40, 380);
             this.gridControlItems.MainView = this.gridViewItems;
             this.gridControlItems.Name = "gridControlItems";
@@ -312,9 +328,9 @@
             this.gridControlItems.TabIndex = 16;
             this.gridControlItems.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewItems});
-            //
+            // 
             // gridViewItems
-            //
+            // 
             this.gridViewItems.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colItem,
             this.colQty,
@@ -325,41 +341,40 @@
             this.gridViewItems.Name = "gridViewItems";
             this.gridViewItems.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
             this.gridViewItems.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
-            this.gridViewItems.OptionsBehavior.Editable = true;
             this.gridViewItems.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.gridViewItems.OptionsView.ShowGroupPanel = false;
             this.gridViewItems.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gridViewItems_CellValueChanged);
             this.gridViewItems.RowCountChanged += new System.EventHandler(this.gridViewItems_RowCountChanged);
-            //
+            // 
             // colItem
-            //
+            // 
             this.colItem.Caption = "المادة";
             this.colItem.FieldName = "ItemGuid";
             this.colItem.Name = "colItem";
             this.colItem.Visible = true;
             this.colItem.VisibleIndex = 0;
             this.colItem.Width = 320;
-            //
+            // 
             // colQty
-            //
+            // 
             this.colQty.Caption = "الكمية";
             this.colQty.FieldName = "Qty";
             this.colQty.Name = "colQty";
             this.colQty.Visible = true;
             this.colQty.VisibleIndex = 1;
             this.colQty.Width = 140;
-            //
+            // 
             // colPrice
-            //
+            // 
             this.colPrice.Caption = "السعر";
             this.colPrice.FieldName = "Price";
             this.colPrice.Name = "colPrice";
             this.colPrice.Visible = true;
             this.colPrice.VisibleIndex = 2;
             this.colPrice.Width = 140;
-            //
+            // 
             // colTotal
-            //
+            // 
             this.colTotal.Caption = "الإجمالي";
             this.colTotal.FieldName = "Total";
             this.colTotal.Name = "colTotal";
@@ -368,9 +383,9 @@
             this.colTotal.Visible = true;
             this.colTotal.VisibleIndex = 3;
             this.colTotal.Width = 140;
-            //
+            // 
             // btnAddItem
-            //
+            // 
             this.btnAddItem.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
             this.btnAddItem.Appearance.Options.UseFont = true;
             this.btnAddItem.Location = new System.Drawing.Point(610, 352);
@@ -380,9 +395,9 @@
             this.btnAddItem.Text = "إضافة مادة";
             this.btnAddItem.ToolTip = "إضافة بند جديد إلى الفاتورة";
             this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click);
-            //
+            // 
             // btnDeleteItem
-            //
+            // 
             this.btnDeleteItem.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
             this.btnDeleteItem.Appearance.Options.UseFont = true;
             this.btnDeleteItem.Location = new System.Drawing.Point(490, 352);
@@ -392,29 +407,29 @@
             this.btnDeleteItem.Text = "حذف المادة";
             this.btnDeleteItem.ToolTip = "حذف البند المحدد من الفاتورة";
             this.btnDeleteItem.Click += new System.EventHandler(this.btnDeleteItem_Click);
-            //
+            // 
             // lblTotal
-            //
+            // 
             this.lblTotal.Appearance.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold);
             this.lblTotal.Appearance.Options.UseFont = true;
+            this.lblTotal.Appearance.Options.UseTextOptions = true;
             this.lblTotal.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.lblTotal.AutoSize = false;
             this.lblTotal.Location = new System.Drawing.Point(60, 560);
             this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(300, 24);
+            this.lblTotal.Size = new System.Drawing.Size(81, 18);
             this.lblTotal.TabIndex = 19;
             this.lblTotal.Text = "الإجمالي: 0";
-            //
+            // 
             // saveCancelControl21
-            //
-            this.saveCancelControl21.Location = new System.Drawing.Point(375, 555);
+            // 
+            this.saveCancelControl21.Location = new System.Drawing.Point(375, 577);
             this.saveCancelControl21.Name = "saveCancelControl21";
             this.saveCancelControl21.SaveText = "حفظ";
             this.saveCancelControl21.Size = new System.Drawing.Size(191, 45);
             this.saveCancelControl21.TabIndex = 20;
-            //
+            // 
             // BillsManageForm
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(920, 640);
@@ -452,6 +467,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.cmbCurrency.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewCurrency)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.spnCurrencyEqualValue.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.deDate.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deDate.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlItems)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewItems)).EndInit();
