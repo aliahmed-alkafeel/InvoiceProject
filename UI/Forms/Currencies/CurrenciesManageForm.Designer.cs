@@ -53,10 +53,11 @@
             // 
             this.lblTitle.Appearance.Font = new System.Drawing.Font("Times New Roman", 18F);
             this.lblTitle.Appearance.Options.UseFont = true;
+            this.lblTitle.Appearance.Options.UseTextOptions = true;
             this.lblTitle.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.lblTitle.Location = new System.Drawing.Point(185, 22);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(190, 27);
+            this.lblTitle.Size = new System.Drawing.Size(89, 27);
             this.lblTitle.TabIndex = 20;
             this.lblTitle.Text = "تعديل العملة";
             // 
@@ -64,11 +65,11 @@
             // 
             this.labelControl8.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelControl8.Appearance.Options.UseFont = true;
+            this.labelControl8.Appearance.Options.UseTextOptions = true;
             this.labelControl8.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelControl8.AutoSize = false;
             this.labelControl8.Location = new System.Drawing.Point(380, 248);
             this.labelControl8.Name = "labelControl8";
-            this.labelControl8.Size = new System.Drawing.Size(140, 17);
+            this.labelControl8.Size = new System.Drawing.Size(65, 17);
             this.labelControl8.TabIndex = 19;
             this.labelControl8.Text = ":الملاحظات";
             // 
@@ -76,11 +77,11 @@
             // 
             this.labelControl7.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelControl7.Appearance.Options.UseFont = true;
+            this.labelControl7.Appearance.Options.UseTextOptions = true;
             this.labelControl7.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelControl7.AutoSize = false;
             this.labelControl7.Location = new System.Drawing.Point(380, 212);
             this.labelControl7.Name = "labelControl7";
-            this.labelControl7.Size = new System.Drawing.Size(140, 17);
+            this.labelControl7.Size = new System.Drawing.Size(34, 17);
             this.labelControl7.TabIndex = 18;
             this.labelControl7.Text = ":فعالة";
             // 
@@ -88,11 +89,11 @@
             // 
             this.labelControl6.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelControl6.Appearance.Options.UseFont = true;
+            this.labelControl6.Appearance.Options.UseTextOptions = true;
             this.labelControl6.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelControl6.AutoSize = false;
-            this.labelControl6.Location = new System.Drawing.Point(380, 176);
+            this.labelControl6.Location = new System.Drawing.Point(380, 140);
             this.labelControl6.Name = "labelControl6";
-            this.labelControl6.Size = new System.Drawing.Size(140, 17);
+            this.labelControl6.Size = new System.Drawing.Size(95, 17);
             this.labelControl6.TabIndex = 17;
             this.labelControl6.Text = ":العملة الرئيسية";
             // 
@@ -100,11 +101,11 @@
             // 
             this.labelControl5.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelControl5.Appearance.Options.UseFont = true;
+            this.labelControl5.Appearance.Options.UseTextOptions = true;
             this.labelControl5.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelControl5.AutoSize = false;
-            this.labelControl5.Location = new System.Drawing.Point(380, 140);
+            this.labelControl5.Location = new System.Drawing.Point(380, 173);
             this.labelControl5.Name = "labelControl5";
-            this.labelControl5.Size = new System.Drawing.Size(140, 17);
+            this.labelControl5.Size = new System.Drawing.Size(72, 17);
             this.labelControl5.TabIndex = 16;
             this.labelControl5.Text = ":سعر الصرف";
             // 
@@ -112,11 +113,11 @@
             // 
             this.labelControl4.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelControl4.Appearance.Options.UseFont = true;
+            this.labelControl4.Appearance.Options.UseTextOptions = true;
             this.labelControl4.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelControl4.AutoSize = false;
             this.labelControl4.Location = new System.Drawing.Point(380, 104);
             this.labelControl4.Name = "labelControl4";
-            this.labelControl4.Size = new System.Drawing.Size(140, 17);
+            this.labelControl4.Size = new System.Drawing.Size(63, 17);
             this.labelControl4.TabIndex = 15;
             this.labelControl4.Text = ":رمز العملة";
             // 
@@ -124,11 +125,11 @@
             // 
             this.labelControl3.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.labelControl3.Appearance.Options.UseFont = true;
+            this.labelControl3.Appearance.Options.UseTextOptions = true;
             this.labelControl3.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelControl3.AutoSize = false;
             this.labelControl3.Location = new System.Drawing.Point(380, 68);
             this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Size = new System.Drawing.Size(140, 17);
+            this.labelControl3.Size = new System.Drawing.Size(72, 17);
             this.labelControl3.TabIndex = 14;
             this.labelControl3.Text = ":اسم العملة";
             // 
@@ -148,25 +149,32 @@
             // 
             // spinCurrencyEqual
             // 
-            this.spinCurrencyEqual.Location = new System.Drawing.Point(70, 138);
+            this.spinCurrencyEqual.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.spinCurrencyEqual.Location = new System.Drawing.Point(70, 171);
             this.spinCurrencyEqual.Name = "spinCurrencyEqual";
             this.spinCurrencyEqual.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.spinCurrencyEqual.Properties.IsFloatValue = true;
-            this.spinCurrencyEqual.Properties.MaxValue = 999999999m;
-            this.spinCurrencyEqual.Properties.MinValue = 0m;
+            this.spinCurrencyEqual.Properties.MaxValue = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
             this.spinCurrencyEqual.Size = new System.Drawing.Size(285, 20);
             this.spinCurrencyEqual.TabIndex = 11;
             // 
             // chkIsMain
             // 
-            this.chkIsMain.Location = new System.Drawing.Point(250, 172);
+            this.chkIsMain.Location = new System.Drawing.Point(233, 136);
             this.chkIsMain.Name = "chkIsMain";
             this.chkIsMain.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
             this.chkIsMain.Properties.Appearance.Options.UseFont = true;
             this.chkIsMain.Properties.Caption = "العملة الرئيسية";
             this.chkIsMain.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.chkIsMain.Size = new System.Drawing.Size(105, 21);
+            this.chkIsMain.Size = new System.Drawing.Size(122, 21);
             this.chkIsMain.TabIndex = 10;
             this.chkIsMain.CheckedChanged += new System.EventHandler(this.chkIsMain_CheckedChanged);
             // 

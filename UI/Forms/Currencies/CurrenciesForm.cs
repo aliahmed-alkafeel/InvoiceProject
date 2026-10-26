@@ -1,12 +1,15 @@
 ﻿using Data.Services.Interfaces;
 using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
+using Models.CurrentUserDetails;
 using Models.DTOs;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Extensions;
 using UI.Forms.Currencies;
 
 namespace UI.Forms
@@ -20,10 +23,12 @@ namespace UI.Forms
         {
             _currencyService = currencyService;
             InitializeComponent();
-
-            toolBarControl1.CreateClicked += CurrenciesToolbar_CreateClicked;
-            toolBarControl1.EditClicked += CurrenciesToolbar_EditClicked;
-            toolBarControl1.DeleteClicked += CurrenciesToolbar_DeleteClicked;
+            if (toolBarControl1.SetManageVisible(CurrentUser.HasRole(UserRole.ManageCurrency)))
+            {
+                toolBarControl1.CreateClicked += CurrenciesToolbar_CreateClicked;
+                toolBarControl1.EditClicked += CurrenciesToolbar_EditClicked;
+                toolBarControl1.DeleteClicked += CurrenciesToolbar_DeleteClicked;
+            }
             toolBarControl1.RefreshClicked += CurrenciesToolbar_RefreshClicked;
         }
 

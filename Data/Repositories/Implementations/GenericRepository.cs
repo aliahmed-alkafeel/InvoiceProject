@@ -8,13 +8,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Data.Context;
 using Models.Entities;
+using Models.CurrentUserDetails;
 
 namespace Data.Repositories.Implementations
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         private readonly DbSet<T> _dbSet;
-        private Guid userId;
         public GenericRepository(InvoiceDbContext context)
         {
             _dbSet = context.Set<T>();
@@ -57,7 +57,7 @@ namespace Data.Repositories.Implementations
         }
         public void Add(T obj)
         {
-            obj.CreatedById = Guid.Empty;
+            obj.CreatedById = CurrentUser.UserId;
             obj.CreatedAt = DateTime.Now;
             _dbSet.Add(obj);
         }
@@ -68,7 +68,7 @@ namespace Data.Repositories.Implementations
 
             foreach (var obj in objects)
             {
-                obj.CreatedById = userId;
+                obj.CreatedById = CurrentUser.UserId;
                 obj.CreatedAt = createdAt;
             }
             _dbSet.AddRange(objects);
@@ -77,7 +77,7 @@ namespace Data.Repositories.Implementations
         {
             foreach (var obj in objects)
             {
-                obj.UpdatedById = userId;
+                obj.UpdatedById = CurrentUser.UserId;
                 obj.IsUpdated = true;
             }
         }
@@ -89,12 +89,12 @@ namespace Data.Repositories.Implementations
             {
                 obj.IsDeleted = true;
                 obj.DeletedAt = deletedAt;
-                obj.DeletedById = userId;
+                obj.DeletedById = CurrentUser.UserId;
             }
         }
         public void Update(T obj)
         {
-            obj.UpdatedById = userId;
+            obj.UpdatedById = CurrentUser.UserId;
             obj.IsUpdated = true;
         }
 
@@ -102,7 +102,7 @@ namespace Data.Repositories.Implementations
         {
             obj.IsDeleted = true;
             obj.DeletedAt = DateTime.Now;
-            obj.DeletedById = userId;
+            obj.DeletedById = CurrentUser.UserId;
         }
 
     }

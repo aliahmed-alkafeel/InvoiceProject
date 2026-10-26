@@ -1,19 +1,18 @@
 ﻿using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
+using Models.CurrentUserDetails;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using UI.Extensions;
 using UI.Forms;
 using UI.Forms.Categories;
-using UI.Forms.Items;
 using UI.Forms.Vouchers;
+
 
 namespace UI.Base.TopBar
 {
@@ -24,6 +23,7 @@ namespace UI.Base.TopBar
         public TopBarControl()
         {
             InitializeComponent();
+            ApplyRoles();
             SetActiveElement(btnItems);
         }
 
@@ -35,90 +35,63 @@ namespace UI.Base.TopBar
         {
             SetActiveElement(e.Element);
 
-            var itemsForm =
-                Program.CurrentScopeProvider.GetRequiredService<ItemsForm>();
-
-            itemsForm.LoadPage();
+            Program.NavigateTo<ItemsForm>();
         }
 
         private void btnCategories_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            var categoriesForm =
-                Program.CurrentScopeProvider.GetRequiredService<CategoriesForm>();
-
-            categoriesForm.LoadPage();
+            Program.NavigateTo<CategoriesForm>();
         }
 
         private void btnCurrencies_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            var currenciesForm =
-                Program.CurrentScopeProvider.GetRequiredService<CurrenciesForm>();
-
-            currenciesForm.LoadPage();
+            Program.NavigateTo<CurrenciesForm>();
         }
 
         private void btnAccountsTree_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            var accountsTreeForm =
-                Program.CurrentScopeProvider.GetRequiredService<AccountsTreeForm>();
-
-            accountsTreeForm.LoadPage();
+            Program.NavigateTo<AccountsTreeForm>();
         }
 
         private void btnBills_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            var billsForm =
-                Program.CurrentScopeProvider.GetRequiredService<BillsForm>();
-
-            billsForm.LoadPage();
+            Program.NavigateTo<BillsForm>();
         }
 
         private void btnVouchers_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            var vouchersForm =
-                Program.CurrentScopeProvider.GetRequiredService<VouchersForm>();
-
-            vouchersForm.LoadPage();
+            Program.NavigateTo<VouchersForm>();
         }
 
         private void navButton7_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            var itemBillsForm =
-                Program.CurrentScopeProvider.GetRequiredService<ItemBillsForm>();
-
-            itemBillsForm.LoadPage();
+            Program.NavigateTo<ItemBillsForm>();
         }
 
         private void btnGroups_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            var groupsForm =
-                Program.CurrentScopeProvider.GetRequiredService<GroupsForm>();
-
-            groupsForm.LoadPage();
+            Program.NavigateTo<GroupsForm>();
         }
 
         private void btnEmployees_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            var employeesForm =
-                Program.CurrentScopeProvider.GetRequiredService<EmployeesForm>();
-
-            employeesForm.LoadPage();
+            Program.NavigateTo<EmployeesForm>();
         }
         private void SetActiveElement(NavElement element)
         {
@@ -135,6 +108,19 @@ namespace UI.Base.TopBar
             element.Appearance.Options.UseBackColor = true;
 
             _activeElement = element;
+        }
+
+        public void ApplyRoles()
+        {
+            btnItems.Visible = CurrentUser.HasRole(UserRole.AccessItems);
+            btnCategories.Visible = CurrentUser.HasRole(UserRole.AccessCategories);
+            btnCurrencies.Visible = CurrentUser.HasRole(UserRole.AccessCurrency);
+            btnAccountsTree.Visible = CurrentUser.HasRole(UserRole.AccessAccountsTree);
+            btnBills.Visible = CurrentUser.HasRole(UserRole.AccessBills);
+            btnItemBills.Visible = CurrentUser.HasRole(UserRole.AccessBills);   
+            btnVouchers.Visible = CurrentUser.HasRole(UserRole.AccessVoucher);
+            btnGroups.Visible = CurrentUser.HasRole(UserRole.AccessGroups);
+            btnEmployees.Visible = CurrentUser.HasRole(UserRole.AccessEmployees);
         }
     }
 }

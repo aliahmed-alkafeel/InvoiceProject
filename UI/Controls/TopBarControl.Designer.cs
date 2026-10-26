@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.tileNavPane1 = new DevExpress.XtraBars.Navigation.TileNavPane();
+            this.btnGroups = new DevExpress.XtraBars.Navigation.NavButton();
             this.btnEmployees = new DevExpress.XtraBars.Navigation.NavButton();
             this.btnCurrencies = new DevExpress.XtraBars.Navigation.NavButton();
             this.btnAccountsTree = new DevExpress.XtraBars.Navigation.NavButton();
             this.btnVouchers = new DevExpress.XtraBars.Navigation.NavButton();
-            this.navButton7 = new DevExpress.XtraBars.Navigation.NavButton();
+            this.btnItemBills = new DevExpress.XtraBars.Navigation.NavButton();
             this.btnBills = new DevExpress.XtraBars.Navigation.NavButton();
             this.btnCategories = new DevExpress.XtraBars.Navigation.NavButton();
             this.btnItems = new DevExpress.XtraBars.Navigation.NavButton();
-            this.btnGroups = new DevExpress.XtraBars.Navigation.NavButton();
             ((System.ComponentModel.ISupportInitialize)(this.tileNavPane1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,7 +51,7 @@
             this.tileNavPane1.Buttons.Add(this.btnCurrencies);
             this.tileNavPane1.Buttons.Add(this.btnAccountsTree);
             this.tileNavPane1.Buttons.Add(this.btnVouchers);
-            this.tileNavPane1.Buttons.Add(this.navButton7);
+            this.tileNavPane1.Buttons.Add(this.btnItemBills);
             this.tileNavPane1.Buttons.Add(this.btnBills);
             this.tileNavPane1.Buttons.Add(this.btnCategories);
             this.tileNavPane1.Buttons.Add(this.btnItems);
@@ -73,6 +73,13 @@
             this.tileNavPane1.Text = "tileNavPane1";
             this.tileNavPane1.ToolTipShowMode = DevExpress.XtraBars.Navigation.ToolTipShowMode.NavBarItems;
             this.tileNavPane1.Click += new System.EventHandler(this.tileNavPane1_Click);
+            // 
+            // btnGroups
+            // 
+            this.btnGroups.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
+            this.btnGroups.Caption = "المجموعات";
+            this.btnGroups.Name = "btnGroups";
+            this.btnGroups.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnGroups_Click);
             // 
             // btnEmployees
             // 
@@ -102,12 +109,12 @@
             this.btnVouchers.Name = "btnVouchers";
             this.btnVouchers.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnVouchers_Click);
             // 
-            // navButton7
+            // btnItemBills
             // 
-            this.navButton7.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
-            this.navButton7.Caption = "تفاصيل الفواتير";
-            this.navButton7.Name = "navButton7";
-            this.navButton7.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.navButton7_Click);
+            this.btnItemBills.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
+            this.btnItemBills.Caption = "تفاصيل الفواتير";
+            this.btnItemBills.Name = "btnItemBills";
+            this.btnItemBills.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.navButton7_Click);
             // 
             // btnBills
             // 
@@ -130,13 +137,6 @@
             this.btnItems.Name = "btnItems";
             this.btnItems.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnItems_Click);
             // 
-            // btnGroups
-            // 
-            this.btnGroups.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
-            this.btnGroups.Caption = "المجموعات";
-            this.btnGroups.Name = "btnGroups";
-            this.btnGroups.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnGroups_Click);
-            // 
             // TopBarControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -154,7 +154,7 @@
         private DevExpress.XtraBars.Navigation.NavButton btnCurrencies;
         private DevExpress.XtraBars.Navigation.NavButton btnAccountsTree;
         private DevExpress.XtraBars.Navigation.NavButton btnVouchers;
-        private DevExpress.XtraBars.Navigation.NavButton navButton7;
+        private DevExpress.XtraBars.Navigation.NavButton btnItemBills;
         private DevExpress.XtraBars.Navigation.NavButton btnBills;
         private DevExpress.XtraBars.Navigation.NavButton btnCategories;
         private DevExpress.XtraBars.Navigation.NavButton btnItems;

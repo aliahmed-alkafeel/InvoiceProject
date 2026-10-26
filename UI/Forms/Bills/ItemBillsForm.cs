@@ -1,12 +1,13 @@
 ﻿using Data.Configurations.DTOsConfigurations;
 using Data.Services.Interfaces;
 using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
 using Microsoft.Extensions.DependencyInjection;
 using Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,36 +21,24 @@ namespace UI.Forms
         private readonly IBillService _billService;
         private readonly IItemService _itemService;
 
-        /// <summary>
-        /// بنود الفاتورة المعروضة، قابلة للتعديل مباشرة داخل الشبكة.
-        /// </summary>
-        private readonly BindingList<BillItemRow> _billItems = new BindingList<BillItemRow>();
+        /// <summary>بنود الفاتورة المعروضة، قابلة للتعديل مباشرة داخل الشبكة.</summary>
+        private readonly BindingList<BillItemDto> _billItems = new BindingList<BillItemDto>();
 
-        /// <summary>
-        /// قاموس المواد المستخدمة في قائمة اختيار المادة داخل الشبكة.
-        /// </summary>
+        /// <summary>قاموس المواد المستخدم في اختيار المادة داخل الشبكة.</summary>
         private IDictionary<Guid, ItemDto> _itemLookup = new Dictionary<Guid, ItemDto>();
 
-        /// <summary>
-        /// الفاتورة المعروضة حالياً (تُستخدم عند حفظ تعديلات البنود).
-        /// </summary>
+        /// <summary>الفاتورة المعروضة حالياً.</summary>
         private BillDto _currentBill;
 
-        /// <summary>
-        /// قائمة الفواتير مرتبة من الأقدم إلى الأحدث (تُستخدم للتنقل بين الفواتير).
-        /// </summary>
+        /// <summary>الفواتير مرتبة من الأقدم إلى الأحدث (للتنقل).</summary>
         private readonly List<BillDto> _bills = new List<BillDto>();
 
-        /// <summary>
-        /// فهرس الفاتورة الحالية داخل <see cref="_bills"/>، و -1 عند عدم وجود فاتورة معروضة.
-        /// </summary>
+        /// <summary>فهرس الفاتورة الحالية داخل _bills، و -1 عند عدم وجودها.</summary>
         private int _currentIndex = -1;
 
         private bool _isLoading;
 
-        /// <summary>
-        /// رقم الفاتورة التي سيتم تحميلها عند فتح النموذج، و null لعرض أول فاتورة تلقائياً.
-        /// </summary>
+        /// <summary>رقم الفاتورة المطلوب عرضها عند الفتح، و null لعرض أول فاتورة.</summary>
         public int? BillNumber { get; set; }
 
         public ItemBillsForm()
@@ -57,178 +46,105 @@ namespace UI.Forms
             InitializeComponent();
 
             gridControl1.DataSource = _billItems;
+            gridView1.InitNewRow += gridView1_InitNewRow;
         }
 
-        public ItemBillsForm(IBillService billService, IItemService itemService)
+        public ItemBillsForm(IBillService billService, IItemService itemService) : this()
         {
             _billService = billService;
             _itemService = itemService;
-            InitializeComponent();
-
-            gridControl1.DataSource = _billItems;
         }
 
         private async void ItemBillsForm_Load(object sender, EventArgs e)
         {
-            ClearBillDetails();
+            Display(null);
 
             await LoadItemsLookupAsync();
-
             await LoadBillsListAsync();
 
-            if (BillNumber.HasValue && BillNumber.Value > 0)
-            {
-                spinBillNumber.EditValue = BillNumber.Value;
-            }
-            else if (_bills.Count > 0)
-            {
-                // عرض أول فاتورة تلقائياً عند فتح النموذج
-                spinBillNumber.EditValue = _bills[0].BillNumber;
-            }
-            else
+            var number = BillNumber > 0 ? BillNumber : _bills.FirstOrDefault()?.BillNumber;
+
+            if (number == null)
             {
                 spinBillNumber.Focus();
                 return;
             }
 
+            spinBillNumber.EditValue = number;
             await LoadBillAsync();
         }
 
-        /// <summary>
-        /// تحميل قائمة المواد لتهيئة قائمة اختيار المادة داخل شبكة البنود.
-        /// </summary>
         private async Task LoadItemsLookupAsync()
         {
             try
             {
-                var items = (await _itemService.GetAllItemsAsync())
-                    .Where(i => i.IsActive)
-                    .ToList();
+                var items = (await _itemService.GetAllItemsAsync()).Where(i => i.IsActive);
 
-                _itemLookup = BillItemsGridHelper.ConfigureItemColumn(colItem, items);
-
-                BillItemsGridHelper.ConfigureNumericColumn(colQty, 0m, 1000000m);
-                BillItemsGridHelper.ConfigureNumericColumn(colPrice, 0m, 1000000m);
+                _itemLookup = BillItemsGridHelper.ConfigureGrid(colItem, colQty, colPrice, colTotal, items);
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show(
-                    $"فشل تحميل قائمة المواد.\n{ex.Message}",
-                    "خطأ",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageHelper.Error($"فشل تحميل قائمة المواد.\n{ex.Message}");
             }
         }
 
-        /// <summary>
-        /// تحميل قائمة الفواتير (بدون البنود) لترتيبها ولتحديد الفاتورة السابقة والتالية.
-        /// </summary>
         private async Task LoadBillsListAsync()
         {
+            _bills.Clear();
+
             try
             {
-                var bills = await _billService.GetAllBillsAsync();
+                var bills = await _billService.GetAllBillsAsync() ?? new List<BillDto>();
 
-                _bills.Clear();
-                _bills.AddRange((bills ?? new List<BillDto>())
-                    .OrderBy(b => b.Date)
-                    .ThenBy(b => b.BillNumber));
+                _bills.AddRange(bills.OrderBy(b => b.Date).ThenBy(b => b.BillNumber));
             }
             catch (Exception ex)
             {
-                _bills.Clear();
-
-                XtraMessageBox.Show(
-                    $"فشل تحميل قائمة الفواتير.\n{ex.Message}",
-                    "خطأ",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageHelper.Error($"فشل تحميل قائمة الفواتير.\n{ex.Message}");
             }
 
             UpdateNavigationButtons();
         }
 
-        /// <summary>
-        /// زر الفاتورة السابقة (الأقدم).
-        /// </summary>
-        private async void btnPrev_Click(object sender, EventArgs e)
-        {
-            await NavigateAsync(-1);
-        }
+        private async void btnPrev_Click(object sender, EventArgs e) => await NavigateAsync(-1);
+
+        private async void btnNext_Click(object sender, EventArgs e) => await NavigateAsync(1);
 
         /// <summary>
-        /// زر الفاتورة التالية (الأحدث).
-        /// </summary>
-        private async void btnNext_Click(object sender, EventArgs e)
-        {
-            await NavigateAsync(1);
-        }
-
-        /// <summary>
-        /// التنقل بين الفواتير: -1 للفاتورة السابقة و 1 للفاتورة التالية.
+        /// التنقل بين الفواتير بشكل دائري: -1 للسابقة و 1 للتالية.
         /// </summary>
         private async Task NavigateAsync(int offset)
         {
-            if (_currentIndex < 0 || _bills.Count == 0)
+            if (_currentIndex < 0)
                 return;
 
-            var targetIndex = _currentIndex + offset;
+            var count = _bills.Count;
 
-            if (targetIndex < 0)
-                targetIndex = _bills.Count - 1;
-            else if (targetIndex >= _bills.Count)
-                targetIndex = 0;
-
-            var target = _bills[targetIndex];
-
-            spinBillNumber.EditValue = target.BillNumber;
+            spinBillNumber.EditValue = _bills[(_currentIndex + offset + count) % count].BillNumber;
 
             await LoadBillAsync();
         }
 
         /// <summary>
-        /// زر إضافة مواد: يفتح نموذج إدارة الفاتورة للفاتورة الحالية في وضع التعديل.
+        /// فتح نموذج إدارة الفاتورة للفاتورة الحالية في وضع التعديل.
         /// </summary>
         private async void btnAddItems_Click(object sender, EventArgs e)
         {
-            if (_currentIndex < 0 || _currentIndex >= _bills.Count)
-            {
-                XtraMessageBox.Show(
-                    "يرجى عرض فاتورة أولاً قبل إضافة المواد",
-                    "تنبيه",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-
-                return;
-            }
-
-            var currentBillId = _bills[_currentIndex].Id;
-
             BillDto billToEdit;
 
             try
             {
-                billToEdit = await _billService.GetBillByIdAsync(currentBillId);
+                billToEdit = await _billService.GetBillByIdAsync(_currentBill.Id);
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show(
-                    $"فشل تحميل بيانات الفاتورة.\n{ex.Message}",
-                    "خطأ",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-
+                MessageHelper.Error($"فشل تحميل بيانات الفاتورة.\n{ex.Message}");
                 return;
             }
 
             if (billToEdit == null)
             {
-                XtraMessageBox.Show(
-                    "لا توجد فاتورة لعرضها",
-                    "تنبيه",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-
+                MessageHelper.Info("لا توجد فاتورة لعرضها");
                 return;
             }
 
@@ -242,28 +158,23 @@ namespace UI.Forms
         }
 
         /// <summary>
-        /// إعادة تحميل قائمة الفواتير ثم تحديث الفاتورة المعروضة بعد تعديلها.
+        /// إعادة تحميل قائمة الفواتير ثم تحديث الفاتورة المعروضة.
         /// </summary>
         private async Task ReloadCurrentBillAsync()
         {
-            var currentBillId = _currentIndex >= 0 && _currentIndex < _bills.Count
-                ? _bills[_currentIndex].Id
-                : Guid.Empty;
+            var currentId = _currentBill?.Id;
 
             await LoadBillsListAsync();
 
-            var newIndex = _bills.FindIndex(b => b.Id == currentBillId);
+            var bill = _bills.FirstOrDefault(b => b.Id == currentId);
 
-            if (newIndex < 0)
+            if (bill == null)
             {
-                ClearBillDetails();
+                Display(null);
                 return;
             }
 
-            _currentIndex = newIndex;
-
-            spinBillNumber.EditValue = _bills[newIndex].BillNumber;
-
+            spinBillNumber.EditValue = bill.BillNumber;
             await LoadBillAsync();
         }
 
@@ -278,46 +189,17 @@ namespace UI.Forms
             await LoadBillAsync();
         }
 
-        /// <summary>
-        /// قراءة رقم الفاتورة من حقل الإدخال (0 عند تركه فارغاً).
-        /// </summary>
-        private int GetBillNumberFromInput()
-        {
-            var value = spinBillNumber.EditValue;
-
-            if (value == null)
-                return 0;
-
-            if (value is int number)
-                return number;
-
-            if (value is long longNumber)
-                return (int)longNumber;
-
-            if (value is decimal decimalNumber)
-                return (int)decimalNumber;
-
-            int parsed;
-            return int.TryParse(value.ToString(), out parsed) ? parsed : 0;
-        }
-
         private async Task LoadBillAsync()
         {
             if (_isLoading)
                 return;
 
-            var billNumber = GetBillNumberFromInput();
+            var number = Convert.ToInt32(spinBillNumber.EditValue ?? 0);
 
-            if (billNumber <= 0)
+            if (number <= 0)
             {
-                ClearBillDetails();
-
-                XtraMessageBox.Show(
-                    "يرجى إدخال رقم الفاتورة",
-                    "تنبيه",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-
+                Display(null);
+                MessageHelper.Info("يرجى إدخال رقم الفاتورة");
                 return;
             }
 
@@ -326,30 +208,16 @@ namespace UI.Forms
 
             try
             {
-                var bill = await _billService.GetBillByNumberAsync(billNumber);
+                var bill = await _billService.GetBillByNumberAsync(number);
+
+                Display(bill);
 
                 if (bill == null)
-                {
-                    ClearBillDetails();
-
-                    XtraMessageBox.Show(
-                        $"لا توجد فاتورة بالرقم '{billNumber}'.",
-                        "فاتورة غير موجودة",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-
-                    return;
-                }
-
-                ShowBillDetails(bill);
+                    MessageHelper.Info($"لا توجد فاتورة بالرقم '{number}'.", "فاتورة غير موجودة");
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show(
-                    $"فشل تحميل بيانات الفاتورة.\n{ex.Message}",
-                    "خطأ",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageHelper.Error($"فشل تحميل بيانات الفاتورة.\n{ex.Message}");
             }
             finally
             {
@@ -358,101 +226,64 @@ namespace UI.Forms
             }
         }
 
-        private void ShowBillDetails(BillDto bill)
+        /// <summary>
+        /// عرض الفاتورة وبنودها، أو تفريغ الشاشة عند تمرير null.
+        /// </summary>
+        private void Display(BillDto bill)
         {
-            _currentIndex = _bills.FindIndex(b => b.Id == bill.Id);
             _currentBill = bill;
-            UpdateNavigationButtons();
+            _currentIndex = bill == null ? -1 : _bills.FindIndex(b => b.Id == bill.Id);
 
-            lblTypeValue.Text = bill.BillType ?? string.Empty;
-            lblDateValue.Text = bill.Date.ToString("yyyy/MM/dd");
-            lblAccountValue.Text = bill.AccountTree?.AccountName ?? string.Empty;
-            lblCurrencyValue.Text = bill.Currency?.CurrencyName ?? string.Empty;
-            lblEqualValue.Text = bill.CurrencyEqualValue.ToString("N2");
-            lblNotesValue.Text = bill.Notes ?? string.Empty;
+            lblTypeValue.Text = bill?.BillType ?? string.Empty;
+            lblDateValue.Text = bill?.Date.ToString("yyyy/MM/dd") ?? string.Empty;
+            lblAccountValue.Text = bill?.AccountTree?.AccountName ?? string.Empty;
+            lblCurrencyValue.Text = bill?.Currency?.CurrencyName ?? string.Empty;
+            lblEqualValue.Text = bill?.CurrencyEqualValue.ToString("N2") ?? string.Empty;
+            lblNotesValue.Text = bill?.Notes ?? string.Empty;
 
             _billItems.Clear();
 
-            foreach (var billItem in bill.BillItems ?? new HashSet<BillItemDto>())
-            {
-                var row = BillItemRow.FromDto(billItem);
-
-                if (row != null)
-                    _billItems.Add(row);
-            }
+            foreach (var billItem in bill?.BillItems ?? new HashSet<BillItemDto>())
+                _billItems.Add(billItem);
 
             UpdateTotal();
-        }
-
-        private void ClearBillDetails()
-        {
-            _currentIndex = -1;
-            _currentBill = null;
             UpdateNavigationButtons();
-
-            lblTypeValue.Text = string.Empty;
-            lblDateValue.Text = string.Empty;
-            lblAccountValue.Text = string.Empty;
-            lblCurrencyValue.Text = string.Empty;
-            lblEqualValue.Text = string.Empty;
-            lblNotesValue.Text = string.Empty;
-
-            _billItems.Clear();
-
-            lblTotal.Text = "إجمالي الفاتورة: 0";
         }
 
         /// <summary>
-        /// عند تغيير المادة داخل الشبكة: تحديث اسم المادة والسعر الافتراضي.
+        /// إعطاء البند الجديد معرّفاً فريداً.
         /// </summary>
-        private void gridView1_CellValueChanged(
-            object sender,
-            DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        private void gridView1_InitNewRow(object sender, InitNewRowEventArgs e)
         {
-            var row = gridView1.GetRow(e.RowHandle) as BillItemRow;
+            if (gridView1.GetRow(e.RowHandle) is BillItemDto row && row.Id == Guid.Empty)
+                row.Id = Guid.NewGuid();
+        }
 
-            if (row != null && e.Column == colItem)
+        private void gridView1_CellValueChanged(object sender, CellValueChangedEventArgs e)
+        {
+            if (e.Column == colItem && gridView1.GetRow(e.RowHandle) is BillItemDto row)
             {
                 BillItemsGridHelper.ApplyItemToRow(row, _itemLookup);
+
+                // ضروري: الـ DTO لا يُبلغ الشبكة بتغيّر السعر.
+                gridView1.RefreshRow(e.RowHandle);
             }
 
             UpdateTotal();
         }
 
-        private void gridView1_RowCountChanged(object sender, EventArgs e)
-        {
-            UpdateTotal();
-        }
+        private void gridView1_RowCountChanged(object sender, EventArgs e) => UpdateTotal();
 
-        /// <summary>
-        /// إضافة بند جديد إلى شبكة بنود الفاتورة الحالية.
-        /// </summary>
         private void btnAddItem_Click(object sender, EventArgs e)
         {
-            if (_currentBill == null)
-            {
-                XtraMessageBox.Show(
-                    "يرجى عرض فاتورة أولاً قبل إضافة المواد",
-                    "تنبيه",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-
-                return;
-            }
-
             gridView1.AddNewRow();
             gridView1.ShowEditor();
         }
 
-        /// <summary>
-        /// حذف البند المحدد من شبكة بنود الفاتورة الحالية.
-        /// </summary>
         private void btnDeleteItem_Click(object sender, EventArgs e)
         {
-            if (gridView1.FocusedRowHandle < 0)
-                return;
-
-            gridView1.DeleteRow(gridView1.FocusedRowHandle);
+            if (gridView1.FocusedRowHandle >= 0)
+                gridView1.DeleteRow(gridView1.FocusedRowHandle);
         }
 
         /// <summary>
@@ -460,38 +291,20 @@ namespace UI.Forms
         /// </summary>
         private async void btnSaveItems_Click(object sender, EventArgs e)
         {
-            if (_currentBill == null)
-            {
-                XtraMessageBox.Show(
-                    "يرجى عرض فاتورة أولاً قبل حفظ التعديلات",
-                    "تنبيه",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+            // إنهاء تحرير الخلية الحالية حتى لا تضيع آخر قيمة مكتوبة.
+            gridView1.CloseEditor();
+            gridView1.UpdateCurrentRow();
 
-                return;
-            }
+            var billItems = _billItems.Where(bi => bi.ItemGuid != Guid.Empty).ToList();
 
-            var billItems = _billItems
-                .Where(bi => bi.ItemGuid != Guid.Empty)
-                .Select(bi => bi.ToDto())
+            var errors = billItems
+                .Select(bi => ValidationHelper.IsValid(new BillItemDtoConfiguration(), bi, out var itemErrors) ? null : itemErrors)
+                .Where(err => err != null)
                 .ToList();
-
-            var errors = new List<string>();
-
-            foreach (var billItem in billItems)
-            {
-                if (!ValidationHelper.IsValid(
-                    new BillItemDtoConfiguration(),
-                    billItem,
-                    out var itemErrors))
-                {
-                    errors.Add(itemErrors);
-                }
-            }
 
             if (errors.Count > 0)
             {
-                XtraMessageBox.Show(string.Join(Environment.NewLine, errors));
+                MessageHelper.Error(string.Join(Environment.NewLine, errors));
                 return;
             }
 
@@ -508,71 +321,52 @@ namespace UI.Forms
                 BillItems = billItems
             };
 
+            string error = null;
             UseWaitCursor = true;
 
             try
             {
-                var result = await _billService.UpdateBillAsync(updateBill);
-
-                if (!result)
-                {
-                    XtraMessageBox.Show(
-                        "فشل في حفظ تعديلات بنود الفاتورة",
-                        "خطأ",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-
-                    return;
-                }
+                if (!await _billService.UpdateBillAsync(updateBill))
+                    error = "فشل في حفظ تعديلات بنود الفاتورة";
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show(
-                    $"فشل حفظ تعديلات بنود الفاتورة.\n{ex.Message}",
-                    "خطأ",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-
-                return;
+                error = $"فشل حفظ تعديلات بنود الفاتورة.\n{ex.Message}";
             }
             finally
             {
                 UseWaitCursor = false;
             }
 
-            XtraMessageBox.Show(
-                "تم حفظ تعديلات بنود الفاتورة بنجاح",
-                "نجاح",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            if (error != null)
+            {
+                MessageHelper.Error(error);
+
+                // الشبكة تعدّل كائنات الـ DTO نفسها، فنعيد التحميل لإلغاء التعديلات غير المحفوظة.
+                await LoadBillAsync();
+                return;
+            }
+
+            MessageHelper.Success("تم حفظ تعديلات بنود الفاتورة بنجاح");
 
             await ReloadCurrentBillAsync();
         }
 
-        /// <summary>
-        /// تحديث إجمالي الفاتورة المعروضة.
-        /// </summary>
         private void UpdateTotal()
         {
-            var total = _billItems.Sum(bi => bi.Qty * bi.Price);
-
-            lblTotal.Text = $"إجمالي الفاتورة: {total:N2}";
+            lblTotal.Text = $"إجمالي الفاتورة: {_billItems.Sum(bi => bi.Qty * bi.Price):N2}";
         }
 
         /// <summary>
-        /// تفعيل/تعطيل أزرار التنقل حسب موقع الفاتورة الحالية من القائمة.
+        /// تفعيل/تعطيل الأزرار حسب وجود فاتورة معروضة وموقعها في القائمة.
         /// </summary>
         private void UpdateNavigationButtons()
         {
-            var hasCurrentBill = _currentIndex >= 0 && _currentIndex < _bills.Count;
+            var hasCurrentBill = _currentIndex >= 0;
 
-            btnPrev.Enabled = _bills.Count > 1 && hasCurrentBill;
-            btnNext.Enabled = _bills.Count > 1 && hasCurrentBill;
-            btnAddItems.Enabled = hasCurrentBill;
+            btnPrev.Enabled = btnNext.Enabled = hasCurrentBill && _bills.Count > 1;
 
-            btnAddItem.Enabled = hasCurrentBill;
-            btnDeleteItem.Enabled = hasCurrentBill;
-            btnSaveItems.Enabled = hasCurrentBill;
+            btnAddItems.Enabled = btnAddItem.Enabled = btnDeleteItem.Enabled = btnSaveItems.Enabled = hasCurrentBill;
         }
     }
 }

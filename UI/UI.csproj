@@ -109,6 +109,8 @@
       <DependentUpon>ToolBarControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\LoadingExtensions.cs" />
+    <Compile Include="Extensions\MessageHelper.cs" />
+    <Compile Include="Extensions\Navigator.cs" />
     <Compile Include="Forms\AccountsTree\AccountsTreeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,7 +129,6 @@
     <Compile Include="Forms\AccountsTree\XtraForm1.Designer.cs">
       <DependentUpon>XtraForm1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Bills\BillItemRow.cs" />
     <Compile Include="Forms\Bills\BillsForm.cs">
       <SubType>Form</SubType>
     </Compile>

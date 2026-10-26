@@ -69,6 +69,7 @@
             // 
             this.txtPassword.Location = new System.Drawing.Point(89, 93);
             this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Properties.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(133, 20);
             this.txtPassword.TabIndex = 3;
             this.txtPassword.EditValueChanged += new System.EventHandler(this.PassTextEdit_EditValueChanged);

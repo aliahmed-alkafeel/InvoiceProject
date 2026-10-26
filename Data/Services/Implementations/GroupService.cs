@@ -30,7 +30,7 @@ namespace RestaurantManagement.Areas.Dashboard.Services
                     "بيانات المجموعة مطلوبة.");
 
             if (string.IsNullOrWhiteSpace(model.GroupName))
-                throw new ArgumentException("اسم المجموعة مطلوب.");
+                throw new ArgumentException("اسم المجموعة مطلوب");
 
             var hasRepeatedName = await _unitOfWork.Groups
                 .Select()

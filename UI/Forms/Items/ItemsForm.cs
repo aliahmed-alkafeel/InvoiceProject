@@ -5,12 +5,15 @@ using DevExpress.Internal.WinApi.Windows.UI.Notifications;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
 using Microsoft.Extensions.DependencyInjection;
+using Models.CurrentUserDetails;
 using Models.DTOs;
 using Models.Entities;
 using System;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Controls;
+using UI.Extensions;
 using UI.Forms.Items;
 
 namespace UI.Forms
@@ -27,12 +30,15 @@ namespace UI.Forms
             _itemsService = itemsService;
             InitializeComponent();
 
-
-            ToolBarControl1.CreateClicked += ItemsToolbar_CreateClicked;
-            ToolBarControl1.EditClicked += ItemsToolbar_EditClicked;
-            ToolBarControl1.DeleteClicked += ItemsToolbar_DeleteClicked;
-            ToolBarControl1.RefreshClicked += ItemsToolbar_RefreshClicked;
+            if(toolBarControl1.SetManageVisible(CurrentUser.HasRole(UserRole.ManageItems)))
+            {
+                toolBarControl1.CreateClicked += ItemsToolbar_CreateClicked;
+                toolBarControl1.EditClicked += ItemsToolbar_EditClicked;
+                toolBarControl1.DeleteClicked += ItemsToolbar_DeleteClicked;
+            }
+            toolBarControl1.RefreshClicked += ItemsToolbar_RefreshClicked;
         }
+
 
         private async void ItemsForm_LoadAsync(object sender, EventArgs e)
         {

@@ -44,7 +44,7 @@ namespace UI.Forms
             this.itemsBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.itemsBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.ToolBarControl1 = new UI.Controls.ToolBarControl();
+            this.toolBarControl1 = new UI.Controls.ToolBarControl();
             this.categoriesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.categoriesTableAdapter = new UI.InvoiceDbDataSet2TableAdapters.CategoriesTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
@@ -150,13 +150,13 @@ namespace UI.Forms
             this.itemsBindingSource2.DataMember = "Items";
             this.itemsBindingSource2.DataSource = this.invoiceDbDataSet2;
             // 
-            // ToolBarControl1
+            // toolBarControl1
             // 
-            this.ToolBarControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ToolBarControl1.Location = new System.Drawing.Point(0, 0);
-            this.ToolBarControl1.Name = "ToolBarControl1";
-            this.ToolBarControl1.Size = new System.Drawing.Size(898, 55);
-            this.ToolBarControl1.TabIndex = 6;
+            this.toolBarControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.toolBarControl1.Location = new System.Drawing.Point(0, 0);
+            this.toolBarControl1.Name = "toolBarControl1";
+            this.toolBarControl1.Size = new System.Drawing.Size(898, 55);
+            this.toolBarControl1.TabIndex = 6;
             // 
             // categoriesBindingSource
             // 
@@ -173,7 +173,7 @@ namespace UI.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(898, 538);
             this.Controls.Add(this.gridControl1);
-            this.Controls.Add(this.ToolBarControl1);
+            this.Controls.Add(this.toolBarControl1);
             this.Name = "ItemsForm";
             this.Text = "ItemsForm";
             this.Load += new System.EventHandler(this.ItemsForm_LoadAsync);
@@ -204,7 +204,7 @@ namespace UI.Forms
         private System.Windows.Forms.BindingSource itemsBindingSource1;
         private System.Windows.Forms.BindingSource itemsBindingSource2;
         private System.Windows.Forms.BindingSource bindingSource1;
-        private Controls.ToolBarControl ToolBarControl1;
+        private Controls.ToolBarControl toolBarControl1;
         private DevExpress.XtraGrid.Columns.GridColumn colCategory;
         private System.Windows.Forms.BindingSource categoriesBindingSource;
         private InvoiceDbDataSet2TableAdapters.CategoriesTableAdapter categoriesTableAdapter;

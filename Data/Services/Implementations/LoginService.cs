@@ -2,6 +2,7 @@
 using Data.Services.Interfaces;
 using Data.UnitOfWork;
 using Models.CurrentUserDetails;
+using Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -22,14 +23,17 @@ namespace Data.Services.Implementations
 
         public async Task<bool> LoginAsync(string username, string password)
         {
-
             var employee = await _unitOfWork.Employees.Select()
                 .FirstOrDefaultAsync(x => x.Username == username);
             if (employee == null)
                 return false;
             if (employee.Password != password)
                 return false;
-            CurrentUser.LogIn(employee.Id);
+            var roles = await _unitOfWork.GroupRoles.Select()
+                .Where(gr => gr.GroupGuid == employee.GroupGuid)
+                .Select(gr => gr.Role.RoleName)
+                .ToListAsync();
+            CurrentUser.LogIn(employee.Id, roles);
             return true;
         }
     }

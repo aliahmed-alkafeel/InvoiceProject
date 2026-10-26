@@ -1,4 +1,7 @@
-﻿using DevExpress.XtraEditors;
+﻿using DevExpress.XtraBars;
+using DevExpress.XtraEditors;
+using Models.CurrentUserDetails;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,5 +20,6 @@ namespace UI.Forms
         {
             InitializeComponent();
         }
+
     }
 }

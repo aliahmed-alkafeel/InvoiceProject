@@ -1,12 +1,15 @@
 ﻿using Data.Services.Interfaces;
 using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
+using Models.CurrentUserDetails;
 using Models.DTOs;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Extensions;
 using UI.Forms.Bills;
 
 namespace UI.Forms
@@ -21,11 +24,13 @@ namespace UI.Forms
         {
             _billService = billService;
             InitializeComponent();
-
-            toolBarControl1.CreateClicked += BillsToolbar_CreateClicked;
-            toolBarControl1.EditClicked += BillsToolbar_EditClicked;
-            toolBarControl1.DeleteClicked += BillsToolbar_DeleteClicked;
-            toolBarControl1.RefreshClicked += BillsToolbar_RefreshClicked;
+            if(toolBarControl1.SetManageVisible(CurrentUser.HasRole(UserRole.ManageBills)))
+            {
+                toolBarControl1.CreateClicked += BillsToolbar_CreateClicked;
+                toolBarControl1.EditClicked += BillsToolbar_EditClicked;
+                toolBarControl1.DeleteClicked += BillsToolbar_DeleteClicked;
+            }
+                toolBarControl1.RefreshClicked += BillsToolbar_RefreshClicked;
         }
 
         private async void BillsForm_LoadAsync(object sender, EventArgs e)

@@ -28,9 +28,16 @@ namespace Models.Entities
         public const string AccessCurrency = "عرض العملات";
         public const string ManageCurrency = "إدارة العملات";
 
+        public const string AccessGroups = "عرض المجموعات";
+        public const string ManageGroups = "إدارة المجموعات";
+
+        public const string AccessEmployees = "عرض الموظفين";
+        public const string ManageEmployees = "إدارة الموظفين";
+
         public static readonly string[] All =
         {
             Unclassified,
+
             ManageBills,
             AccessBills,
 
@@ -45,8 +52,15 @@ namespace Models.Entities
 
             AccessAccountsTree,
             ManageAccountsTree,
+
             AccessCurrency,
             ManageCurrency,
+
+            AccessGroups,
+            ManageGroups,
+
+            AccessEmployees,    
+            ManageEmployees
         };
     }
 }

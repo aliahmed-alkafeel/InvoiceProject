@@ -13,6 +13,18 @@ namespace UI.Controls
 {
     public partial class ToolBarControl : DevExpress.XtraEditors.XtraUserControl
     {
+
+        public bool SetManageVisible(bool canManage)
+        {
+            btnAdd.Visible = canManage;
+            btnEdit.Visible = canManage;
+            btnDelete.Visible = canManage;
+
+            tablePanel1.SetColumn(btnRefresh, canManage ? 3 : 0);
+            return canManage;
+        }
+
+
         public ToolBarControl()
         {
             InitializeComponent();
@@ -42,5 +54,6 @@ namespace UI.Controls
         {
             RefreshClicked?.Invoke(this, EventArgs.Empty);
         }
+
     }
 }

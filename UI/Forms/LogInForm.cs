@@ -52,8 +52,6 @@ namespace UI.Screens
 
         private void PassTextEdit_EditValueChanged(object sender, EventArgs e)
         {
-            txtPassword.Properties.PasswordChar = '●';
-
         }
 
         private async void btnLogIn_Click(object sender, EventArgs e)

@@ -1,12 +1,15 @@
 ﻿using Data.Services.Interfaces;
 using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
+using Models.CurrentUserDetails;
 using Models.DTOs;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Extensions;
 using UI.Forms.Groups;
 
 namespace UI.Forms
@@ -20,10 +23,12 @@ namespace UI.Forms
         {
             _groupService = groupService;
             InitializeComponent();
-
+            if (toolBarControl1.SetManageVisible(CurrentUser.HasRole(UserRole.ManageGroups)))
+            {
             toolBarControl1.CreateClicked += GroupsToolbar_CreateClicked;
             toolBarControl1.EditClicked += GroupsToolbar_EditClicked;
             toolBarControl1.DeleteClicked += GroupsToolbar_DeleteClicked;
+            }
             toolBarControl1.RefreshClicked += GroupsToolbar_RefreshClicked;
         }
 

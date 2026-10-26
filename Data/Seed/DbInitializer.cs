@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Data.Context;
 using Models.Entities;
 using Microsoft.Extensions.DependencyInjection;
+using Models.CurrentUserDetails;
 namespace Data.Seed
 {
     public static class DbInitializer
@@ -44,12 +45,12 @@ namespace Data.Seed
                     await context.SaveChangesAsync();
                 }
 
-                var adminGroup = await context.Groups.FirstOrDefaultAsync(g => g.GroupName == "Administrator");
+                var adminGroup = await context.Groups.FirstOrDefaultAsync(g => g.GroupName == "المدير");
                 if (adminGroup is null)
                 {
                     adminGroup = new Group
                     {
-                        GroupName = "Administrator"
+                        GroupName = "المدير"
                     };
                     context.Groups.Add(adminGroup);
                     await context.SaveChangesAsync();
@@ -90,7 +91,6 @@ namespace Data.Seed
                         CreatedAt = now
                     };
                     context.Employees.Add(admin);
-
                 }
                 else
                 {

@@ -1,12 +1,15 @@
 ﻿using Data.Services.Interfaces;
 using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
+using Models.CurrentUserDetails;
 using Models.DTOs;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Extensions;
 using UI.Forms.Employees;
 
 namespace UI.Forms
@@ -20,10 +23,13 @@ namespace UI.Forms
         {
             _employeeService = employeeService;
             InitializeComponent();
+            if(toolBarControl1.SetManageVisible(CurrentUser.HasRole(UserRole.ManageEmployees)))
+            {
 
             toolBarControl1.CreateClicked += EmployeesToolbar_CreateClicked;
             toolBarControl1.EditClicked += EmployeesToolbar_EditClicked;
             toolBarControl1.DeleteClicked += EmployeesToolbar_DeleteClicked;
+            }
             toolBarControl1.RefreshClicked += EmployeesToolbar_RefreshClicked;
         }
 

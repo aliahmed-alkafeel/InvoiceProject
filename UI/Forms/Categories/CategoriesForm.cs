@@ -5,6 +5,7 @@ using DevExpress.Internal.WinApi.Windows.UI.Notifications;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
 using Microsoft.Extensions.DependencyInjection;
+using Models.CurrentUserDetails;
 using Models.DTOs;
 using Models.Entities;
 using System;
@@ -27,13 +28,16 @@ namespace UI.Forms.Categories
         {
             _categoryService = categoryService;
             InitializeComponent();
-
-
-            toolBarControl1.CreateClicked += CategoriesToolbar_CreateClicked;
-            toolBarControl1.EditClicked += CategoriesToolbar_EditClicked;
-            toolBarControl1.DeleteClicked += CategoriesToolbar_DeleteClicked;
+            if(toolBarControl1.SetManageVisible(CurrentUser.HasRole(UserRole.ManageCategories)))
+            {
+                toolBarControl1.CreateClicked += CategoriesToolbar_CreateClicked;
+                toolBarControl1.EditClicked += CategoriesToolbar_EditClicked;
+                toolBarControl1.DeleteClicked += CategoriesToolbar_DeleteClicked;
+            }
             toolBarControl1.RefreshClicked += CategoriesToolbar_RefreshClicked;
         }
+
+
 
         private async void CategoriesForm_LoadAsync(object sender, EventArgs e)
         {

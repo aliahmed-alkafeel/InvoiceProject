@@ -1,84 +1,78 @@
-﻿using DevExpress.XtraEditors.Repository;
+﻿using DevExpress.Data;
+using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Columns;
 using Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UI.Forms.Bills;
 
 namespace UI.Extensions
 {
     /// <summary>
-    /// أدوات مشتركة لإعداد شبكة بنود الفاتورة للتعديل المباشر داخل الشبكة (Inline Edit).
+    /// إعداد شبكة بنود الفاتورة للتعديل المباشر (Inline Edit).
     /// </summary>
     public static class BillItemsGridHelper
     {
         /// <summary>
-        /// إعداد عمود المادة (قائمة بحث) وإرجاع قاموس المواد للربط السريع.
+        /// إعداد أعمدة الشبكة كاملة (المادة، الكمية، السعر، الإجمالي) وإرجاع قاموس المواد.
         /// </summary>
-        public static IDictionary<Guid, ItemDto> ConfigureItemColumn(GridColumn column, IEnumerable<ItemDto> items)
+        public static IDictionary<Guid, ItemDto> ConfigureGrid(
+            GridColumn colItem,
+            GridColumn colQty,
+            GridColumn colPrice,
+            GridColumn colTotal,
+            IEnumerable<ItemDto> items)
         {
-            var list = (items ?? Enumerable.Empty<ItemDto>())
-                .Where(i => i != null)
-                .ToList();
+            var list = items.Where(i => i != null).ToList();
 
-            var lookup = new Dictionary<Guid, ItemDto>();
-
-            foreach (var item in list)
-                lookup[item.Id] = item;
-
-            var itemLookup = new RepositoryItemGridLookUpEdit
+            colItem.ColumnEdit = new RepositoryItemGridLookUpEdit
             {
+                DataSource = list,
                 DisplayMember = "Name",
                 ValueMember = "Id",
                 AutoComplete = true,
                 NullText = "اختر المادة"
             };
+            colItem.OptionsColumn.AllowEdit = true;
 
-            itemLookup.DataSource = list;
+            ConfigureNumericColumn(colQty);
+            ConfigureNumericColumn(colPrice);
 
-            column.ColumnEdit = itemLookup;
-            column.OptionsColumn.AllowEdit = true;
+            // عمود غير مرتبط يحسب الإجمالي تلقائياً (اسم الحقل غير موجود في الـ DTO).
+            colTotal.FieldName = "Total";
+            colTotal.UnboundType = UnboundColumnType.Decimal;
+            colTotal.UnboundExpression = "[Qty] * [Price]";
+            colTotal.OptionsColumn.AllowEdit = false;
+            colTotal.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            colTotal.DisplayFormat.FormatString = "N2";
 
-            return lookup;
+            return list.ToDictionary(i => i.Id);
         }
 
-        /// <summary>
-        /// إعداد عمود رقمي (الكمية / السعر) للتعديل المباشر.
-        /// </summary>
-        public static void ConfigureNumericColumn(GridColumn column, decimal minValue, decimal maxValue)
+        private static void ConfigureNumericColumn(GridColumn column)
         {
             column.OptionsColumn.AllowEdit = true;
-
-            var editor = new RepositoryItemSpinEdit
+            column.ColumnEdit = new RepositoryItemSpinEdit
             {
                 IsFloatValue = true,
-                MinValue = minValue,
-                MaxValue = maxValue
+                MinValue = 0m,
+                MaxValue = 1000000m
             };
-
-            column.ColumnEdit = editor;
         }
 
         /// <summary>
-        /// تحديث بيانات المادة في الصف عند تغييرها داخل الشبكة.
+        /// تطبيق المادة المختارة على الصف (المادة والسعر الافتراضي).
         /// </summary>
-        public static bool ApplyItemToRow(BillItemRow row, IDictionary<Guid, ItemDto> lookup)
+        public static void ApplyItemToRow(BillItemDto row, IDictionary<Guid, ItemDto> lookup)
         {
-            if (row == null)
-                return false;
+            ItemDto item = null;
+            lookup?.TryGetValue(row.ItemGuid, out item);
 
-            ItemDto item;
+            row.Item = item;
 
-            if (row.ItemGuid == Guid.Empty || lookup == null || !lookup.TryGetValue(row.ItemGuid, out item))
-            {
-                row.Item = null;
-                return false;
-            }
-
-            row.ApplyItem(item);
-
-            return true;
+            if (item?.Price != null)
+                row.Price = item.Price.Value;
         }
     }
 }

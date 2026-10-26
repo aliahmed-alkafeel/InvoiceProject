@@ -1,12 +1,15 @@
 ﻿using Data.Services.Interfaces;
 using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
+using Models.CurrentUserDetails;
 using Models.DTOs;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Extensions;
 using UI.Forms.AccountsTree;
 
 namespace UI.Forms
@@ -22,10 +25,13 @@ namespace UI.Forms
             _accountsTreeService = accountsTreeService;
             InitializeComponent();
 
-            toolBarControl1.CreateClicked += AccountsToolbar_CreateClicked;
-            toolBarControl1.EditClicked += AccountsToolbar_EditClicked;
-            toolBarControl1.DeleteClicked += AccountsToolbar_DeleteClicked;
-            toolBarControl1.RefreshClicked += AccountsToolbar_RefreshClicked;
+            if(toolBarControl1.SetManageVisible(CurrentUser.HasRole(UserRole.ManageAccountsTree)))
+            {
+                toolBarControl1.CreateClicked += AccountsToolbar_CreateClicked;
+                toolBarControl1.EditClicked += AccountsToolbar_EditClicked;
+                toolBarControl1.DeleteClicked += AccountsToolbar_DeleteClicked;
+            }
+                toolBarControl1.RefreshClicked += AccountsToolbar_RefreshClicked;
         }
 
         private async void AccountsTreeForm_LoadAsync(object sender, EventArgs e)

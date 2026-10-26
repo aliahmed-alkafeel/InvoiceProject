@@ -1,7 +1,9 @@
 ﻿using Data.Services.Interfaces;
 using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
+using Models.CurrentUserDetails;
 using Models.DTOs;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UI.Controls;
+using UI.Extensions;
 
 namespace UI.Forms.Vouchers
 {
@@ -25,10 +28,12 @@ namespace UI.Forms.Vouchers
             _vouchersService = vouchersService;
             InitializeComponent();
 
-
-            toolBarControl1.CreateClicked += VouchersToolbar_CreateClicked;
-            toolBarControl1.EditClicked += VouchersToolbar_EditClicked;
-            toolBarControl1.DeleteClicked += VouchersToolbar_DeleteClicked;
+            if (toolBarControl1.SetManageVisible(CurrentUser.HasRole(UserRole.ManageVoucher)))
+            {
+                toolBarControl1.CreateClicked += VouchersToolbar_CreateClicked;
+                toolBarControl1.EditClicked += VouchersToolbar_EditClicked;
+                toolBarControl1.DeleteClicked += VouchersToolbar_DeleteClicked;
+            }
             toolBarControl1.RefreshClicked += VouchersToolbar_RefreshClicked;
         }
 

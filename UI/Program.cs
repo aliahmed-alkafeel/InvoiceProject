@@ -33,6 +33,7 @@ namespace UI
         public static IServiceProvider CurrentScopeProvider { get; private set; }
         private static XtraForm _hostForm;
         private static XtraForm _currentPage;
+        private static IServiceScope _currentPageScope;
 
         [STAThread]
         static void Main()
@@ -61,11 +62,11 @@ namespace UI
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
-            // del this line and if
-            var rememberedUsernam =
-Properties.Settings.Default.RememberedUsername;
-            if (rememberedUsernam == null)
-            {
+//            // del this line and if
+//            var rememberedUsernam =
+//Properties.Settings.Default.RememberedUsername;
+//            if (rememberedUsernam == null)
+//            {
                 using (var loginScope = ServiceProvider.CreateScope())
                 {
                     var loginForm =
@@ -76,24 +77,34 @@ Properties.Settings.Default.RememberedUsername;
                     if (result != DialogResult.OK)
                         return;
                 }
-            }
+            //}
+
             using (var mainScope = ServiceProvider.CreateScope())
             {
-                CurrentScopeProvider = mainScope.ServiceProvider;
-
-                var mainForm =
-                    CurrentScopeProvider.GetRequiredService<MainForm>();
-
-                var firstForm =
-                    CurrentScopeProvider.GetRequiredService<ItemsForm>();
-
-                _hostForm = mainForm;
+                // النافذة الرئيسية تبقى طوال فترة تشغيل التطبيق.
+                _hostForm = mainScope.ServiceProvider
+                    .GetRequiredService<MainForm>();
 
                 _currentPage = null;
+                _currentPageScope = null;
 
-                firstForm.LoadPage();
+                try
+                {
+                    // فتح الشاشة الأولى باستخدام Scope مستقل.
+                    NavigateTo<ItemsForm>();
 
-                Application.Run(mainForm);
+                    Application.Run(_hostForm);
+                }
+                finally
+                {
+                    // التخلص من Scope آخر شاشة عند إغلاق التطبيق.
+                    _currentPageScope?.Dispose();
+
+                    _currentPageScope = null;
+                    _currentPage = null;
+                    CurrentScopeProvider = null;
+                    _hostForm = null;
+                }
             }
         }
 
@@ -105,8 +116,6 @@ Properties.Settings.Default.RememberedUsername;
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ILoginService, LoginService>();
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IItemService, ItemService>();
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<IAccountsTreeService, AccountsTreesService>();
             services.AddScoped<IBillService, BillService>();
@@ -136,34 +145,52 @@ Properties.Settings.Default.RememberedUsername;
             services.AddTransient<EmployeesManageForm>();
         }
 
-        public static void LoadPage(this XtraForm page)
+        public static void NavigateTo<TPage>()
+    where TPage : XtraForm
         {
             if (_hostForm == null)
-                throw new InvalidOperationException("لم يتم تحديد الفورم الرئيسي.");
+                throw new InvalidOperationException(
+                    "لم يتم تحديد الفورم الرئيسي");
 
+            // إذا كانت الشاشة المطلوبة هي الشاشة الحالية، فلا تفعل شيئًا.
             if (_currentPage != null &&
-                _currentPage.GetType() == page.GetType())
+              _currentPage.GetType() == typeof(TPage))
             {
-                page.Dispose();
                 return;
             }
-            if (_currentPage != null)
+
+            // 1. إنشاء Scope جديد للشاشة.
+            var newScope = ServiceProvider.CreateScope();
+
+            TPage newPage;
+
+            try
             {
-                _hostForm.Controls.Remove(_currentPage);
-                _currentPage.Dispose();
+                newPage = newScope.ServiceProvider
+                    .GetRequiredService<TPage>();
+
+                newPage.TopLevel = false;
+                newPage.FormBorderStyle = FormBorderStyle.None;
+                newPage.Dock = DockStyle.Fill;
             }
-            page.TopLevel = false;
-            page.FormBorderStyle = FormBorderStyle.None;
-            page.Dock = DockStyle.Fill;
+            catch
+            {
+                newScope.Dispose();
+                throw new Exception($"فشل انشاء {typeof(TPage).Name}");
+            }
 
-            _hostForm.Controls.Add(page);
+            var previousScope = _currentPageScope;
 
-            page.Show();
-            page.BringToFront();
-
-            _currentPage = page;
-
-            _hostForm.Text = page.Text;
+            if (_currentPage != null)
+                _hostForm.Controls.Remove(_currentPage);
+            _hostForm.Controls.Add(newPage);
+            _currentPage = newPage;
+            _currentPageScope = newScope;
+            CurrentScopeProvider = newScope.ServiceProvider;
+            _hostForm.Text = newPage.Text;
+            newPage.Show();
+            newPage.BringToFront();
+            previousScope?.Dispose();
         }
     }
 }
