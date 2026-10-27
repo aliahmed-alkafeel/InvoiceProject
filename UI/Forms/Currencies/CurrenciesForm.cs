@@ -56,7 +56,9 @@ namespace UI.Forms
             _isLoadingCurrencies = true;
             try
             {
-                var currencies = await _currencyService.GetAllCurrenciesAsync();
+                var currencies = await this.WithLoading(cts =>
+                     _currencyService.GetAllCurrenciesAsync(cts),
+                    "جارٍ تحميل العملات، يرجى الانتظار...");
 
                 gridControl1.DataSource = currencies;
 

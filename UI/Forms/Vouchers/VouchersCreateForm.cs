@@ -100,9 +100,9 @@ namespace UI.Forms.Vouchers
         private async Task LoadVoucherDetailsAsync(VoucherDto voucher)
         {
             _selectedVoucher = voucher;
-
-            var accounts = (await _accountsTreeService.GetAllAccountsAsync())
-         .Where(a => a.IsLeaf && a.IsActive)
+            var accounts = (await this.WithLoading(async cts =>
+                await _accountsTreeService.GetAllAccountsAsync(cts), "جارٍ تحميل الحسابات، يرجى الانتظار...")
+         ).Where(a => a.IsLeaf && a.IsActive)
          .Select(a => new
          {
              a.Id,
@@ -141,7 +141,8 @@ namespace UI.Forms.Vouchers
             cmbVoucherTypes.EditValue = null;
 
 
-            var currencies = (await _currencyService.GetAllCurrenciesAsync())
+            var currencies = (await this.WithLoading(async cts =>
+                await _currencyService.GetAllCurrenciesAsync(cts), "جارٍ تحميل العملات، يرجى الانتظار..."))
          .Select(a => new
          {
              a.Id,

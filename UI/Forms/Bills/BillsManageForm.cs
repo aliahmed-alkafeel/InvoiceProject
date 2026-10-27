@@ -64,7 +64,9 @@ namespace UI.Forms.Bills
 
         private async Task LoadLookupsAsync()
         {
-            cmbAccountTree.Properties.DataSource = (await _accountsTreeService.GetAllAccountsAsync())
+            cmbAccountTree.Properties.DataSource = (await this.WithLoading(async cts =>
+                await _accountsTreeService.GetAllAccountsAsync(cts),
+                "جارٍ تحميل الحسابات، يرجى الانتظار..."))
                 .Where(a => a.IsLeaf && a.IsActive)
                 .Select(a => new { a.Id, a.AccountName })
                 .ToList();
@@ -72,18 +74,27 @@ namespace UI.Forms.Bills
             cmbAccountTree.Properties.ValueMember = "Id";
             cmbAccountTree.Properties.NullText = "اختر الحساب";
 
-            cmbCurrency.Properties.DataSource = (await _currencyService.GetAllCurrenciesAsync())
+            cmbCurrency.Properties.DataSource = (await this.WithLoading(async cts =>
+                await _currencyService.GetAllCurrenciesAsync(cts),
+                "جارٍ تحميل العملات، يرجى الانتظار..."))
                 .Select(c => new { c.Id, c.CurrencyName })
                 .ToList();
             cmbCurrency.Properties.DisplayMember = "CurrencyName";
             cmbCurrency.Properties.ValueMember = "Id";
             cmbCurrency.Properties.NullText = "اختر العملة";
 
-            cmbBillType.Properties.Items.Clear();
-            cmbBillType.Properties.Items.AddRange(new object[] { BillType.In, BillType.Out });
+            cmbBillType.Properties.DataSource = BillType.All
+                .Select(type => new
+                {
+                    Value = type,
+                    Text = type
+                })
+                .ToList();
+            cmbBillType.Properties.DisplayMember = "Text";
+            cmbBillType.Properties.ValueMember = "Value";
             cmbBillType.Properties.NullText = "اختر نوع الفاتورة";
 
-            var items = (await _itemService.GetAllItemsAsync()).Where(i => i.IsActive);
+            var items = (await this.WithLoading(async cts => await _itemService.GetAllItemsAsync(cts), "جارٍ تحميل المواد، يرجى الانتظار...")).Where(i => i.IsActive);
 
             _itemLookup = BillItemsGridHelper.ConfigureGrid(colItem, colQty, colPrice, colTotal, items);
         }

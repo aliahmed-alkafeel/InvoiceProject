@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -9,48 +8,61 @@ namespace UI.Extensions
 {
     public static class LoadingExtensions
     {
-        public static T WithLoading<T>(
+        public static async Task<T> WithLoading<T>(
             this Form owner,
             Func<CancellationToken, Task<T>> operation,
             string message = "Please wait...")
         {
+            if (owner == null)
+                throw new ArgumentNullException(nameof(owner));
+
+            if (operation == null)
+                throw new ArgumentNullException(nameof(operation));
+
             using (var cts = new CancellationTokenSource())
             using (var form = new LoadingForm(cts, message))
             {
-                T result = default(T);
-                Exception error = null;
-                bool cancelled = false;
+                // Start the operation immediately.
+                Task<T> operationTask = operation(cts.Token);
 
+                // Wait up to 100 milliseconds before showing the loading form.
+                await Task.WhenAny(
+                    operationTask,
+                    Task.Delay(100));
+
+                // If the operation has already completed,
+                // return its result without showing the loading form.
+                if (operationTask.IsCompleted)
+                    return await operationTask;
+
+                // The operation is still running.
+                // Close the loading form when the operation finishes.
                 form.Shown += async (s, e) =>
                 {
                     try
                     {
-                        // Task.Run حتى لا يتجمد الفورم إذا كان في الـ operation جزء متزامن
-                        result = await Task.Run(() => operation(cts.Token));
+                        await operationTask;
                     }
-                    catch (OperationCanceledException) when (cts.IsCancellationRequested)
+                    catch (Exception)
                     {
-                        cancelled = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        error = ex;
+                        // The exception will be propagated below.
                     }
                     finally
                     {
-                        form.CloseAfterOperation();
+                        if (!form.IsDisposed)
+                            form.CloseAfterOperation();
                     }
                 };
 
+                // Show the loading form only when the delay has elapsed
+                // and the operation is still running.
+                if (operationTask.IsCompleted)
+                    return await operationTask;
+
                 form.ShowDialog(owner);
 
-                if (cancelled)
-                    throw new OperationCanceledException();
-
-                if (error != null)
-                    ExceptionDispatchInfo.Capture(error).Throw();
-
-                return result;
+                // Return the result or propagate the exception/cancellation.
+                return await operationTask;
             }
         }
     }

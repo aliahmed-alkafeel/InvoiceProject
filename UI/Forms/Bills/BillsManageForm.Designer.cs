@@ -38,7 +38,9 @@
             this.labelNotes = new DevExpress.XtraEditors.LabelControl();
             this.labelItems = new DevExpress.XtraEditors.LabelControl();
             this.spinBillNumber = new DevExpress.XtraEditors.SpinEdit();
-            this.cmbBillType = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.cmbBillType = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.gridViewBillType = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colBillType = new DevExpress.XtraGrid.Columns.GridColumn();
             this.cmbAccountTree = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.gridViewAccountTree = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colAccountName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -62,6 +64,7 @@
             this.saveCancelControl21 = new UI.Controls.SaveCancelControl2();
             ((System.ComponentModel.ISupportInitialize)(this.spinBillNumber.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbBillType.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewBillType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbAccountTree.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewAccountTree)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbCurrency.Properties)).BeginInit();
@@ -207,8 +210,26 @@
             this.cmbBillType.Name = "cmbBillType";
             this.cmbBillType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbBillType.Properties.PopupView = this.gridViewBillType;
             this.cmbBillType.Size = new System.Drawing.Size(290, 20);
             this.cmbBillType.TabIndex = 10;
+            // 
+            // gridViewBillType
+            // 
+            this.gridViewBillType.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colBillType});
+            this.gridViewBillType.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridViewBillType.Name = "gridViewBillType";
+            this.gridViewBillType.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridViewBillType.OptionsView.ShowGroupPanel = false;
+            // 
+            // colBillType
+            // 
+            this.colBillType.Caption = "نوع الفاتورة";
+            this.colBillType.FieldName = "Text";
+            this.colBillType.Name = "colBillType";
+            this.colBillType.Visible = true;
+            this.colBillType.VisibleIndex = 0;
             // 
             // cmbAccountTree
             // 
@@ -461,6 +482,7 @@
             this.Text = "الفواتير";
             this.Load += new System.EventHandler(this.BillsManageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.spinBillNumber.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewBillType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbBillType.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbAccountTree.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewAccountTree)).EndInit();
@@ -488,7 +510,9 @@
         private DevExpress.XtraEditors.LabelControl labelNotes;
         private DevExpress.XtraEditors.LabelControl labelItems;
         private DevExpress.XtraEditors.SpinEdit spinBillNumber;
-        private DevExpress.XtraEditors.ComboBoxEdit cmbBillType;
+        private DevExpress.XtraEditors.SearchLookUpEdit cmbBillType;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewBillType;
+        private DevExpress.XtraGrid.Columns.GridColumn colBillType;
         private DevExpress.XtraEditors.SearchLookUpEdit cmbAccountTree;
         private DevExpress.XtraGrid.Views.Grid.GridView gridViewAccountTree;
         private DevExpress.XtraGrid.Columns.GridColumn colAccountName;

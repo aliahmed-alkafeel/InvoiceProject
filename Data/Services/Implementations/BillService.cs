@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Data.Services.Implementations
@@ -20,7 +21,7 @@ namespace Data.Services.Implementations
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<BillDto>> GetAllBillsAsync()
+        public async Task<List<BillDto>> GetAllBillsAsync(CancellationToken cts)
         {
             return await _unitOfWork.Bills
                 .Select()
@@ -48,7 +49,7 @@ namespace Data.Services.Implementations
                         CurrencySymbol = b.Currency.CurrencySymbol
                     }
                 })
-                .ToListAsync();
+                .ToListAsync(cts);
         }
 
         public async Task<BillDto> GetBillByIdAsync(Guid id)

@@ -58,7 +58,9 @@ namespace UI.Forms
             _isLoadingAccounts = true;
             try
             {
-                _accounts = await _accountsTreeService.GetAllAccountsAsync();
+                _accounts = await this.WithLoading(cts =>
+                    _accountsTreeService.GetAllAccountsAsync(cts),
+                    "جارٍ تحميل شجرة الحسابات، يرجى الانتظار...");
 
                 treeListControl1.DataSource = _accounts;
                 treeListControl1.ExpandAll();

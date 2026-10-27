@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Data.Services.Implementations
@@ -19,7 +20,7 @@ namespace Data.Services.Implementations
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<ItemDto>> GetAllItemsAsync()
+        public async Task<List<ItemDto>> GetAllItemsAsync(System.Threading.CancellationToken cts)
         {
             return await _unitOfWork.Items
                 .Select().Include(i => i.Category)
@@ -37,7 +38,7 @@ namespace Data.Services.Implementations
                         IsActive = i.Category.IsActive
                     },
                 })
-                .ToListAsync();
+                .ToListAsync(cts);
         }
 
         public async Task<ItemDto> GetItemByIdAsync(Guid id)

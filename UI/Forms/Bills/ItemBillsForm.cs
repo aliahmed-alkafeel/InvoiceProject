@@ -47,6 +47,25 @@ namespace UI.Forms
 
             gridControl1.DataSource = _billItems;
             gridView1.InitNewRow += gridView1_InitNewRow;
+
+            ApplyCaptionToControlDistance();
+        }
+
+        /// <summary>
+        /// تقريب نصوص التسميات (نوع الفاتورة، سعر الصرف، وغيرها) من القيم المعروضة بجانبها،
+        /// بإزالة المسافة الافتراضية الفاصلة بين النص والcontrol.
+        /// </summary>
+        private void ApplyCaptionToControlDistance()
+        {
+            const int textToControlDistance = 0;
+
+            itemBillNumber.TextToControlDistance = textToControlDistance;
+            itemType.TextToControlDistance = textToControlDistance;
+            itemAccount.TextToControlDistance = textToControlDistance;
+            itemEqual.TextToControlDistance = textToControlDistance;
+            itemDate.TextToControlDistance = textToControlDistance;
+            itemCurrency.TextToControlDistance = textToControlDistance;
+            itemNotes.TextToControlDistance = textToControlDistance;
         }
 
         public ItemBillsForm(IBillService billService, IItemService itemService) : this()
@@ -78,7 +97,7 @@ namespace UI.Forms
         {
             try
             {
-                var items = (await _itemService.GetAllItemsAsync()).Where(i => i.IsActive);
+                var items = (await this.WithLoading(async cts => await _itemService.GetAllItemsAsync(cts), "جارٍ تحميل المواد، يرجى الانتظار...")).Where(i => i.IsActive);
 
                 _itemLookup = BillItemsGridHelper.ConfigureGrid(colItem, colQty, colPrice, colTotal, items);
             }
@@ -94,7 +113,9 @@ namespace UI.Forms
 
             try
             {
-                var bills = await _billService.GetAllBillsAsync() ?? new List<BillDto>();
+                var bills = await this.WithLoading(async cts =>
+                    await _billService.GetAllBillsAsync(cts),
+                    "جارٍ تحميل الفواتير، يرجى الانتظار...") ?? new List<BillDto>();
 
                 _bills.AddRange(bills.OrderBy(b => b.Date).ThenBy(b => b.BillNumber));
             }

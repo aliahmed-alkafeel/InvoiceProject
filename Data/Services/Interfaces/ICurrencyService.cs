@@ -9,7 +9,7 @@ namespace Data.Services.Interfaces
 {
     public interface ICurrencyService
     {
-        Task<List<CurrencyDto>> GetAllCurrenciesAsync();
+        Task<List<CurrencyDto>> GetAllCurrenciesAsync(System.Threading.CancellationToken cts);
         Task<CurrencyDto> GetCurrencyByIdAsync(Guid id);
         Task<bool> CreateCurrencyAsync(CreateCurrencyDto model);
         Task<bool> UpdateCurrencyAsync(UpdateCurrencyDto model);

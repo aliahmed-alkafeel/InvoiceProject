@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RestaurantManagement.Areas.Dashboard.Services
@@ -92,21 +93,21 @@ namespace RestaurantManagement.Areas.Dashboard.Services
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
 
-        public async Task<List<GroupDto>> GetAllGroupsAsync()
+        public async Task<List<GroupDto>> GetAllGroupsAsync(CancellationToken cts)
         {
             var groups = await _unitOfWork.Groups
                 .NoTrackingSelect()
                 .Include(g => g.GroupRoles.Select(gr => gr.Role))
-                .ToListAsync();
+                .ToListAsync(cts);
 
             return groups.Select(ToDto).ToList();
         }
 
-        public async Task<List<RoleDto>> GetAllRolesAsync()
+        public async Task<List<RoleDto>> GetAllRolesAsync(CancellationToken cts)
         {
             var roles = await _unitOfWork.Roles
                 .NoTrackingSelect()
-                .ToListAsync();
+                .ToListAsync(cts);
 
             return roles
                 .GroupBy(r => r.RoleName)

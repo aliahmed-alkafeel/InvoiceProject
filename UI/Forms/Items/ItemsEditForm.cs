@@ -107,8 +107,9 @@ namespace UI.Forms.Items
 
         private async void ItemsEditForm_Load(object sender, EventArgs e)
         {
-            var categories = ( this.WithLoading(
-            cts => _categoryService.GetAllCategoriesAsync(cts)))
+            var categories = (await this.WithLoading(async cts =>
+                await _categoryService.GetAllCategoriesAsync(cts),
+                "جارٍ تحميل الفئات، يرجى الانتظار..."))
                 .Select(c => new
                 {
                     c.Id,

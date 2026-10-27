@@ -10,7 +10,7 @@ namespace Data.Services.Interfaces
 {
     public interface IItemService
     {
-        Task<List<ItemDto>> GetAllItemsAsync();
+        Task<List<ItemDto>> GetAllItemsAsync(CancellationToken cts);
         Task<ItemDto> GetItemByIdAsync(Guid id);
         Task<bool> CreateItemAsync(CreateItemDto model);
         Task<bool> UpdateItemAsync(UpdateItemDto model);

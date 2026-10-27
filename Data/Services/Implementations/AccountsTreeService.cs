@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Data.Services.Implementations
@@ -20,43 +21,57 @@ namespace Data.Services.Implementations
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<AccountsTreeDto>> GetAllAccountsAsync()
+        public async Task<List<AccountsTreeDto>> GetAllAccountsAsync(CancellationToken cts)
         {
-            return await _unitOfWork.AccountsTrees
+            var accounts = await _unitOfWork.AccountsTrees
                 .Select()
                 .OrderBy(a => a.AccountCode)
+                .ToListAsync(cts);
+
+            // الحساب النهائي هو الذي لا يحتوي على حسابات فرعية.
+            // تُحسب الحالة من الشجرة نفسها بدلاً من العمود المخزّن (IsLeaf)
+            // لأنه يصبح قديماً عند إضافة حساب فرعي لاحقاً.
+            var parentIds = new HashSet<Guid>(accounts
+                .Where(a => a.ParentGuid.HasValue)
+                .Select(a => a.ParentGuid.Value));
+
+            return accounts
                 .Select(a => new AccountsTreeDto
                 {
                     Id = a.Id,
                     ParentGuid = a.ParentGuid,
                     AccountCode = a.AccountCode,
                     AccountName = a.AccountName,
-                    IsLeaf = a.IsLeaf,
+                    IsLeaf = !parentIds.Contains(a.Id),
                     IsActive = a.IsActive,
                     Notes = a.Notes
                 })
-                .ToListAsync();
+                .ToList();
         }
 
         public async Task<AccountsTreeDto> GetAccountByIdAsync(Guid id)
         {
-            var account = await _unitOfWork.AccountsTrees
+            var entity = await _unitOfWork.AccountsTrees
                 .Select()
-                .Where(a => a.Id == id)
-                .Select(a => new AccountsTreeDto
-                {
-                    Id = a.Id,
-                    ParentGuid = a.ParentGuid,
-                    AccountCode = a.AccountCode,
-                    AccountName = a.AccountName,
-                    IsLeaf = a.IsLeaf,
-                    IsActive = a.IsActive,
-                    Notes = a.Notes
-                })
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(a => a.Id == id);
 
-            return account ?? throw new InvalidOperationException(
-                $"لم يتم العثور على الحساب بالمعرّف '{id}'.");
+            if (entity == null)
+                throw new InvalidOperationException(
+                    $"لم يتم العثور على الحساب بالمعرّف '{id}'.");
+
+            return new AccountsTreeDto
+            {
+                Id = entity.Id,
+                ParentGuid = entity.ParentGuid,
+                AccountCode = entity.AccountCode,
+                AccountName = entity.AccountName,
+                // تُحسب الحالة من الشجرة نفسها بدلاً من العمود المخزّن (IsLeaf).
+                IsLeaf = !await _unitOfWork.AccountsTrees
+                    .Select()
+                    .AnyAsync(a => a.ParentGuid == entity.Id),
+                IsActive = entity.IsActive,
+                Notes = entity.Notes
+            };
         }
 
         public async Task<bool> CreateAccountAsync(CreateAccountsTreeDto model)

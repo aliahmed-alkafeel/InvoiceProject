@@ -64,7 +64,9 @@ namespace UI.Forms
             _isLoadingItems = true;
             try
             {
-                var items = await _itemsService.GetAllItemsAsync();
+                var items = await this.WithLoading(cts =>
+                    _itemsService.GetAllItemsAsync(cts),
+                    "جارٍ تحميل المنتجات، يرجى الانتظار...");
 
                 gridControl1.DataSource = items;
 
@@ -164,7 +166,7 @@ namespace UI.Forms
 
             try
             {
-                
+                 
                await  _itemsService.DeleteItemAsync(item.Id);
 
                 await LoadItemsAsync();

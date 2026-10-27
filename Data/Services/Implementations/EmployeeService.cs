@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Data.Services.Implementations
@@ -23,13 +24,13 @@ namespace Data.Services.Implementations
                     "وحدة العمل مطلوبة.");
         }
 
-        public async Task<List<EmployeeDto>> GetAllEmployeesAsync()
+        public async Task<List<EmployeeDto>> GetAllEmployeesAsync(CancellationToken cts)
         {
             var employees = await _unitOfWork.Employees
                 .NoTrackingSelect()
                 .Include(e => e.Group)
                 .Where(e => e.Group != null && !e.Group.IsDeleted)
-                .ToListAsync();
+                .ToListAsync(cts);
 
             return employees.Select(e => ToDto(e)).ToList();
         }

@@ -8,7 +8,7 @@ namespace Data.Services.Interfaces
 {
     public interface IBillService
     {
-        Task<List<BillDto>> GetAllBillsAsync();
+        Task<List<BillDto>> GetAllBillsAsync(System.Threading.CancellationToken cts);
         Task<BillDto> GetBillByIdAsync(Guid id);
         Task<BillDto> GetBillByNumberAsync(int billNumber);
         Task<bool> CreateBillAsync(CreateBillDto model);

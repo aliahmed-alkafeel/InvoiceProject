@@ -63,8 +63,8 @@ namespace UI.Forms.Categories
             _isLoadingCategories = true;
             try
             {
-                var categorys =  this.WithLoading(
-                    cts => _categoryService.GetAllCategoriesAsync(cts),
+                var categorys = await this.WithLoading(cts =>
+                    _categoryService.GetAllCategoriesAsync(cts),
                     "جارٍ تحميل الفئات، يرجى الانتظار...");
 
                 gridControl1.DataSource = categorys;

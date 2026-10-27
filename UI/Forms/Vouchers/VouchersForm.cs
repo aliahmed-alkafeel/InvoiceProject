@@ -61,7 +61,9 @@ namespace UI.Forms.Vouchers
             _isLoadingVouchers = true;
             try
             {
-                var vouchers = await _vouchersService.GetAllVouchersAsync();
+                var vouchers = await this.WithLoading(cts =>
+                    _vouchersService.GetAllVouchersAsync(cts),
+                    "جارٍ تحميل السندات، يرجى الانتظار...");
 
                 gridControl1.DataSource = vouchers;
 

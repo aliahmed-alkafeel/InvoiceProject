@@ -47,7 +47,9 @@ namespace UI.Forms.Groups
 
         private async Task LoadRolesAsync()
         {
-            var roles = await _groupService.GetAllRolesAsync();
+            var roles = await this.WithLoading(async cts =>
+                await _groupService.GetAllRolesAsync(cts),
+                "جارٍ تحميل الصلاحيات، يرجى الانتظار...");
 
             checkedListBoxControl1.BeginUpdate();
             try

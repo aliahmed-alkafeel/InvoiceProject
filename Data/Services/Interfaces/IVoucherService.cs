@@ -9,7 +9,7 @@ namespace Data.Services.Interfaces
 {
     public interface IVoucherService
     {
-        Task<List<VoucherDto>> GetAllVouchersAsync();
+        Task<List<VoucherDto>> GetAllVouchersAsync(System.Threading.CancellationToken cts);
         Task<VoucherDto> GetVoucherByIdAsync(Guid id);
         Task<bool> CreateVoucherAsync(CreateVoucherDto model);
         Task<bool> UpdateVoucherAsync(UpdateVoucherDto model);

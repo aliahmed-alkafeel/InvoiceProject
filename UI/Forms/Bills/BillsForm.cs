@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UI.Extensions;
 using UI.Forms.Bills;
-
 namespace UI.Forms
 {
     public partial class BillsForm : XtraForm
@@ -57,7 +56,9 @@ namespace UI.Forms
             _isLoadingBills = true;
             try
             {
-                _bills = await _billService.GetAllBillsAsync();
+                _bills = await this.WithLoading(cts =>
+                    _billService.GetAllBillsAsync(cts),
+                    "جارٍ تحميل الفواتير، يرجى الانتظار...");
 
                 gridControl1.DataSource = _bills;
 

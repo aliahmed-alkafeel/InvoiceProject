@@ -56,7 +56,9 @@ namespace UI.Forms
             _isLoadingGroups = true;
             try
             {
-                var groups = await _groupService.GetAllGroupsAsync();
+                var groups = await this.WithLoading(cts =>
+                    _groupService.GetAllGroupsAsync(cts),
+                    "جارٍ تحميل المجموعات، يرجى الانتظار...");
 
                 gridControl1.DataSource = groups;
 

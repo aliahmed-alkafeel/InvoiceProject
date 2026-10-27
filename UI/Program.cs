@@ -50,8 +50,10 @@ namespace UI
 
             var services = new ServiceCollection();
             ConfigureServices(services);
-            ServiceProvider = services.BuildServiceProvider();
-            try
+            using (var rootProvider = services.BuildServiceProvider())
+            {
+                ServiceProvider = rootProvider;
+                try
             {
                 DbInitializer.SeedAsync(ServiceProvider).Wait();
             }
@@ -104,6 +106,8 @@ namespace UI
                     _currentPage = null;
                     CurrentScopeProvider = null;
                     _hostForm = null;
+                }
+                    ServiceProvider = null;
                 }
             }
         }

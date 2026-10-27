@@ -1,4 +1,5 @@
 ﻿using Data.Configurations.DTOsConfigurations;
+using Data.Services.Implementations;
 using Data.Services.Interfaces;
 using DevExpress.XtraEditors;
 using Models.DTOs;
@@ -47,7 +48,9 @@ namespace UI.Forms.AccountsTree
 
         private async Task LoadParentAccountsAsync()
         {
-            _accounts = await _accountsTreeService.GetAllAccountsAsync();
+            _accounts = await this.WithLoading(async cts =>
+                await _accountsTreeService.GetAllAccountsAsync(cts),
+                "جارٍ تحميل شجرة الحسابات، يرجى الانتظار...");
 
             var parents = GetParentCandidates()
                 .OrderBy(a => a.AccountCode)

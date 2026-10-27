@@ -51,7 +51,9 @@ namespace UI.Forms.Employees
 
         private async Task LoadGroupsAsync()
         {
-            var groups = (await _groupService.GetAllGroupsAsync())
+            var groups = (await this.WithLoading(async cts =>
+                await _groupService.GetAllGroupsAsync(cts),
+                "جارٍ تحميل المجموعات، يرجى الانتظار..."))
                 .Select(g => new
                 {
                     g.Id,

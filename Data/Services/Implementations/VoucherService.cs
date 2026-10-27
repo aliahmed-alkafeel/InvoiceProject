@@ -9,6 +9,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Data.Services.Implementations
@@ -22,7 +23,7 @@ namespace Data.Services.Implementations
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<VoucherDto>> GetAllVouchersAsync()
+        public async Task<List<VoucherDto>> GetAllVouchersAsync(CancellationToken cts)
         {
             return await _unitOfWork.Vouchers
                 .Select()
@@ -51,7 +52,7 @@ namespace Data.Services.Implementations
                         CurrencySymbol = v.Currency.CurrencySymbol
                     }
                 })
-                .ToListAsync();
+                .ToListAsync(cts);
         }
 
         public async Task<VoucherDto> GetVoucherByIdAsync(Guid id)

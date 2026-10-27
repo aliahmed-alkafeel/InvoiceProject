@@ -57,7 +57,9 @@ namespace UI.Forms
             _isLoadingEmployees = true;
             try
             {
-                var employees = await _employeeService.GetAllEmployeesAsync();
+                var employees = await this.WithLoading(cts =>
+                    _employeeService.GetAllEmployeesAsync(cts),
+                    "جارٍ تحميل الموظفين، يرجى الانتظار...");
 
                 gridControl1.DataSource = employees;
                 if (gridView1.RowCount > 0)
