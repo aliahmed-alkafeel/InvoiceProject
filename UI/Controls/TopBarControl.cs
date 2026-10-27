@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraBars.Navigation;
+using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
 using Models.CurrentUserDetails;
@@ -35,63 +35,63 @@ namespace UI.Base.TopBar
         {
             SetActiveElement(e.Element);
 
-            Program.NavigateTo<ItemsForm>();
+            Navigator.NavigateTo<ItemsForm>();
         }
 
         private void btnCategories_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            Program.NavigateTo<CategoriesForm>();
+            Navigator.NavigateTo<CategoriesForm>();
         }
 
         private void btnCurrencies_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            Program.NavigateTo<CurrenciesForm>();
+            Navigator.NavigateTo<CurrenciesForm>();
         }
 
         private void btnAccountsTree_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            Program.NavigateTo<AccountsTreeForm>();
+            Navigator.NavigateTo<AccountsTreeForm>();
         }
 
         private void btnBills_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            Program.NavigateTo<BillsForm>();
+            Navigator.NavigateTo<BillsForm>();
         }
 
         private void btnVouchers_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            Program.NavigateTo<VouchersForm>();
+            Navigator.NavigateTo<VouchersForm>();
         }
 
         private void navButton7_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            Program.NavigateTo<ItemBillsForm>();
+            Navigator.NavigateTo<ItemBillsForm>();
         }
 
         private void btnGroups_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            Program.NavigateTo<GroupsForm>();
+            Navigator.NavigateTo<GroupsForm>();
         }
 
         private void btnEmployees_Click(object sender, NavElementEventArgs e)
         {
             SetActiveElement(e.Element);
 
-            Program.NavigateTo<EmployeesForm>();
+            Navigator.NavigateTo<EmployeesForm>();
         }
         private void SetActiveElement(NavElement element)
         {

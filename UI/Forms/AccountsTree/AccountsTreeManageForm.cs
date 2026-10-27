@@ -208,7 +208,6 @@ namespace UI.Forms.AccountsTree
             {
                 lblTitle.Text = "إضافة حساب";
                 saveCancelControl21.SaveText = "إضافة";
-                ClearDetails();
                 return;
             }
 
@@ -221,16 +220,6 @@ namespace UI.Forms.AccountsTree
             chkIsActive.Checked = account.IsActive;
             txtNotes.Text = account.Notes;
             cmbParent.EditValue = account.ParentGuid;
-        }
-
-        private void ClearDetails()
-        {
-            txtAccountCode.Text = string.Empty;
-            txtAccountName.Text = string.Empty;
-            chkIsLeaf.Checked = false;
-            chkIsActive.Checked = true;
-            txtNotes.Text = string.Empty;
-            cmbParent.EditValue = null;
         }
 
         private void cmbParent_EditValueChanged(object sender, EventArgs e)

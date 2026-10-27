@@ -40,17 +40,16 @@
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.cmbGroups = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colGroupName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colGroupId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.txtFirstName = new DevExpress.XtraEditors.TextEdit();
             this.txtLastName = new DevExpress.XtraEditors.TextEdit();
             this.txtUsername = new DevExpress.XtraEditors.TextEdit();
             this.txtPassword = new DevExpress.XtraEditors.TextEdit();
-            this.lblPasswordHint = new DevExpress.XtraEditors.LabelControl();
             this.txtEmail = new DevExpress.XtraEditors.TextEdit();
             this.txtPhone = new DevExpress.XtraEditors.TextEdit();
             this.deStartingDate = new DevExpress.XtraEditors.DateEdit();
             this.deEndingDate = new DevExpress.XtraEditors.DateEdit();
-            this.colGroupName = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colGroupId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.saveCancelControl21 = new UI.Controls.SaveCancelControl2();
             ((System.ComponentModel.ISupportInitialize)(this.cmbGroups.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
@@ -132,7 +131,7 @@
             this.labelControl6.Appearance.Options.UseFont = true;
             this.labelControl6.Appearance.Options.UseTextOptions = true;
             this.labelControl6.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelControl6.Location = new System.Drawing.Point(380, 212);
+            this.labelControl6.Location = new System.Drawing.Point(380, 217);
             this.labelControl6.Name = "labelControl6";
             this.labelControl6.Size = new System.Drawing.Size(71, 17);
             this.labelControl6.TabIndex = 15;
@@ -206,6 +205,20 @@
             this.searchLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.searchLookUpEdit1View.OptionsView.ShowGroupPanel = false;
             // 
+            // colGroupName
+            // 
+            this.colGroupName.Caption = "المجموعة";
+            this.colGroupName.FieldName = "GroupName";
+            this.colGroupName.Name = "colGroupName";
+            this.colGroupName.Visible = true;
+            this.colGroupName.VisibleIndex = 0;
+            // 
+            // colGroupId
+            // 
+            this.colGroupId.Caption = "gridColumn1";
+            this.colGroupId.FieldName = "Id";
+            this.colGroupId.Name = "colGroupId";
+            // 
             // txtFirstName
             // 
             this.txtFirstName.Location = new System.Drawing.Point(70, 102);
@@ -229,24 +242,11 @@
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(70, 210);
+            this.txtPassword.Location = new System.Drawing.Point(70, 215);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Properties.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(285, 20);
             this.txtPassword.TabIndex = 6;
-            // 
-            // lblPasswordHint
-            // 
-            this.lblPasswordHint.Appearance.Font = new System.Drawing.Font("Tahoma", 8F);
-            this.lblPasswordHint.Appearance.Options.UseFont = true;
-            this.lblPasswordHint.Appearance.Options.UseTextOptions = true;
-            this.lblPasswordHint.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.lblPasswordHint.Location = new System.Drawing.Point(161, 233);
-            this.lblPasswordHint.Name = "lblPasswordHint";
-            this.lblPasswordHint.Size = new System.Drawing.Size(195, 13);
-            this.lblPasswordHint.TabIndex = 21;
-            this.lblPasswordHint.Text = "اتركها فارغة للإبقاء على كلمة المرور الحالية";
-            this.lblPasswordHint.Visible = false;
             // 
             // txtEmail
             // 
@@ -292,20 +292,6 @@
             this.deEndingDate.Size = new System.Drawing.Size(285, 20);
             this.deEndingDate.TabIndex = 2;
             // 
-            // colGroupName
-            // 
-            this.colGroupName.Caption = "المجموعة";
-            this.colGroupName.FieldName = "GroupName";
-            this.colGroupName.Name = "colGroupName";
-            this.colGroupName.Visible = true;
-            this.colGroupName.VisibleIndex = 0;
-            // 
-            // colGroupId
-            // 
-            this.colGroupId.Caption = "gridColumn1";
-            this.colGroupId.FieldName = "Id";
-            this.colGroupId.Name = "colGroupId";
-            // 
             // saveCancelControl21
             // 
             this.saveCancelControl21.Location = new System.Drawing.Point(184, 415);
@@ -334,7 +320,6 @@
             this.Controls.Add(this.txtLastName);
             this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.lblPasswordHint);
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.txtPhone);
             this.Controls.Add(this.deStartingDate);
@@ -383,7 +368,6 @@
         private DevExpress.XtraEditors.TextEdit txtLastName;
         private DevExpress.XtraEditors.TextEdit txtUsername;
         private DevExpress.XtraEditors.TextEdit txtPassword;
-        private DevExpress.XtraEditors.LabelControl lblPasswordHint;
         private DevExpress.XtraEditors.TextEdit txtEmail;
         private DevExpress.XtraEditors.TextEdit txtPhone;
         private DevExpress.XtraEditors.DateEdit deStartingDate;

@@ -169,7 +169,7 @@ namespace UI.Forms
                 return;
             }
 
-            using (var manageForm = ActivatorUtilities.CreateInstance<BillsManageForm>(Program.CurrentScopeProvider, billToEdit))
+            using (var manageForm = ActivatorUtilities.CreateInstance<BillsManageForm>(Navigator.CurrentScopeProvider, billToEdit))
             {
                 if (manageForm.ShowDialog(this) != DialogResult.OK)
                     return;

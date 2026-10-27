@@ -153,7 +153,8 @@ namespace Data.Services.Implementations
 
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
-        private async Task<string> GenerateVoucherNumberAsync(
+
+private async Task<string> GenerateVoucherNumberAsync(
     string voucherType,
     int year)
         {
@@ -162,10 +163,24 @@ namespace Data.Services.Implementations
                     "نوع السند مطلوب.",
                     nameof(voucherType));
 
-            voucherType = voucherType.Trim().ToUpperInvariant();
+            string typeCode;
 
-            var prefix = $"{voucherType}-{year}-";
+            if (voucherType.Trim() == VoucherType.Receipt)
+            {
+                typeCode = "REC";
+            }
+            else if (voucherType.Trim() == VoucherType.Payment)
+            {
+                typeCode = "PAY";
+            }
+            else
+            {
+                throw new ArgumentException(
+                    "نوع السند غير صالح.",
+                    nameof(voucherType));
+            }
 
+            var prefix = $"{typeCode}-{year}-";
 
             var lastVoucherNumber = await _unitOfWork.Vouchers
                 .Select(DeletedStatus.All)

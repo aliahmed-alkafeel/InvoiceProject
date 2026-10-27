@@ -124,7 +124,7 @@ namespace UI.Forms.Categories
 
             using (var editForm =
                 ActivatorUtilities.CreateInstance<CategoriesManageForm>(
-                    Program.CurrentScopeProvider,
+                    Navigator.CurrentScopeProvider,
                     selectedCategory))
             {
                 var result = editForm.ShowDialog(this);

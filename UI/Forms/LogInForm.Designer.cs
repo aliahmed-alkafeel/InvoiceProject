@@ -76,7 +76,7 @@
             // 
             // btnLogIn
             // 
-            this.btnLogIn.Location = new System.Drawing.Point(137, 128);
+            this.btnLogIn.Location = new System.Drawing.Point(165, 161);
             this.btnLogIn.Name = "btnLogIn";
             this.btnLogIn.Size = new System.Drawing.Size(85, 26);
             this.btnLogIn.TabIndex = 4;
@@ -86,11 +86,11 @@
             // checkRememberMe
             // 
             this.checkRememberMe.EditValue = true;
-            this.checkRememberMe.Location = new System.Drawing.Point(246, 134);
+            this.checkRememberMe.Location = new System.Drawing.Point(179, 129);
             this.checkRememberMe.Name = "checkRememberMe";
-            this.checkRememberMe.Properties.Caption = "تذكرني";
+            this.checkRememberMe.Properties.Caption = "تذكر اسم المستخدم";
             this.checkRememberMe.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.checkRememberMe.Size = new System.Drawing.Size(60, 20);
+            this.checkRememberMe.Size = new System.Drawing.Size(127, 20);
             this.checkRememberMe.TabIndex = 6;
             // 
             // LogInForm

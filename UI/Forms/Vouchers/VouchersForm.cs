@@ -120,7 +120,7 @@ namespace UI.Forms.Vouchers
 
             using (var editForm =
                 ActivatorUtilities.CreateInstance<VouchersManageForm>(
-                    Program.CurrentScopeProvider,
+                    Navigator.CurrentScopeProvider,
                     selectedRow))
             {
                 var result = editForm.ShowDialog(this);

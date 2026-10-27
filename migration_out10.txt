@@ -1,0 +1,17 @@
+﻿System.InvalidOperationException: No connection string named 'InvoiceDbConnection' could be found in the application config file.
+   at System.Data.Entity.Infrastructure.DbConnectionInfo.GetConnectionString(AppConfig config)
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.OverrideConnection(IInternalConnection connection)
+   at System.Data.Entity.Infrastructure.DbContextInfo.ConfigureContext(DbContext context)
+   at System.Data.Entity.Internal.InternalContext.ApplyContextInfo(DbContextInfo info)
+   at System.Data.Entity.Infrastructure.DbContextInfo.CreateInstance()
+   at System.Data.Entity.Infrastructure.DbContextInfo..ctor(Type contextType, DbProviderInfo modelProviderInfo, AppConfig config, DbConnectionInfo connectionInfo, Func`1 resolver)
+   at System.Data.Entity.Migrations.DbMigrator..ctor(DbMigrationsConfiguration configuration, DbContext usersContext, DatabaseExistenceState existenceState, Boolean calledByCreateDatabase)
+   at System.Data.Entity.Migrations.DbMigrator..ctor(DbMigrationsConfiguration configuration)
+   at System.Data.Entity.Migrations.Design.MigrationScaffolder..ctor(DbMigrationsConfiguration migrationsConfiguration)
+   at System.Data.Entity.Infrastructure.Design.Executor.CreateMigrationScaffolder(DbMigrationsConfiguration configuration)
+   at System.Data.Entity.Infrastructure.Design.Executor.ScaffoldInternal(String name, DbConnectionInfo connectionInfo, String migrationsConfigurationName, Boolean ignoreChanges)
+   at System.Data.Entity.Infrastructure.Design.Executor.Scaffold.<>c__DisplayClass0_0.<.ctor>b__0()
+   at System.Data.Entity.Infrastructure.Design.Executor.OperationBase.<>c__DisplayClass4_0`1.<Execute>b__0()
+   at System.Data.Entity.Infrastructure.Design.Executor.OperationBase.Execute(Action action)
+No connection string named 'InvoiceDbConnection' could be found in the application config file.

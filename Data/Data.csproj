@@ -106,21 +106,9 @@
     <Compile Include="Configurations\EntitiesConfigurations\CategoryConfiguration.cs" />
     <Compile Include="Configurations\EntitiesConfigurations\VoucherConfiguration.cs" />
     <Compile Include="Context\InvoiceDbContext.cs" />
-    <Compile Include="Migrations\202610070730390_Init.cs" />
-    <Compile Include="Migrations\202610070730390_Init.Designer.cs">
-      <DependentUpon>202610070730390_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202610131249444_notedeleted.cs" />
-    <Compile Include="Migrations\202610131249444_notedeleted.Designer.cs">
-      <DependentUpon>202610131249444_notedeleted.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202610200725179_notedeleted1.cs" />
-    <Compile Include="Migrations\202610200725179_notedeleted1.Designer.cs">
-      <DependentUpon>202610200725179_notedeleted1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202610220626534_BillNumberToInt.cs" />
-    <Compile Include="Migrations\202610220626534_BillNumberToInt.Designer.cs">
-      <DependentUpon>202610220626534_BillNumberToInt.cs</DependentUpon>
+    <Compile Include="Migrations\202610271306039_Indexes2.cs" />
+    <Compile Include="Migrations\202610271306039_Indexes2.Designer.cs">
+      <DependentUpon>202610271306039_Indexes2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -159,17 +147,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202610070730390_Init.resx">
-      <DependentUpon>202610070730390_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202610131249444_notedeleted.resx">
-      <DependentUpon>202610131249444_notedeleted.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202610200725179_notedeleted1.resx">
-      <DependentUpon>202610200725179_notedeleted1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202610220626534_BillNumberToInt.resx">
-      <DependentUpon>202610220626534_BillNumberToInt.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202610271306039_Indexes2.resx">
+      <DependentUpon>202610271306039_Indexes2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

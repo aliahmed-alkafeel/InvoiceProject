@@ -133,7 +133,6 @@ namespace UI.Forms.Items
             _selectedItem = item;
             if (item == null)
             {
-                ClearDetails();
                 return;
             }
             txtName.Text = item.Name;
@@ -142,14 +141,6 @@ namespace UI.Forms.Items
             chkIsActive.Checked = item.IsActive;
             txtNotes.Text = item.Notes;
         }
-        private void ClearDetails()
-        {
-            txtName.Text = string.Empty;
-            cmbCategories.EditValue = null;
-            spnPrice.EditValue = null;
-            chkIsActive.Checked = false;
-            txtNotes.Text = string.Empty;
 
-        }
     }
 }

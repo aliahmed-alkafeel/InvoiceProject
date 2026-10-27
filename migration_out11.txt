@@ -1,0 +1,18 @@
+﻿System.Data.Entity.Tools.CommandException: Your target project 'Data' doesn't reference EntityFramework. This package is required for the Entity Framework Core Tools to work. Ensure your target project is correct, install the package, and try again. ---> System.IO.FileNotFoundException: Could not load file or assembly 'EntityFramework' or one of its dependencies. The system cannot find the file specified.
+   at System.Reflection.RuntimeAssembly._nLoad(AssemblyName fileName, String codeBase, Evidence assemblySecurity, RuntimeAssembly locationHint, StackCrawlMark& stackMark, IntPtr pPrivHostBinder, Boolean throwOnFileNotFound, Boolean forIntrospection, Boolean suppressSecurityChecks)
+   at System.Reflection.RuntimeAssembly.nLoad(AssemblyName fileName, String codeBase, Evidence assemblySecurity, RuntimeAssembly locationHint, StackCrawlMark& stackMark, IntPtr pPrivHostBinder, Boolean throwOnFileNotFound, Boolean forIntrospection, Boolean suppressSecurityChecks)
+   at System.Reflection.RuntimeAssembly.InternalLoadAssemblyName(AssemblyName assemblyRef, Evidence assemblySecurity, RuntimeAssembly reqAssembly, StackCrawlMark& stackMark, IntPtr pPrivHostBinder, Boolean throwOnFileNotFound, Boolean forIntrospection, Boolean suppressSecurityChecks)
+   at System.Activator.CreateInstance(String assemblyString, String typeName, Boolean ignoreCase, BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture, Object[] activationAttributes, Evidence securityInfo, StackCrawlMark& stackMark)
+   at System.Activator.CreateInstance(String assemblyName, String typeName, Boolean ignoreCase, BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture, Object[] activationAttributes)
+   at System.AppDomain.CreateInstance(String assemblyName, String typeName, Boolean ignoreCase, BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture, Object[] activationAttributes)
+   at System.AppDomain.CreateInstanceAndUnwrap(String assemblyName, String typeName, Boolean ignoreCase, BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture, Object[] activationAttributes)
+   at System.AppDomain.CreateInstanceAndUnwrap(String assemblyName, String typeName, Boolean ignoreCase, BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture, Object[] activationAttributes)
+   at System.Data.Entity.Tools.AppDomainExecutor..ctor(String assembly, String dataDirectory, String configurationFile, String rootNamespace, String language)
+   at System.Data.Entity.Tools.Commands.ProjectCommandBase.CreateExecutor()
+   --- End of inner exception stack trace ---
+   at System.Data.Entity.Tools.Commands.ProjectCommandBase.CreateExecutor()
+   at System.Data.Entity.Tools.Commands.MigrationsAddCommand.Execute()
+   at System.Data.Entity.Tools.Commands.CommandBase.<>c__DisplayClass0_0.<Configure>b__0()
+   at Microsoft.DotNet.Cli.CommandLine.CommandLineApplication.Execute(String[] args)
+   at System.Data.Entity.Tools.Program.Main(String[] args)
+Your target project 'Data' doesn't reference EntityFramework. This package is required for the Entity Framework Core Tools to work. Ensure your target project is correct, install the package, and try again.

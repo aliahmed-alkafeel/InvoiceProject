@@ -30,11 +30,6 @@ namespace UI
     internal static class Program
     {
         public static IServiceProvider ServiceProvider { get; private set; }
-        public static IServiceProvider CurrentScopeProvider { get; private set; }
-        private static XtraForm _hostForm;
-        private static XtraForm _currentPage;
-        private static IServiceScope _currentPageScope;
-
         [STAThread]
         static void Main()
         {
@@ -64,12 +59,9 @@ namespace UI
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
-//            // del this line and if
-//            var rememberedUsernam =
-//Properties.Settings.Default.RememberedUsername;
-//            if (rememberedUsernam == null)
-//            {
-                using (var loginScope = ServiceProvider.CreateScope())
+
+
+                    using (var loginScope = ServiceProvider.CreateScope())
                 {
                     var loginForm =
                         loginScope.ServiceProvider.GetRequiredService<LogInForm>();
@@ -78,36 +70,24 @@ namespace UI
 
                     if (result != DialogResult.OK)
                         return;
-                }
-            //}
-
+                
+            }
             using (var mainScope = ServiceProvider.CreateScope())
-            {
-                // النافذة الرئيسية تبقى طوال فترة تشغيل التطبيق.
-                _hostForm = mainScope.ServiceProvider
-                    .GetRequiredService<MainForm>();
-
-                _currentPage = null;
-                _currentPageScope = null;
-
-                try
                 {
-                    // فتح الشاشة الأولى باستخدام Scope مستقل.
-                    NavigateTo<ItemsForm>();
+                    var hostForm = mainScope.ServiceProvider
+                        .GetRequiredService<MainForm>();
 
-                    Application.Run(_hostForm);
-                }
-                finally
-                {
-                    // التخلص من Scope آخر شاشة عند إغلاق التطبيق.
-                    _currentPageScope?.Dispose();
+                    Navigator.Initialize(ServiceProvider, hostForm);
 
-                    _currentPageScope = null;
-                    _currentPage = null;
-                    CurrentScopeProvider = null;
-                    _hostForm = null;
-                }
-                    ServiceProvider = null;
+                    try
+                    {
+                        Navigator.NavigateTo<ItemsForm>();
+                        Application.Run(hostForm);
+                    }
+                    finally
+                    {
+                        Navigator.Shutdown();
+                    }
                 }
             }
         }
@@ -149,52 +129,5 @@ namespace UI
             services.AddTransient<EmployeesManageForm>();
         }
 
-        public static void NavigateTo<TPage>()
-    where TPage : XtraForm
-        {
-            if (_hostForm == null)
-                throw new InvalidOperationException(
-                    "لم يتم تحديد الفورم الرئيسي");
-
-            // إذا كانت الشاشة المطلوبة هي الشاشة الحالية، فلا تفعل شيئًا.
-            if (_currentPage != null &&
-              _currentPage.GetType() == typeof(TPage))
-            {
-                return;
-            }
-
-            // 1. إنشاء Scope جديد للشاشة.
-            var newScope = ServiceProvider.CreateScope();
-
-            TPage newPage;
-
-            try
-            {
-                newPage = newScope.ServiceProvider
-                    .GetRequiredService<TPage>();
-
-                newPage.TopLevel = false;
-                newPage.FormBorderStyle = FormBorderStyle.None;
-                newPage.Dock = DockStyle.Fill;
-            }
-            catch
-            {
-                newScope.Dispose();
-                throw new Exception($"فشل انشاء {typeof(TPage).Name}");
-            }
-
-            var previousScope = _currentPageScope;
-
-            if (_currentPage != null)
-                _hostForm.Controls.Remove(_currentPage);
-            _hostForm.Controls.Add(newPage);
-            _currentPage = newPage;
-            _currentPageScope = newScope;
-            CurrentScopeProvider = newScope.ServiceProvider;
-            _hostForm.Text = newPage.Text;
-            newPage.Show();
-            newPage.BringToFront();
-            previousScope?.Dispose();
-        }
     }
 }

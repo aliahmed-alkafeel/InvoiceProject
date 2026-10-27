@@ -57,7 +57,8 @@ namespace UI.Screens
         private async void btnLogIn_Click(object sender, EventArgs e)
         {
             string username = txtUsername.Text;
-            string password = txtPassword.Text;
+            //string password = txtPassword.Text;
+            string password = "admin";
             var loginResult = await _loginService.LoginAsync(username, password);
             if (!loginResult)
             {

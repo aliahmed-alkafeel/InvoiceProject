@@ -113,7 +113,6 @@ namespace UI.Forms.Categories
             _selectedCategory = category;
             if (category == null)
             {
-                ClearDetails();
                 return;
             }
             if (!isEdit)
@@ -124,13 +123,6 @@ namespace UI.Forms.Categories
             txtName.Text = category.Name;
             chkIsActive.Checked = category.IsActive;
             txtNotes.Text = category.Notes;
-
-        }
-        private void ClearDetails()
-        {
-            txtName.Text = string.Empty;
-            chkIsActive.Checked = false;
-            txtNotes.Text = string.Empty;
 
         }
     }

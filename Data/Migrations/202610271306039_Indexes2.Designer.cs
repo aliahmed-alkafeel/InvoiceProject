@@ -7,13 +7,13 @@ namespace Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.5.2")]
-    public sealed partial class notedeleted : IMigrationMetadata
+    public sealed partial class Indexes2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(notedeleted));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Indexes2));
         
         string IMigrationMetadata.Id
         {
-            get { return "202610131249444_notedeleted"; }
+            get { return "202610271306039_Indexes2"; }
         }
         
         string IMigrationMetadata.Source

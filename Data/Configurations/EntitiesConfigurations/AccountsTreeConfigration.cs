@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
@@ -11,8 +13,30 @@ namespace Data.Configurations.EntitiesConfigurations
     {
         public AccountsTreeConfiguration()
         {
-            Property(x=> x.AccountCode).IsRequired().HasMaxLength(50);
-            Property(x=> x.AccountName).IsRequired().HasMaxLength(200);
+            Property(x => x.AccountCode).IsRequired().HasMaxLength(50)
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName,
+                    new IndexAnnotation(new IndexAttribute("UX_AccountsTree_Code_Del", 1) { IsUnique = true }));
+
+            Property(x => x.AccountName).IsRequired().HasMaxLength(200)
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName,
+                    new IndexAnnotation(new IndexAttribute("UX_AccountsTree_Name_Del", 1) { IsUnique = true }));
+
+            Property(x => x.IsDeleted)
+                .IsRequired()
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName,
+                    new IndexAnnotation(new[]
+                    {
+                        new IndexAttribute("UX_AccountsTree_Code_Del", 2) { IsUnique = true },
+                        new IndexAttribute("UX_AccountsTree_Name_Del", 2) { IsUnique = true }
+                    }));
+
+            Property(x => x.DeletedAt)
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName,
+                    new IndexAnnotation(new[]
+                    {
+                        new IndexAttribute("UX_AccountsTree_Code_Del", 3) { IsUnique = true },
+                        new IndexAttribute("UX_AccountsTree_Name_Del", 3) { IsUnique = true }
+                    }));
         }
     }
 }

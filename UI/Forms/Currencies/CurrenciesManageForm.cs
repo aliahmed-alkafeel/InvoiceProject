@@ -176,7 +176,6 @@ namespace UI.Forms.Currencies
                 {
                     lblTitle.Text = "إضافة عملة";
                     saveCancelControl21.SaveText = "إضافة";
-                    ClearDetails();
                     return;
                 }
 
@@ -196,17 +195,6 @@ namespace UI.Forms.Currencies
             }
 
             UpdateCurrencyEqualEditor();
-        }
-
-        private void ClearDetails()
-        {
-            txtCurrencyName.Text = string.Empty;
-            txtCurrencySymbol.Text = string.Empty;
-            txtNotes.Text = string.Empty;
-            chkIsActive.Checked = true;
-            chkIsMain.Checked = false;
-            spinCurrencyEqual.EditValue = 1m;
-            spinCurrencyEqual.Enabled = true;
         }
     }
 }

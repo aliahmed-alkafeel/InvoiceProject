@@ -1,0 +1,6 @@
+﻿
+            using (var manageForm = ActivatorUtilities.CreateInstance<BillsManageForm>(Program.CurrentScopeProvider, billToEdit))
+            {
+                if (manageForm.ShowDialog(this) != DialogResult.OK)
+                    return;
+            }

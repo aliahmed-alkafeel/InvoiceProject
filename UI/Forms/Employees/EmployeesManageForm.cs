@@ -196,14 +196,12 @@ namespace UI.Forms.Employees
             {
                 lblTitle.Text = "إضافة موظف";
                 saveCancelControl21.SaveText = "إضافة";
-                lblPasswordHint.Visible = false;
-                ClearDetails();
                 return;
             }
 
             lblTitle.Text = "تعديل الموظف";
             saveCancelControl21.SaveText = "حفظ";
-            lblPasswordHint.Visible = true;
+            txtPassword.ToolTip = "اتركها فارغة للإبقاء على كلمة المرور الحالية";
 
             txtFirstName.Text = employee.FirstName;
             txtLastName.Text = employee.LastName;
@@ -214,19 +212,6 @@ namespace UI.Forms.Employees
             cmbGroups.EditValue = employee.GroupGuid;
             deStartingDate.EditValue = employee.EmployeeStartingDate;
             deEndingDate.EditValue = employee.EmployeeEndingDate;
-        }
-
-        private void ClearDetails()
-        {
-            txtFirstName.Text = string.Empty;
-            txtLastName.Text = string.Empty;
-            txtUsername.Text = string.Empty;
-            txtPassword.Text = string.Empty;
-            txtEmail.Text = string.Empty;
-            txtPhone.Text = string.Empty;
-            cmbGroups.EditValue = null;
-            deStartingDate.EditValue = DateTime.Now;
-            deEndingDate.EditValue = null;
         }
     }
 }

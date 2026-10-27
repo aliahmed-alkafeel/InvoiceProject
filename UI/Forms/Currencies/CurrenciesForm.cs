@@ -80,7 +80,7 @@ namespace UI.Forms
             if (CheckCurrenciesLoading())
                 return;
 
-            using (var manageForm = Program.CurrentScopeProvider
+            using (var manageForm = Navigator.CurrentScopeProvider
                 .GetService(typeof(CurrenciesManageForm)) as CurrenciesManageForm)
             {
                 var result = manageForm.ShowDialog(this);
@@ -132,7 +132,7 @@ namespace UI.Forms
 
             using (var manageForm =
                 ActivatorUtilities.CreateInstance<CurrenciesManageForm>(
-                    Program.CurrentScopeProvider,
+                    Navigator.CurrentScopeProvider,
                     currencyToEdit))
             {
                 var result = manageForm.ShowDialog(this);

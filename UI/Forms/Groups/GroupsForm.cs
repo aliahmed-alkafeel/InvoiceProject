@@ -113,7 +113,7 @@ namespace UI.Forms
 
             using (var manageForm =
                 ActivatorUtilities.CreateInstance<GroupsManageForm>(
-                    Program.CurrentScopeProvider,
+                    Navigator.CurrentScopeProvider,
                     selectedGroup))
             {
                 var result = manageForm.ShowDialog(this);

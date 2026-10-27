@@ -45,6 +45,7 @@
     <Reference Include="DevExpress.XtraEditors.v24.2" />
     <Reference Include="DevExpress.Printing.v24.2.Core" />
     <Reference Include="DevExpress.Drawing.v24.2" />
+    <Reference Include="DevExpress.Images.v24.2" />
     <Reference Include="DevExpress.XtraGrid.v24.2, Version=24.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v24.2, Version=24.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraNavBar.v24.2, Version=24.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -107,6 +108,13 @@
     </Compile>
     <Compile Include="Controls\ToolBarControl.Designer.cs">
       <DependentUpon>ToolBarControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TopBarButtonItem.cs" />
+    <Compile Include="Controls\TopBarButtonsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TopBarButtonsControl.Designer.cs">
+      <DependentUpon>TopBarButtonsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\LoadingExtensions.cs" />
     <Compile Include="Extensions\MessageHelper.cs" />
@@ -222,6 +230,12 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Previews\TopBarButtonsPreviewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Previews\TopBarButtonsPreviewForm.Designer.cs">
+      <DependentUpon>TopBarButtonsPreviewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Vouchers\VouchersCreateForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -261,6 +275,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ToolBarControl.resx">
       <DependentUpon>ToolBarControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TopBarButtonsControl.resx">
+      <DependentUpon>TopBarButtonsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AccountsTree\AccountsTreeForm.resx">
       <DependentUpon>AccountsTreeForm.cs</DependentUpon>
@@ -316,6 +333,9 @@
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Previews\TopBarButtonsPreviewForm.resx">
+      <DependentUpon>TopBarButtonsPreviewForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Vouchers\VouchersCreateForm.resx">
       <DependentUpon>VouchersCreateForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -340,6 +360,7 @@
       <DependentUpon>LogInForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
+    <None Include="Forms\Previews\RunTopBarButtonsPreview.ps1" />
     <None Include="InvoiceDbDataSet21.xsc">
       <DependentUpon>InvoiceDbDataSet21.xsd</DependentUpon>
     </None>

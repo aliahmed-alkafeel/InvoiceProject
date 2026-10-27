@@ -153,7 +153,6 @@ namespace UI.Forms.Groups
             {
                 lblTitle.Text = "إضافة مجموعة";
                 saveCancelControl21.SaveText = "إضافة";
-                ClearDetails();
                 return;
             }
 
@@ -174,17 +173,6 @@ namespace UI.Forms.Groups
                 checkedListBoxControl1.SetItemChecked(
                     i,
                     roleIds.Contains((Guid)item.Value));
-            }
-        }
-
-        private void ClearDetails()
-        {
-            txtName.Text = string.Empty;
-            txtNotes.Text = string.Empty;
-
-            for (int i = 0; i < checkedListBoxControl1.Items.Count; i++)
-            {
-                checkedListBoxControl1.SetItemChecked(i, false);
             }
         }
     }

@@ -1,0 +1,15 @@
+﻿powershell : Add-Migration : The term 'Add-Migration' is not recognized as the name of a cmdlet, function, script 
+file, or operable 
+At line:1 char:1
++ powershell -NoProfile -ExecutionPolicy Bypass -Command "Add-Migration ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Add-Migration :...e, or operable :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ Add-Migration AddUniqueIndexes -ProjectName Data -StartUpProjectName  ...
++ ~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Add-Migration:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 

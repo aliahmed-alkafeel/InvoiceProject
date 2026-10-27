@@ -1,0 +1,25 @@
+﻿
+
+Usage: ef6 migrations add [arguments] [options]
+
+Arguments:
+  <NAME>  Specifies the name of the custom script.
+
+Options:
+  -f|--force                       Specifies that the migration user code be overwritten when re-scaffolding an existing migration.
+  --ignore-changes                 Scaffolds an empty migration ignoring any pending changes detected in the current model. This can be used to create an initial, empty migration to enable Migrations for an existing database. N.B. Doing this assumes that the target database schema is compatible with the current model.
+  --json                           Show JSON output.
+  --migrations-config <TYPE>       Specifies the migrations configuration to use. If omitted, migrations will attempt to locate a single migrations configuration type in the target project.
+  -a|--assembly <PATH>             The assembly to use.
+  --project-dir <PATH>             The project directory. Defaults to the current directory.
+  --language <LANGUAGE>            The language. Defaults to 'C#'.
+  --root-namespace <NAMESPACE>     The root namespace. Defaults to the target assembly name.
+  --data-dir <PATH>                The data directory.
+  --config <PATH>                  Specifies the configuration file to use for named connection strings.
+  --connection-string-name <NAME>  Specifies the name of a connection string to use from the application's configuration file.
+  --connection-string <STRING>     Specifies the connection string to use. If omitted, the context's default connection will be used.
+  --connection-provider <NAME>     Specifies the provider invariant name of the connection string.
+  -h|--help                        Show help information
+  -v|--verbose                     Show verbose output.
+  --no-color                       Don't colorize output.
+  --prefix-output                  Prefix output with level.

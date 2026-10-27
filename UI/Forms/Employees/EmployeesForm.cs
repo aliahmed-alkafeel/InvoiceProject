@@ -80,7 +80,7 @@ namespace UI.Forms
             if (CheckEmployeesLoading())
                 return;
 
-            using (var manageForm = Program.CurrentScopeProvider
+            using (var manageForm = Navigator.CurrentScopeProvider
                 .GetService(typeof(EmployeesManageForm)) as EmployeesManageForm)
             {
                 var result = manageForm.ShowDialog(this);
@@ -113,7 +113,7 @@ namespace UI.Forms
 
             using (var manageForm =
                 ActivatorUtilities.CreateInstance<EmployeesManageForm>(
-                    Program.CurrentScopeProvider,
+                    Navigator.CurrentScopeProvider,
                     selectedEmployee))
             {
                 var result = manageForm.ShowDialog(this);

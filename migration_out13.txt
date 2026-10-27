@@ -1,0 +1,8 @@
+﻿System.Data.Entity.Migrations.Infrastructure.MigrationsPendingException: Unable to generate an explicit migration because the following explicit migrations are pending: [202610070730390_Init, 202610131249444_notedeleted, 202610200725179_notedeleted1, 202610220626534_BillNumberToInt]. Apply the pending explicit migrations before attempting to generate a new explicit migration.
+   at System.Data.Entity.Migrations.DbMigrator.Scaffold(String migrationName, String namespace, Boolean ignoreChanges)
+   at System.Data.Entity.Migrations.Design.MigrationScaffolder.Scaffold(String migrationName, Boolean ignoreChanges)
+   at System.Data.Entity.Infrastructure.Design.Executor.ScaffoldInternal(String name, DbConnectionInfo connectionInfo, String migrationsConfigurationName, Boolean ignoreChanges)
+   at System.Data.Entity.Infrastructure.Design.Executor.Scaffold.<>c__DisplayClass0_0.<.ctor>b__0()
+   at System.Data.Entity.Infrastructure.Design.Executor.OperationBase.<>c__DisplayClass4_0`1.<Execute>b__0()
+   at System.Data.Entity.Infrastructure.Design.Executor.OperationBase.Execute(Action action)
+Unable to generate an explicit migration because the following explicit migrations are pending: [202610070730390_Init, 202610131249444_notedeleted, 202610200725179_notedeleted1, 202610220626534_BillNumberToInt]. Apply the pending explicit migrations before attempting to generate a new explicit migration.

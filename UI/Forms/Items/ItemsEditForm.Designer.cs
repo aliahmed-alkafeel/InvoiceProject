@@ -132,6 +132,7 @@
             // 
             // chkIsActive
             // 
+            this.chkIsActive.EditValue = true;
             this.chkIsActive.Location = new System.Drawing.Point(69, 163);
             this.chkIsActive.Name = "chkIsActive";
             this.chkIsActive.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);

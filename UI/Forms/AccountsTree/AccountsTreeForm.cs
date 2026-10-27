@@ -85,7 +85,7 @@ namespace UI.Forms
 
             var selectedAccount = GetSelectedAccount();
 
-            using (var manageForm = Program.CurrentScopeProvider
+            using (var manageForm = Navigator.CurrentScopeProvider
                 .GetService(typeof(AccountsTreeManageForm)) as AccountsTreeManageForm)
             {
                 if (manageForm == null)
@@ -122,7 +122,7 @@ namespace UI.Forms
 
             using (var manageForm =
                 ActivatorUtilities.CreateInstance<AccountsTreeManageForm>(
-                    Program.CurrentScopeProvider,
+                    Navigator.CurrentScopeProvider,
                     selectedAccount))
             {
                 var result = manageForm.ShowDialog(this);

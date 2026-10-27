@@ -123,7 +123,7 @@ namespace UI.Forms
 
             using (var editForm =
                 ActivatorUtilities.CreateInstance<ItemsEditForm>(
-                    Program.CurrentScopeProvider,
+                    Navigator.CurrentScopeProvider,
                     selectedItem))
             {
                 var result = editForm.ShowDialog(this);

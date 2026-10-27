@@ -80,7 +80,7 @@ namespace UI.Forms
             if (CheckBillsLoading())
                 return;
 
-            using (var manageForm = Program.CurrentScopeProvider
+            using (var manageForm = Navigator.CurrentScopeProvider
                 .GetService(typeof(BillsManageForm)) as BillsManageForm)
             {
                 if (manageForm == null)
@@ -134,7 +134,7 @@ namespace UI.Forms
 
             using (var manageForm =
                 ActivatorUtilities.CreateInstance<BillsManageForm>(
-                    Program.CurrentScopeProvider,
+                    Navigator.CurrentScopeProvider,
                     billToEdit))
             {
                 var result = manageForm.ShowDialog(this);
@@ -249,7 +249,7 @@ namespace UI.Forms
                 return;
             }
 
-            using (var itemBillsForm = Program.CurrentScopeProvider
+            using (var itemBillsForm = Navigator.CurrentScopeProvider
                 .GetService(typeof(ItemBillsForm)) as ItemBillsForm)
             {
                 if (itemBillsForm == null)
