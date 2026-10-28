@@ -104,7 +104,7 @@
             this.Controls.Add(this.gridControl1);
             this.Controls.Add(this.toolBarControl1);
             this.Name = "GroupsForm";
-            this.Text = "GroupsForm";
+            this.Text = "المجموعات";
             this.Load += new System.EventHandler(this.GroupsForm_LoadAsync);
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();

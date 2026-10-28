@@ -315,7 +315,7 @@
             this.Controls.Add(this.labelControl3);
             this.Controls.Add(this.saveCancelControl21);
             this.Name = "VouchersManageForm";
-            this.Text = "VouchersManageForm";
+            this.Text = "إدارة السند";
             this.Load += new System.EventHandler(this.VouchersManageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.spnAmount.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbAccounts.Properties)).EndInit();

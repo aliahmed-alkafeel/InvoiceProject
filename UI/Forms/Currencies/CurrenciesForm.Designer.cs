@@ -138,7 +138,7 @@
             this.Controls.Add(this.gridControl1);
             this.Controls.Add(this.toolBarControl1);
             this.Name = "CurrenciesForm";
-            this.Text = "العملة";
+            this.Text = "العملات";
             this.Load += new System.EventHandler(this.CurrenciesForm_LoadAsync);
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();

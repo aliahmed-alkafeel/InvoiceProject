@@ -165,15 +165,26 @@ namespace UI.Forms.Vouchers
 
             try
             {
-                await _vouchersService.DeleteVoucherAsync(voucher.Id);
+                var result2 = await _vouchersService.DeleteVoucherAsync(voucher.Id);
 
-                await LoadVouchersAsync();
+                if (result2)
+                {
+                    await LoadVouchersAsync();
 
-                XtraMessageBox.Show(
-                    "تم حذف السند بنجاح",
-                    "نجاح",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                    XtraMessageBox.Show(
+                        "تم حذف السند بنجاح",
+                        "نجاح",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else
+                {
+                    XtraMessageBox.Show(
+                        "لا يمكن حذف السند.",
+                        "خطأ",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {

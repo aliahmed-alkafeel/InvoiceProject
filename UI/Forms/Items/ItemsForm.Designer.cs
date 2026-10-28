@@ -175,7 +175,7 @@ namespace UI.Forms
             this.Controls.Add(this.gridControl1);
             this.Controls.Add(this.toolBarControl1);
             this.Name = "ItemsForm";
-            this.Text = "ItemsForm";
+            this.Text = "المنتجات";
             this.Load += new System.EventHandler(this.ItemsForm_LoadAsync);
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();

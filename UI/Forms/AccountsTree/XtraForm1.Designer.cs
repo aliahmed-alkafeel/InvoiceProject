@@ -55,7 +55,7 @@
             this.Controls.Add(this.simpleButton1);
             this.Controls.Add(this.toolBarControl1);
             this.Name = "XtraForm1";
-            this.Text = "XtraForm1";
+            this.Text = "نموذج";
             this.ResumeLayout(false);
 
         }

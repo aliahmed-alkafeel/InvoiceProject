@@ -224,7 +224,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AccountsTreeManageForm";
-            this.Text = "AccountsTreeManageForm";
+            this.Text = "إدارة الحساب";
             this.Load += new System.EventHandler(this.AccountsTreeManageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtAccountName.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAccountCode.Properties)).EndInit();

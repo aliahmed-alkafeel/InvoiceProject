@@ -126,7 +126,7 @@
             this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.saveCancelControl21);
             this.Name = "GroupsManageForm";
-            this.Text = "GroupsManageForm";
+            this.Text = "إدارة المجموعة";
             this.Load += new System.EventHandler(this.GroupsManageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.checkedListBoxControl1)).EndInit();

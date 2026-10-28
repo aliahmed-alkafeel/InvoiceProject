@@ -177,15 +177,26 @@ namespace UI.Forms
 
             try
             {
-                await _billService.DeleteBillAsync(bill.Id);
+                var result2 = await _billService.DeleteBillAsync(bill.Id);
 
-                await LoadBillsAsync();
+                if (result2)
+                {
+                    await LoadBillsAsync();
 
-                XtraMessageBox.Show(
-                    "تم حذف الفاتورة بنجاح",
-                    "نجاح",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                    XtraMessageBox.Show(
+                        "تم حذف الفاتورة بنجاح",
+                        "نجاح",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else
+                {
+                    XtraMessageBox.Show(
+                        "لا يمكن حذف الفاتورة.",
+                        "خطأ",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {

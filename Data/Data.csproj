@@ -110,6 +110,18 @@
     <Compile Include="Migrations\202610271306039_Indexes2.Designer.cs">
       <DependentUpon>202610271306039_Indexes2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202610280725336_bill_currency_edit.cs" />
+    <Compile Include="Migrations\202610280725336_bill_currency_edit.Designer.cs">
+      <DependentUpon>202610280725336_bill_currency_edit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202610280739446_bill_currency_edit_undo.cs" />
+    <Compile Include="Migrations\202610280739446_bill_currency_edit_undo.Designer.cs">
+      <DependentUpon>202610280739446_bill_currency_edit_undo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202610280744066_bill_currency_edit_undo2.cs" />
+    <Compile Include="Migrations\202610280744066_bill_currency_edit_undo2.Designer.cs">
+      <DependentUpon>202610280744066_bill_currency_edit_undo2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Implementations\GenericRepository.cs" />
@@ -149,6 +161,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202610271306039_Indexes2.resx">
       <DependentUpon>202610271306039_Indexes2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202610280725336_bill_currency_edit.resx">
+      <DependentUpon>202610280725336_bill_currency_edit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202610280739446_bill_currency_edit_undo.resx">
+      <DependentUpon>202610280739446_bill_currency_edit_undo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202610280744066_bill_currency_edit_undo2.resx">
+      <DependentUpon>202610280744066_bill_currency_edit_undo2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

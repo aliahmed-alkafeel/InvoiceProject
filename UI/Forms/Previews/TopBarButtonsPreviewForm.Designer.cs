@@ -125,7 +125,7 @@ namespace UI.Forms.Previews
             this.MinimumSize = new System.Drawing.Size(620, 320);
             this.Name = "TopBarButtonsPreviewForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "TopBar Buttons Control Preview";
+            this.Text = "معاينة أزرار الشريط";
             this.ResumeLayout(false);
 
         }

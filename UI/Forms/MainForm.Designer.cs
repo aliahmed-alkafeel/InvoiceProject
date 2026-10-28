@@ -48,7 +48,7 @@
             this.Controls.Add(this.topBarControl1);
             this.IconOptions.Image = ((System.Drawing.Image)(resources.GetObject("MainForm.IconOptions.Image")));
             this.Name = "MainForm";
-            this.Text = "MainForm";
+            this.Text = "الشاشة الرئيسية";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
 

@@ -117,7 +117,7 @@
             this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.saveCancelControl21);
             this.Name = "CategoriesManageForm";
-            this.Text = "CategoriesManageForm";
+            this.Text = "إدارة الفئة";
             this.Load += new System.EventHandler(this.CategoriesManageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkIsActive.Properties)).EndInit();

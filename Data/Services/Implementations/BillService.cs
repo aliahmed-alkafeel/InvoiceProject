@@ -160,6 +160,16 @@ namespace Data.Services.Implementations
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات الفاتورة مطلوبة.");
 
+            var currency = await _unitOfWork.Currencies
+                .Select()
+                .FirstOrDefaultAsync(c => c.Id == model.CurrencyGuid);
+
+            if (currency == null)
+                throw new InvalidOperationException("العملة المحددة غير موجودة");
+
+            if (currency.CurrencyEqual <= 0)
+                throw new InvalidOperationException("قيمة تحويل العملة يجب أن تكون أكبر من صفر");
+
             var lastBillNumber = await _unitOfWork.Bills
                 .Select()
                 .Where(b => b.BillNumber >= 1)
@@ -173,7 +183,7 @@ namespace Data.Services.Implementations
                 BillType = model.BillType,
                 AccountTreeGuid = model.AccountTreeGuid,
                 CurrencyGuid = model.CurrencyGuid,
-                CurrencyEqualValue = model.CurrencyEqualValue,
+                CurrencyEqualValue = currency.CurrencyEqual,
                 Date = model.Date,
                 Notes = model.Notes
             };
@@ -207,6 +217,9 @@ namespace Data.Services.Implementations
             if (bill == null)
                 throw new InvalidOperationException(
                     $"لم يتم العثور على الفاتورة بالمعرّف '{model.Id}'.");
+
+            if (model.CurrencyEqualValue <= 0)
+                throw new InvalidOperationException("سعر الصرف يجب أن يكون أكبر من صفر");
 
             bill.BillNumber = model.BillNumber;
             bill.BillType = model.BillType;

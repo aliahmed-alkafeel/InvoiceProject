@@ -167,16 +167,26 @@ namespace UI.Forms.Categories
 
             try
             {
+                var result2 = await _categoryService.DeleteCategoryAsync(category.Id);
 
-                await _categoryService.DeleteCategoryAsync(category.Id);
+                if (result2)
+                {
+                    await LoadCategoriesAsync();
 
-                await LoadCategoriesAsync();
-
-                XtraMessageBox.Show(
-                    ".تم حذف الفئة بنجاح",
-                    "نجاح",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                    XtraMessageBox.Show(
+                        "تم حذف الفئة بنجاح",
+                        "نجاح",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else
+                {
+                    XtraMessageBox.Show(
+                        "لا يمكن حذف الفئة.\nقد تكون الفئة مستخدمة في المنتجات.",
+                        "خطأ",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {

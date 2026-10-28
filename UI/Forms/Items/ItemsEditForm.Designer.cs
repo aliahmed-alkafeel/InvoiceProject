@@ -203,7 +203,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ItemsEditForm";
-            this.Text = "ItemsEditForm";
+            this.Text = "إدارة المنتج";
             this.Load += new System.EventHandler(this.ItemsEditForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.cmbCategories.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();

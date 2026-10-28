@@ -120,7 +120,7 @@
             this.Controls.Add(this.gridControl1);
             this.Controls.Add(this.toolBarControl1);
             this.Name = "CategoriesForm";
-            this.Text = "CategoriesForm";
+            this.Text = "الفئات";
             this.Load += new System.EventHandler(this.CategoriesForm_LoadAsync);
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.categoriesBindingSource)).EndInit();

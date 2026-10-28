@@ -28,7 +28,6 @@ namespace UI.Forms.Vouchers
             _voucherService = vouchersService;
             _accountsTreeService = accountsTreeService;
             _selectedVoucher = selectedVoucher;
-
             saveCancelControl21.SaveClicked += SaveCancelControl_SaveClicked;
             saveCancelControl21.CancelClicked += SaveCancelControl_CancelClicked;
         }

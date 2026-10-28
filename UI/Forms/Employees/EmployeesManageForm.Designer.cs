@@ -329,7 +329,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EmployeesManageForm";
-            this.Text = "EmployeesManageForm";
+            this.Text = "إدارة الموظف";
             this.Load += new System.EventHandler(this.EmployeesManageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.cmbGroups.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();

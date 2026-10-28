@@ -24,7 +24,6 @@ namespace UI.Forms.Bills
         private readonly BindingList<BillItemDto> _billItems = new BindingList<BillItemDto>();
         private IDictionary<Guid, ItemDto> _itemLookup = new Dictionary<Guid, ItemDto>();
         private readonly BillDto _selectedBill;
-
         private bool isEdit => _selectedBill != null;
 
         public BillsManageForm(
@@ -47,6 +46,7 @@ namespace UI.Forms.Bills
 
             saveCancelControl21.SaveClicked += SaveCancelControl_SaveClicked;
             saveCancelControl21.CancelClicked += Close;
+            cmbCurrency.EditValueChanged += CmbCurrency_EditValueChanged;
         }
 
         private async void BillsManageForm_Load(object sender, EventArgs e)
@@ -54,7 +54,7 @@ namespace UI.Forms.Bills
             try
             {
                 await LoadLookupsAsync();
-                LoadBillDetails(_selectedBill);
+                await LoadBillDetails(_selectedBill);
             }
             catch (Exception ex)
             {
@@ -70,18 +70,14 @@ namespace UI.Forms.Bills
                 .Where(a => a.IsLeaf && a.IsActive)
                 .Select(a => new { a.Id, a.AccountName })
                 .ToList();
-            cmbAccountTree.Properties.DisplayMember = "AccountName";
-            cmbAccountTree.Properties.ValueMember = "Id";
-            cmbAccountTree.Properties.NullText = "اختر الحساب";
+
 
             cmbCurrency.Properties.DataSource = (await this.WithLoading(async cts =>
                 await _currencyService.GetAllCurrenciesAsync(cts),
                 "جارٍ تحميل العملات، يرجى الانتظار..."))
                 .Select(c => new { c.Id, c.CurrencyName })
                 .ToList();
-            cmbCurrency.Properties.DisplayMember = "CurrencyName";
-            cmbCurrency.Properties.ValueMember = "Id";
-            cmbCurrency.Properties.NullText = "اختر العملة";
+
 
             cmbBillType.Properties.DataSource = BillType.All
                 .Select(type => new
@@ -90,16 +86,14 @@ namespace UI.Forms.Bills
                     Text = type
                 })
                 .ToList();
-            cmbBillType.Properties.DisplayMember = "Text";
-            cmbBillType.Properties.ValueMember = "Value";
-            cmbBillType.Properties.NullText = "اختر نوع الفاتورة";
+
 
             var items = (await this.WithLoading(async cts => await _itemService.GetAllItemsAsync(cts), "جارٍ تحميل المواد، يرجى الانتظار...")).Where(i => i.IsActive);
 
             _itemLookup = BillItemsGridHelper.ConfigureGrid(colItem, colQty, colPrice, colTotal, items);
         }
 
-        private void LoadBillDetails(BillDto bill)
+        private async Task LoadBillDetails(BillDto bill)
         {
             var isNew = bill == null;
 
@@ -112,7 +106,33 @@ namespace UI.Forms.Bills
             cmbBillType.EditValue = bill?.BillType;
             cmbAccountTree.EditValue = bill?.AccountTreeGuid;
             cmbCurrency.EditValue = bill?.CurrencyGuid;
-            spnCurrencyEqualValue.EditValue = bill?.CurrencyEqualValue;
+            if (isNew)
+            {
+                spnCurrencyEqualValue.Enabled = false;
+                spnCurrencyEqualValue.Properties.ReadOnly = true;
+                if (bill?.CurrencyGuid != null && bill.CurrencyGuid != Guid.Empty)
+                {
+                    try
+                    {
+                        var currency = await _currencyService.GetCurrencyByIdAsync(bill.CurrencyGuid);
+                        spnCurrencyEqualValue.EditValue = currency?.CurrencyEqual ?? 1m;
+                    }
+                    catch
+                    {
+                        spnCurrencyEqualValue.EditValue = 1m;
+                    }
+                }
+                else
+                {
+                    spnCurrencyEqualValue.EditValue = 1m;
+                }
+            }
+            else
+            {
+                spnCurrencyEqualValue.Enabled = true;
+                spnCurrencyEqualValue.Properties.ReadOnly = false;
+                spnCurrencyEqualValue.EditValue = bill?.CurrencyEqualValue;
+            }
             deDate.EditValue = bill?.Date ?? DateTime.Now;
             txtNotes.Text = bill?.Notes ?? string.Empty;
 
@@ -134,8 +154,8 @@ namespace UI.Forms.Bills
             var accountTreeGuid = cmbAccountTree.EditValue is Guid account ? account : Guid.Empty;
             var currencyGuid = cmbCurrency.EditValue is Guid currency ? currency : Guid.Empty;
             var billDate = deDate.EditValue is DateTime date ? date : DateTime.Now;
-            var currencyEqualValue = Convert.ToDecimal(spnCurrencyEqualValue.EditValue ?? 0m);
             var billType = cmbBillType.EditValue as string;
+            var currencyEqualValue = Convert.ToDecimal(spnCurrencyEqualValue.EditValue ?? 0m);
 
             if (!isEdit)
             {
@@ -146,7 +166,7 @@ namespace UI.Forms.Bills
                     BillType = billType,
                     AccountTreeGuid = accountTreeGuid,
                     CurrencyGuid = currencyGuid,
-                    CurrencyEqualValue = currencyEqualValue,
+                    CurrencyEqualValue = 1m,
                     Date = billDate,
                     Notes = txtNotes.Text,
                     BillItems = billItems
@@ -234,6 +254,24 @@ namespace UI.Forms.Bills
         {
             if (gridViewItems.FocusedRowHandle >= 0)
                 gridViewItems.DeleteRow(gridViewItems.FocusedRowHandle);
+        }
+
+        private async void CmbCurrency_EditValueChanged(object sender, EventArgs e)
+        {
+            if (cmbCurrency.EditValue is Guid currencyGuid && currencyGuid != Guid.Empty)
+            {
+                try
+                {
+                    var currency = await _currencyService.GetCurrencyByIdAsync(currencyGuid);
+                    if (currency != null)
+                    {
+                        spnCurrencyEqualValue.EditValue = currency.CurrencyEqual;
+                    }
+                }
+                catch
+                {
+                }
+            }
         }
 
         private void UpdateTotal()

@@ -127,7 +127,7 @@ namespace UI.Forms
                     selectedItem))
             {
                 var result = editForm.ShowDialog(this);
-
+            
                 if (result == DialogResult.OK)
                 {
                     await LoadItemsAsync();
@@ -166,16 +166,26 @@ namespace UI.Forms
 
             try
             {
-                 
-               await  _itemsService.DeleteItemAsync(item.Id);
+                var result2 = await _itemsService.DeleteItemAsync(item.Id);
 
-                await LoadItemsAsync();
+                if (result2)
+                {
+                    await LoadItemsAsync();
 
-                XtraMessageBox.Show(
-                    "تم حذف المنتج بنجاح",
-                    "نجاح",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                    XtraMessageBox.Show(
+                        "تم حذف المنتج بنجاح",
+                        "نجاح",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else
+                {
+                    XtraMessageBox.Show(
+                        "لا يمكن حذف المنتج.\nقد يكون المنتج مستخدماً في الفواتير.",
+                        "خطأ",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {

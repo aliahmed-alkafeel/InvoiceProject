@@ -210,7 +210,11 @@
             this.cmbBillType.Name = "cmbBillType";
             this.cmbBillType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbBillType.Properties.DisplayMember = "Text";
+            this.cmbBillType.Properties.NullText = "اختر نوع الفاتورة";
             this.cmbBillType.Properties.PopupView = this.gridViewBillType;
+            this.cmbBillType.Properties.ValueMember = "Value";
+            this.cmbBillType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cmbBillType.Size = new System.Drawing.Size(290, 20);
             this.cmbBillType.TabIndex = 10;
             // 
@@ -237,7 +241,11 @@
             this.cmbAccountTree.Name = "cmbAccountTree";
             this.cmbAccountTree.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbAccountTree.Properties.DisplayMember = "AccountName";
+            this.cmbAccountTree.Properties.NullText = "اختر الحساب";
             this.cmbAccountTree.Properties.PopupView = this.gridViewAccountTree;
+            this.cmbAccountTree.Properties.ValueMember = "Id";
+            this.cmbAccountTree.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cmbAccountTree.Size = new System.Drawing.Size(290, 20);
             this.cmbAccountTree.TabIndex = 11;
             // 
@@ -271,7 +279,11 @@
             this.cmbCurrency.Name = "cmbCurrency";
             this.cmbCurrency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbCurrency.Properties.DisplayMember = "CurrencyName";
+            this.cmbCurrency.Properties.NullText = "اختر العملة";
             this.cmbCurrency.Properties.PopupView = this.gridViewCurrency;
+            this.cmbCurrency.Properties.ValueMember = "Id";
+            this.cmbCurrency.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cmbCurrency.Size = new System.Drawing.Size(290, 20);
             this.cmbCurrency.TabIndex = 12;
             // 
@@ -482,8 +494,8 @@
             this.Text = "الفواتير";
             this.Load += new System.EventHandler(this.BillsManageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.spinBillNumber.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridViewBillType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbBillType.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewBillType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbAccountTree.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewAccountTree)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbCurrency.Properties)).EndInit();

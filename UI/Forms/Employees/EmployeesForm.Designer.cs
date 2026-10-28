@@ -149,7 +149,7 @@
             this.Controls.Add(this.gridControl1);
             this.Controls.Add(this.toolBarControl1);
             this.Name = "EmployeesForm";
-            this.Text = "الموظفون";
+            this.Text = "الموظفين";
             this.Load += new System.EventHandler(this.EmployeesForm_LoadAsync);
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
