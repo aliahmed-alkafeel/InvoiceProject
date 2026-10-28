@@ -97,9 +97,10 @@ namespace UI.Forms
         {
             try
             {
-                var items = (await this.WithLoading(async cts => await _itemService.GetAllItemsAsync(cts), "جارٍ تحميل المواد، يرجى الانتظار...")).Where(i => i.IsActive);
-
-                _itemLookup = BillItemsGridHelper.ConfigureGrid(colItem, colQty, colPrice, colTotal, items);
+                var items = (await this.WithLoading(async cts => await _itemService.GetAllItemsAsync(cts), "جارٍ تحميل المواد، يرجى الانتظار..."))
+                    .Where(i => i.IsActive).ToList();
+                repositoryItemGridLookUpEdit.DataSource = items;
+                _itemLookup = items.ToDictionary(i => i.Id);
             }
             catch (Exception ex)
             {

@@ -121,9 +121,7 @@ namespace UI.Forms.Vouchers
          .ToList();
 
             cmbAccounts.Properties.DataSource = accounts;
-            cmbAccounts.Properties.DisplayMember = "AccountName";
-            cmbAccounts.Properties.ValueMember = "Id";
-            cmbAccounts.Properties.NullText = "اختر الحساب";
+            // Properties moved to designer file
 
             //cmbAccounts.Properties.View.Columns.Clear();
             //cmbAccounts.Properties.View.Columns

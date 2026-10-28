@@ -88,9 +88,12 @@ namespace UI.Forms.Bills
                 .ToList();
 
 
-            var items = (await this.WithLoading(async cts => await _itemService.GetAllItemsAsync(cts), "جارٍ تحميل المواد، يرجى الانتظار...")).Where(i => i.IsActive);
+            var items = (await this.WithLoading(cts =>
+            _itemService.GetAllItemsAsync(cts), "جارٍ تحميل المواد، يرجى الانتظار..."))
+            .Where(i => i.IsActive).ToList();
+            repositoryItemGridLookUpEdit.DataSource = items;
 
-            _itemLookup = BillItemsGridHelper.ConfigureGrid(colItem, colQty, colPrice, colTotal, items);
+            _itemLookup = items.ToDictionary(i => i.Id);
         }
 
         private async Task LoadBillDetails(BillDto bill)

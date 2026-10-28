@@ -73,6 +73,7 @@
             this.itemCurrency = new DevExpress.XtraLayout.LayoutControlItem();
             this.itemNotes = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutItemsActions = new DevExpress.XtraLayout.LayoutControl();
+            this.lblTotal = new DevExpress.XtraEditors.LabelControl();
             this.btnAddItem = new DevExpress.XtraEditors.SimpleButton();
             this.btnDeleteItem = new DevExpress.XtraEditors.SimpleButton();
             this.btnSaveItems = new DevExpress.XtraEditors.SimpleButton();
@@ -80,14 +81,20 @@
             this.itemAddItem = new DevExpress.XtraLayout.LayoutControlItem();
             this.itemDeleteItem = new DevExpress.XtraLayout.LayoutControlItem();
             this.itemSaveItems = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.gridControl1 = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colItem = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemGridLookUpEdit = new DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit();
+            this.repositoryItemGridLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colLookupName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colLookupPrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colQty = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemSpinEditQty = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
             this.colPrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemSpinEditPrice = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
             this.colTotal = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.lblTotal = new DevExpress.XtraEditors.LabelControl();
-            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutSearch)).BeginInit();
             this.layoutSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spinBillNumber.Properties)).BeginInit();
@@ -111,9 +118,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.itemAddItem)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemDeleteItem)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemSaveItems)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit1View)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEditQty)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEditPrice)).BeginInit();
             this.SuspendLayout();
             // 
             // layoutSearch
@@ -125,8 +136,9 @@
             this.layoutSearch.Dock = System.Windows.Forms.DockStyle.Top;
             this.layoutSearch.Location = new System.Drawing.Point(0, 0);
             this.layoutSearch.Name = "layoutSearch";
+            this.layoutSearch.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(533, 160, 650, 400);
             this.layoutSearch.Root = this.Root_Search;
-            this.layoutSearch.Size = new System.Drawing.Size(1000, 84);
+            this.layoutSearch.Size = new System.Drawing.Size(1000, 64);
             this.layoutSearch.TabIndex = 0;
             // 
             // spinBillNumber
@@ -202,7 +214,7 @@
             this.itemNext,
             this.itemAddItems});
             this.Root_Search.LayoutMode = DevExpress.XtraLayout.Utils.LayoutMode.Table;
-            this.Root_Search.Name = "Root_Search";
+            this.Root_Search.Name = "Root";
             columnDefinition1.SizeType = System.Windows.Forms.SizeType.Percent;
             columnDefinition1.Width = 100D;
             columnDefinition2.SizeType = System.Windows.Forms.SizeType.Absolute;
@@ -221,12 +233,12 @@
             columnDefinition5});
             rowDefinition1.Height = 40D;
             rowDefinition1.SizeType = System.Windows.Forms.SizeType.Absolute;
-            rowDefinition2.Height = 100D;
+            rowDefinition2.Height = 20D;
             rowDefinition2.SizeType = System.Windows.Forms.SizeType.Percent;
             this.Root_Search.OptionsTableLayoutGroup.RowDefinitions.AddRange(new DevExpress.XtraLayout.RowDefinition[] {
             rowDefinition1,
             rowDefinition2});
-            this.Root_Search.Size = new System.Drawing.Size(1000, 84);
+            this.Root_Search.Size = new System.Drawing.Size(1000, 64);
             this.Root_Search.TextVisible = false;
             // 
             // itemBillNumber
@@ -283,7 +295,7 @@
             this.layoutBillInfo.Controls.Add(this.lblEqualValue);
             this.layoutBillInfo.Controls.Add(this.lblNotesValue);
             this.layoutBillInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.layoutBillInfo.Location = new System.Drawing.Point(0, 84);
+            this.layoutBillInfo.Location = new System.Drawing.Point(0, 64);
             this.layoutBillInfo.Name = "layoutBillInfo";
             this.layoutBillInfo.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2407, 355, 650, 400);
             this.layoutBillInfo.Root = this.Root_BillInfo;
@@ -514,6 +526,19 @@
             this.layoutItemsActions.Size = new System.Drawing.Size(1000, 36);
             this.layoutItemsActions.TabIndex = 3;
             // 
+            // lblTotal
+            // 
+            this.lblTotal.Appearance.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold);
+            this.lblTotal.Appearance.Options.UseFont = true;
+            this.lblTotal.Appearance.Options.UseTextOptions = true;
+            this.lblTotal.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.lblTotal.Location = new System.Drawing.Point(22, 9);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(126, 18);
+            this.lblTotal.StyleController = this.layoutItemsActions;
+            this.lblTotal.TabIndex = 4;
+            this.lblTotal.Text = "إجمالي الفاتورة: 0";
+            // 
             // btnAddItem
             // 
             this.btnAddItem.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
@@ -621,15 +646,30 @@
             this.itemSaveItems.Size = new System.Drawing.Size(130, 36);
             this.itemSaveItems.TextVisible = false;
             // 
+            // layoutControlItem1
+            // 
+            this.layoutControlItem1.ContentHorzAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.layoutControlItem1.ContentVertAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.layoutControlItem1.Control = this.lblTotal;
+            this.layoutControlItem1.Location = new System.Drawing.Point(20, 0);
+            this.layoutControlItem1.Name = "layoutControlItem1";
+            this.layoutControlItem1.OptionsTableLayoutItem.ColumnIndex = 1;
+            this.layoutControlItem1.Size = new System.Drawing.Size(610, 36);
+            this.layoutControlItem1.TextVisible = false;
+            // 
             // gridControl1
             // 
             this.gridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControl1.Location = new System.Drawing.Point(0, 194);
+            this.gridControl1.Location = new System.Drawing.Point(0, 174);
             this.gridControl1.MainView = this.gridView1;
             this.gridControl1.Name = "gridControl1";
+            this.gridControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemGridLookUpEdit,
+            this.repositoryItemSpinEditPrice,
+            this.repositoryItemSpinEditQty});
             this.gridControl1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.gridControl1.Size = new System.Drawing.Size(1000, 370);
-            this.gridControl1.TabIndex = 3;
+            this.gridControl1.Size = new System.Drawing.Size(1000, 390);
+            this.gridControl1.TabIndex = 17;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
             // 
@@ -647,70 +687,136 @@
             this.gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
             this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.gridView1.OptionsView.ShowGroupPanel = false;
-            this.gridView1.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gridView1_CellValueChanged);
-            this.gridView1.RowCountChanged += new System.EventHandler(this.gridView1_RowCountChanged);
             // 
             // colItem
             // 
-            this.colItem.Caption = "المادة";
+            this.colItem.AppearanceCell.Options.UseTextOptions = true;
+            this.colItem.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.colItem.Caption = "المنتج";
+            this.colItem.ColumnEdit = this.repositoryItemGridLookUpEdit;
             this.colItem.FieldName = "ItemGuid";
             this.colItem.Name = "colItem";
             this.colItem.Visible = true;
             this.colItem.VisibleIndex = 0;
-            this.colItem.Width = 320;
+            this.colItem.Width = 304;
+            // 
+            // repositoryItemGridLookUpEdit
+            // 
+            this.repositoryItemGridLookUpEdit.AutoHeight = false;
+            this.repositoryItemGridLookUpEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemGridLookUpEdit.DisplayMember = "Name";
+            this.repositoryItemGridLookUpEdit.Name = "repositoryItemGridLookUpEdit";
+            this.repositoryItemGridLookUpEdit.NullText = "اختر المنتج";
+            this.repositoryItemGridLookUpEdit.PopupView = this.repositoryItemGridLookUpEdit1View;
+            this.repositoryItemGridLookUpEdit.ValueMember = "Id";
+            // 
+            // repositoryItemGridLookUpEdit1View
+            // 
+            this.repositoryItemGridLookUpEdit1View.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colLookupName,
+            this.gridColumn1,
+            this.colLookupPrice});
+            this.repositoryItemGridLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.repositoryItemGridLookUpEdit1View.Name = "repositoryItemGridLookUpEdit1View";
+            this.repositoryItemGridLookUpEdit1View.OptionsBehavior.AutoPopulateColumns = false;
+            this.repositoryItemGridLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.repositoryItemGridLookUpEdit1View.OptionsView.ShowGroupPanel = false;
+            // 
+            // colLookupName
+            // 
+            this.colLookupName.AppearanceCell.Options.UseTextOptions = true;
+            this.colLookupName.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.colLookupName.Caption = "اسم المنتج";
+            this.colLookupName.FieldName = "Name";
+            this.colLookupName.Name = "colLookupName";
+            this.colLookupName.Visible = true;
+            this.colLookupName.VisibleIndex = 0;
+            // 
+            // gridColumn1
+            // 
+            this.gridColumn1.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumn1.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.gridColumn1.Caption = "الفئة";
+            this.gridColumn1.FieldName = "Category.Name";
+            this.gridColumn1.Name = "gridColumn1";
+            this.gridColumn1.Visible = true;
+            this.gridColumn1.VisibleIndex = 2;
+            // 
+            // colLookupPrice
+            // 
+            this.colLookupPrice.AppearanceCell.Options.UseTextOptions = true;
+            this.colLookupPrice.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.colLookupPrice.Caption = "السعر";
+            this.colLookupPrice.FieldName = "Price";
+            this.colLookupPrice.Name = "colLookupPrice";
+            this.colLookupPrice.Visible = true;
+            this.colLookupPrice.VisibleIndex = 1;
             // 
             // colQty
             // 
+            this.colQty.AppearanceCell.Options.UseTextOptions = true;
+            this.colQty.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
             this.colQty.Caption = "الكمية";
+            this.colQty.ColumnEdit = this.repositoryItemSpinEditQty;
             this.colQty.FieldName = "Qty";
             this.colQty.Name = "colQty";
             this.colQty.Visible = true;
             this.colQty.VisibleIndex = 1;
-            this.colQty.Width = 140;
+            this.colQty.Width = 221;
+            // 
+            // repositoryItemSpinEditQty
+            // 
+            this.repositoryItemSpinEditQty.AutoHeight = false;
+            this.repositoryItemSpinEditQty.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemSpinEditQty.MaxValue = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.repositoryItemSpinEditQty.Name = "repositoryItemSpinEditQty";
             // 
             // colPrice
             // 
+            this.colPrice.AppearanceCell.Options.UseTextOptions = true;
+            this.colPrice.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
             this.colPrice.Caption = "السعر";
+            this.colPrice.ColumnEdit = this.repositoryItemSpinEditPrice;
             this.colPrice.FieldName = "Price";
             this.colPrice.Name = "colPrice";
             this.colPrice.Visible = true;
             this.colPrice.VisibleIndex = 2;
-            this.colPrice.Width = 140;
+            this.colPrice.Width = 221;
+            // 
+            // repositoryItemSpinEditPrice
+            // 
+            this.repositoryItemSpinEditPrice.AutoHeight = false;
+            this.repositoryItemSpinEditPrice.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemSpinEditPrice.MaxValue = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.repositoryItemSpinEditPrice.Name = "repositoryItemSpinEditPrice";
             // 
             // colTotal
             // 
+            this.colTotal.AppearanceCell.Options.UseTextOptions = true;
+            this.colTotal.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
             this.colTotal.Caption = "الإجمالي";
+            this.colTotal.DisplayFormat.FormatString = "N2";
+            this.colTotal.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colTotal.FieldName = "Total";
             this.colTotal.Name = "colTotal";
             this.colTotal.OptionsColumn.AllowEdit = false;
             this.colTotal.OptionsColumn.ReadOnly = true;
+            this.colTotal.UnboundDataType = typeof(decimal);
+            this.colTotal.UnboundExpression = "[Qty] * [Price]";
             this.colTotal.Visible = true;
             this.colTotal.VisibleIndex = 3;
-            this.colTotal.Width = 160;
-            // 
-            // lblTotal
-            // 
-            this.lblTotal.Appearance.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold);
-            this.lblTotal.Appearance.Options.UseFont = true;
-            this.lblTotal.Appearance.Options.UseTextOptions = true;
-            this.lblTotal.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.lblTotal.Location = new System.Drawing.Point(22, 9);
-            this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(126, 18);
-            this.lblTotal.StyleController = this.layoutItemsActions;
-            this.lblTotal.TabIndex = 4;
-            this.lblTotal.Text = "إجمالي الفاتورة: 0";
-            // 
-            // layoutControlItem1
-            // 
-            this.layoutControlItem1.ContentHorzAlignment = DevExpress.Utils.HorzAlignment.Near;
-            this.layoutControlItem1.ContentVertAlignment = DevExpress.Utils.VertAlignment.Center;
-            this.layoutControlItem1.Control = this.lblTotal;
-            this.layoutControlItem1.Location = new System.Drawing.Point(20, 0);
-            this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.OptionsTableLayoutItem.ColumnIndex = 1;
-            this.layoutControlItem1.Size = new System.Drawing.Size(610, 36);
-            this.layoutControlItem1.TextVisible = false;
+            this.colTotal.Width = 229;
             // 
             // ItemBillsForm
             // 
@@ -747,9 +853,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.itemAddItem)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemDeleteItem)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemSaveItems)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit1View)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEditQty)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEditPrice)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -785,16 +895,23 @@
         private DevExpress.XtraLayout.LayoutControlItem itemAddItem;
         private DevExpress.XtraLayout.LayoutControlItem itemDeleteItem;
         private DevExpress.XtraLayout.LayoutControlItem itemSaveItems;
-        private DevExpress.XtraGrid.GridControl gridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
-        private DevExpress.XtraGrid.Columns.GridColumn colItem;
-        private DevExpress.XtraGrid.Columns.GridColumn colQty;
-        private DevExpress.XtraGrid.Columns.GridColumn colPrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colTotal;
         private DevExpress.XtraLayout.LayoutControlGroup Root_Search;
         private DevExpress.XtraLayout.LayoutControlGroup Root_BillInfo;
         private DevExpress.XtraLayout.LayoutControlGroup Root_ItemsActions;
         private DevExpress.XtraEditors.LabelControl lblTotal;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraGrid.GridControl gridControl1;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private DevExpress.XtraGrid.Columns.GridColumn colItem;
+        private DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit repositoryItemGridLookUpEdit;
+        private DevExpress.XtraGrid.Views.Grid.GridView repositoryItemGridLookUpEdit1View;
+        private DevExpress.XtraGrid.Columns.GridColumn colQty;
+        private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit repositoryItemSpinEditQty;
+        private DevExpress.XtraGrid.Columns.GridColumn colPrice;
+        private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit repositoryItemSpinEditPrice;
+        private DevExpress.XtraGrid.Columns.GridColumn colTotal;
+        private DevExpress.XtraGrid.Columns.GridColumn colLookupName;
+        private DevExpress.XtraGrid.Columns.GridColumn colLookupPrice;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
     }
 }

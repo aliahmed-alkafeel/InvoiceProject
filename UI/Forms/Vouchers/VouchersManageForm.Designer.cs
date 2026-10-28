@@ -102,6 +102,9 @@
             this.cmbAccounts.Name = "cmbAccounts";
             this.cmbAccounts.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbAccounts.Properties.DisplayMember = "AccountName";
+            this.cmbAccounts.Properties.ValueMember = "Id";
+            this.cmbAccounts.Properties.NullText = "اختر الحساب";
             this.cmbAccounts.Properties.PopupView = this.searchLookUpEdit1View;
             this.cmbAccounts.Size = new System.Drawing.Size(183, 20);
             this.cmbAccounts.TabIndex = 75;

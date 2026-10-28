@@ -147,7 +147,7 @@
             // btnShowBillItems
             // 
             this.btnShowBillItems.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowBillItems.Location = new System.Drawing.Point(466, 10);
+            this.btnShowBillItems.Location = new System.Drawing.Point(466, 11);
             this.btnShowBillItems.Name = "btnShowBillItems";
             this.btnShowBillItems.Size = new System.Drawing.Size(160, 33);
             this.btnShowBillItems.TabIndex = 5;
