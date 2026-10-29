@@ -88,16 +88,9 @@ namespace UI.Forms
             if (CheckItemsLoading())
                 return;
 
-            using (var editForm = Program.ServiceProvider
-                .GetService(typeof(ItemsEditForm)) as ItemsEditForm)
-            {
-
-                var result = editForm.ShowDialog(this);
-
-            if (result == DialogResult.OK)
+            if (Navigator.ShowScopedDialog<ItemsEditForm>() == DialogResult.OK)
             {
                 await LoadItemsAsync();
-            }
             }
         }
 
@@ -121,17 +114,9 @@ namespace UI.Forms
                 return;
             }
 
-            using (var editForm =
-                ActivatorUtilities.CreateInstance<ItemsEditForm>(
-                    Navigator.CurrentScopeProvider,
-                    selectedItem))
+            if (Navigator.ShowScopedDialog<ItemsEditForm>(selectedItem) == DialogResult.OK)
             {
-                var result = editForm.ShowDialog(this);
-            
-                if (result == DialogResult.OK)
-                {
-                    await LoadItemsAsync();
-                }
+                await LoadItemsAsync();
             }
         }
 

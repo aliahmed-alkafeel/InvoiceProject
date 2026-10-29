@@ -116,6 +116,7 @@
     <Compile Include="Controls\TopBarButtonsControl.Designer.cs">
       <DependentUpon>TopBarButtonsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\DialogHelper.cs" />
     <Compile Include="Extensions\LoadingExtensions.cs" />
     <Compile Include="Extensions\MessageHelper.cs" />
     <Compile Include="Extensions\Navigator.cs" />

@@ -85,16 +85,9 @@ namespace UI.Forms.Vouchers
             if (CheckVouchersLoading())
                 return;
 
-            using (var editForm = Program.ServiceProvider
-                .GetService(typeof(VouchersCreateForm)) as VouchersCreateForm)
+            if (Navigator.ShowScopedDialog<VouchersCreateForm>() == DialogResult.OK)
             {
-
-                var result = editForm.ShowDialog(this);
-
-                if (result == DialogResult.OK)
-                {
-                    await LoadVouchersAsync();
-                }
+                await LoadVouchersAsync();
             }
         }
 
@@ -118,17 +111,10 @@ namespace UI.Forms.Vouchers
                 return;
             }
 
-            using (var editForm =
-                ActivatorUtilities.CreateInstance<VouchersManageForm>(
-                    Navigator.CurrentScopeProvider,
-                    selectedRow))
+            if (Navigator.ShowScopedDialog<VouchersManageForm>(
+                selectedRow) == DialogResult.OK)
             {
-                var result = editForm.ShowDialog(this);
-
-                if (result == DialogResult.OK)
-                {
-                    await LoadVouchersAsync();
-                }
+                await LoadVouchersAsync();
             }
         }
 

@@ -89,16 +89,9 @@ namespace UI.Forms.Categories
             if (CheckCategoriesLoading())
                 return;
 
-            using (var editForm = Program.ServiceProvider
-                .GetService(typeof(CategoriesManageForm)) as CategoriesManageForm)
+            if (Navigator.ShowScopedDialog<CategoriesManageForm>() == DialogResult.OK)
             {
-
-                var result = editForm.ShowDialog(this);
-
-                if (result == DialogResult.OK)
-                {
-                    await LoadCategoriesAsync();
-                }
+                await LoadCategoriesAsync();
             }
         }
 
@@ -122,17 +115,10 @@ namespace UI.Forms.Categories
                 return;
             }
 
-            using (var editForm =
-                ActivatorUtilities.CreateInstance<CategoriesManageForm>(
-                    Navigator.CurrentScopeProvider,
-                    selectedCategory))
+            if (Navigator.ShowScopedDialog<CategoriesManageForm>(
+                selectedCategory) == DialogResult.OK)
             {
-                var result = editForm.ShowDialog(this);
-
-                if (result == DialogResult.OK)
-                {
-                    await LoadCategoriesAsync();
-                }
+                await LoadCategoriesAsync();
             }
         }
 

@@ -83,20 +83,9 @@ namespace UI.Forms
             if (CheckAccountsLoading())
                 return;
 
-            var selectedAccount = GetSelectedAccount();
-
-            using (var manageForm = Navigator.CurrentScopeProvider
-                .GetService(typeof(AccountsTreeManageForm)) as AccountsTreeManageForm)
+            if (Navigator.ShowScopedDialog<AccountsTreeManageForm>() == DialogResult.OK)
             {
-                if (manageForm == null)
-                    return;
-
-                var result = manageForm.ShowDialog(this);
-
-                if (result == DialogResult.OK)
-                {
-                    await LoadAccountsAsync();
-                }
+                await LoadAccountsAsync();
             }
         }
 
@@ -120,17 +109,10 @@ namespace UI.Forms
                 return;
             }
 
-            using (var manageForm =
-                ActivatorUtilities.CreateInstance<AccountsTreeManageForm>(
-                    Navigator.CurrentScopeProvider,
-                    selectedAccount))
+            if (Navigator.ShowScopedDialog<AccountsTreeManageForm>(
+                selectedAccount) == DialogResult.OK)
             {
-                var result = manageForm.ShowDialog(this);
-
-                if (result == DialogResult.OK)
-                {
-                    await LoadAccountsAsync();
-                }
+                await LoadAccountsAsync();
             }
         }
 

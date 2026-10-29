@@ -80,15 +80,9 @@ namespace UI.Forms
             if (CheckEmployeesLoading())
                 return;
 
-            using (var manageForm = Navigator.CurrentScopeProvider
-                .GetService(typeof(EmployeesManageForm)) as EmployeesManageForm)
+            if (Navigator.ShowScopedDialog<EmployeesManageForm>() == DialogResult.OK)
             {
-                var result = manageForm.ShowDialog(this);
-
-                if (result == DialogResult.OK)
-                {
-                    await LoadEmployeesAsync();
-                }
+                await LoadEmployeesAsync();
             }
         }
 
@@ -111,17 +105,10 @@ namespace UI.Forms
                 return;
             }
 
-            using (var manageForm =
-                ActivatorUtilities.CreateInstance<EmployeesManageForm>(
-                    Navigator.CurrentScopeProvider,
-                    selectedEmployee))
+            if (Navigator.ShowScopedDialog<EmployeesManageForm>(
+                selectedEmployee) == DialogResult.OK)
             {
-                var result = manageForm.ShowDialog(this);
-
-                if (result == DialogResult.OK)
-                {
-                    await LoadEmployeesAsync();
-                }
+                await LoadEmployeesAsync();
             }
         }
 

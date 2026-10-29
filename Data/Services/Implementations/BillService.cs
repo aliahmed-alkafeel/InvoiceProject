@@ -91,7 +91,7 @@ namespace Data.Services.Implementations
             return bill;
         }
 
-        public async Task<BillDto> GetBillByNumberAsync(int billNumber)
+        public async Task<BillDto> GetBillByNumberAsync(int billNumber, CancellationToken cts)
         {
             if (billNumber <= 0)
                 throw new ArgumentException("رقم الفاتورة مطلوب.", nameof(billNumber));
@@ -123,17 +123,17 @@ namespace Data.Services.Implementations
                         CurrencySymbol = b.Currency.CurrencySymbol
                     }
                 })
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(cts);
 
             if (bill == null)
                 return null;
 
-            bill.BillItems = await GetBillItemsAsync(bill.Id);
+            bill.BillItems = await GetBillItemsAsync(bill.Id, cts);
 
             return bill;
         }
 
-        private async Task<List<BillItemDto>> GetBillItemsAsync(Guid billId)
+        private async Task<List<BillItemDto>> GetBillItemsAsync(Guid billId, CancellationToken cts = default)
         {
             return await _unitOfWork.BillItems
                 .Select()
@@ -152,7 +152,7 @@ namespace Data.Services.Implementations
                         Name = bi.Item.Name
                     }
                 })
-                .ToListAsync();
+                .ToListAsync(cts);
         }
 
         public async Task<bool> CreateBillAsync(CreateBillDto model)
@@ -246,7 +246,10 @@ namespace Data.Services.Implementations
 
             _unitOfWork.Bills.Update(bill);
 
-            return await _unitOfWork.SaveChangesAsync() > 0;
+            // الحفظ بدون تغيير فعلي لا يُعد فشلاً؛ الأخطاء الحقيقية تُرمى كاستثناءات.
+            await _unitOfWork.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<bool> DeleteBillAsync(Guid modelId)

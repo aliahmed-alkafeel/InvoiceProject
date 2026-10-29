@@ -54,7 +54,7 @@ namespace UI.Forms.Bills
             try
             {
                 await LoadLookupsAsync();
-                await LoadBillDetails(_selectedBill);
+                LoadBillDetails(_selectedBill);
             }
             catch (Exception ex)
             {
@@ -96,53 +96,44 @@ namespace UI.Forms.Bills
             _itemLookup = items.ToDictionary(i => i.Id);
         }
 
-        private async Task LoadBillDetails(BillDto bill)
+        private void LoadBillDetails(BillDto bill)
         {
             var isNew = bill == null;
 
-            lblTitle.Text = isNew ? "إضافة فاتورة" : "تعديل الفاتورة";
-            saveCancelControl21.SaveText = isNew ? "إضافة" : "تعديل";
-
-            spinBillNumber.Enabled = !isNew;
-            spinBillNumber.Properties.NullText = isNew ? "يتم التوليد تلقائياً" : "أدخل رقم الفاتورة";
-            spinBillNumber.EditValue = bill?.BillNumber;
-            cmbBillType.EditValue = bill?.BillType;
-            cmbAccountTree.EditValue = bill?.AccountTreeGuid;
-            cmbCurrency.EditValue = bill?.CurrencyGuid;
             if (isNew)
             {
+                lblTitle.Text = "إضافة فاتورة";
+                saveCancelControl21.SaveText = "إضافة";
+
+                spinBillNumber.Enabled = false;
+                spinBillNumber.Properties.NullText = "يتم توليده تلقائياً عند الانشاء";
+
                 spnCurrencyEqualValue.Enabled = false;
-                spnCurrencyEqualValue.Properties.ReadOnly = true;
-                if (bill?.CurrencyGuid != null && bill.CurrencyGuid != Guid.Empty)
-                {
-                    try
-                    {
-                        var currency = await _currencyService.GetCurrencyByIdAsync(bill.CurrencyGuid);
-                        spnCurrencyEqualValue.EditValue = currency?.CurrencyEqual ?? 1m;
-                    }
-                    catch
-                    {
-                        spnCurrencyEqualValue.EditValue = 1m;
-                    }
-                }
-                else
-                {
-                    spnCurrencyEqualValue.EditValue = 1m;
-                }
+                //spnCurrencyEqualValue.Properties.ReadOnly = true;
+                spnCurrencyEqualValue.EditValue = 1m;
+                deDate.EditValue = DateTime.Now;
+
             }
             else
             {
+                // تعديل فاتورة موجودة
+                lblTitle.Text = "تعديل الفاتورة";
+                saveCancelControl21.SaveText = "تعديل";
+
+                spinBillNumber.Enabled = true;
                 spnCurrencyEqualValue.Enabled = true;
                 spnCurrencyEqualValue.Properties.ReadOnly = false;
-                spnCurrencyEqualValue.EditValue = bill?.CurrencyEqualValue;
-            }
-            deDate.EditValue = bill?.Date ?? DateTime.Now;
-            txtNotes.Text = bill?.Notes ?? string.Empty;
+                spnCurrencyEqualValue.EditValue = bill.CurrencyEqualValue;
+            spinBillNumber.EditValue = bill.BillNumber;
+            cmbBillType.EditValue = bill.BillType;
+            cmbAccountTree.EditValue = bill.AccountTreeGuid;
+            cmbCurrency.EditValue = bill.CurrencyGuid;
+            deDate.EditValue = bill.Date;
+            txtNotes.Text = bill.Notes;
 
-            _billItems.Clear();
-
-            foreach (var billItem in bill?.BillItems ?? new HashSet<BillItemDto>())
+            foreach (var billItem in bill.BillItems)
                 _billItems.Add(billItem);
+            }
 
             UpdateTotal();
         }
@@ -152,7 +143,6 @@ namespace UI.Forms.Bills
             // إنهاء تحرير الخلية الحالية حتى لا تضيع آخر قيمة مكتوبة.
             gridViewItems.CloseEditor();
             gridViewItems.UpdateCurrentRow();
-
             var billItems = _billItems.Where(bi => bi.ItemGuid != Guid.Empty).ToList();
             var accountTreeGuid = cmbAccountTree.EditValue is Guid account ? account : Guid.Empty;
             var currencyGuid = cmbCurrency.EditValue is Guid currency ? currency : Guid.Empty;

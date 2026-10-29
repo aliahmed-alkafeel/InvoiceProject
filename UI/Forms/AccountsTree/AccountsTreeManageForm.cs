@@ -5,6 +5,7 @@ using DevExpress.XtraEditors;
 using Models.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -100,6 +101,24 @@ namespace UI.Forms.AccountsTree
 
         private async void SaveCancelControl_SaveClicked()
         {
+            try
+            {
+                await SaveAccountAsync();
+            }
+            catch (DbUpdateException)
+            {
+                MessageHelper.Error(isEdit
+                    ? "فشل في تعديل الحساب، رمز الحساب أو اسم الحساب مستخدم بالفعل."
+                    : "فشل في إضافة الحساب، رمز الحساب أو اسم الحساب مستخدم بالفعل.");
+            }
+            catch (Exception ex)
+            {
+                MessageHelper.Error($"فشل في حفظ الحساب.\n{ex.Message}");
+            }
+        }
+
+        private async Task SaveAccountAsync()
+        {
             var accountCode = txtAccountCode.Text.Trim();
             var accountName = txtAccountName.Text.Trim();
             var isLeaf = chkIsLeaf.Checked;
@@ -125,31 +144,17 @@ namespace UI.Forms.AccountsTree
                     newAccount,
                     out var errors))
                 {
-                    XtraMessageBox.Show(errors);
+                    MessageHelper.Error(errors);
                     return;
                 }
 
-                var result = await _accountsTreeService.CreateAccountAsync(newAccount);
-
-                if (result)
+                if (!await _accountsTreeService.CreateAccountAsync(newAccount))
                 {
-                    MessageBox.Show(
-                        "تم إضافة الحساب بنجاح",
-                        "نجاح",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                    MessageHelper.Error("فشل في إضافة الحساب.");
+                    return;
+                }
 
-                    DialogResult = DialogResult.OK;
-                    Close();
-                }
-                else
-                {
-                    MessageBox.Show(
-                        "فشل في إضافة الحساب، قد يكون رمز الحساب مكرراً",
-                        "خطأ",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
+                MessageHelper.Success("تم إضافة الحساب بنجاح");
             }
             else
             {
@@ -169,32 +174,21 @@ namespace UI.Forms.AccountsTree
                     updatedAccount,
                     out var errors))
                 {
-                    XtraMessageBox.Show(errors);
+                    MessageHelper.Error(errors);
                     return;
                 }
 
-                var result = await _accountsTreeService.UpdateAccountAsync(updatedAccount);
-
-                if (result)
+                if (!await _accountsTreeService.UpdateAccountAsync(updatedAccount))
                 {
-                    MessageBox.Show(
-                        "تم تعديل الحساب بنجاح",
-                        "نجاح",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                    MessageHelper.Error("فشل في تعديل الحساب.");
+                    return;
+                }
 
-                    DialogResult = DialogResult.OK;
-                    Close();
-                }
-                else
-                {
-                    MessageBox.Show(
-                        "فشل في تعديل الحساب، قد يكون رمز الحساب مكرراً",
-                        "خطأ",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
+                MessageHelper.Success("تم تعديل الحساب بنجاح");
             }
+
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void SaveCancelControl_CancelClicked()

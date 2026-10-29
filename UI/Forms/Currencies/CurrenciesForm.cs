@@ -80,15 +80,9 @@ namespace UI.Forms
             if (CheckCurrenciesLoading())
                 return;
 
-            using (var manageForm = Navigator.CurrentScopeProvider
-                .GetService(typeof(CurrenciesManageForm)) as CurrenciesManageForm)
+            if (Navigator.ShowScopedDialog<CurrenciesManageForm>() == DialogResult.OK)
             {
-                var result = manageForm.ShowDialog(this);
-
-                if (result == DialogResult.OK)
-                {
-                    await LoadCurrenciesAsync();
-                }
+                await LoadCurrenciesAsync();
             }
         }
 
@@ -130,17 +124,10 @@ namespace UI.Forms
                 return;
             }
 
-            using (var manageForm =
-                ActivatorUtilities.CreateInstance<CurrenciesManageForm>(
-                    Navigator.CurrentScopeProvider,
-                    currencyToEdit))
+            if (Navigator.ShowScopedDialog<CurrenciesManageForm>(
+                currencyToEdit) == DialogResult.OK)
             {
-                var result = manageForm.ShowDialog(this);
-
-                if (result == DialogResult.OK)
-                {
-                    await LoadCurrenciesAsync();
-                }
+                await LoadCurrenciesAsync();
             }
         }
 

@@ -80,18 +80,9 @@ namespace UI.Forms
             if (CheckBillsLoading())
                 return;
 
-            using (var manageForm = Navigator.CurrentScopeProvider
-                .GetService(typeof(BillsManageForm)) as BillsManageForm)
+            if (Navigator.ShowScopedDialog<BillsManageForm>() == DialogResult.OK)
             {
-                if (manageForm == null)
-                    return;
-
-                var result = manageForm.ShowDialog(this);
-
-                if (result == DialogResult.OK)
-                {
-                    await LoadBillsAsync();
-                }
+                await LoadBillsAsync();
             }
         }
 
@@ -132,17 +123,10 @@ namespace UI.Forms
                 return;
             }
 
-            using (var manageForm =
-                ActivatorUtilities.CreateInstance<BillsManageForm>(
-                    Navigator.CurrentScopeProvider,
-                    billToEdit))
+            if (Navigator.ShowScopedDialog<BillsManageForm>(
+                billToEdit) == DialogResult.OK)
             {
-                var result = manageForm.ShowDialog(this);
-
-                if (result == DialogResult.OK)
-                {
-                    await LoadBillsAsync();
-                }
+                await LoadBillsAsync();
             }
         }
 
@@ -260,16 +244,8 @@ namespace UI.Forms
                 return;
             }
 
-            using (var itemBillsForm = Navigator.CurrentScopeProvider
-                .GetService(typeof(ItemBillsForm)) as ItemBillsForm)
-            {
-                if (itemBillsForm == null)
-                    return;
-
-                itemBillsForm.BillNumber = billNumber.Value;
-
-                itemBillsForm.ShowDialog(this);
-            }
+            Navigator.ShowScopedDialog<ItemBillsForm>(
+                billNumber.Value);
         }
 
         private BillDto GetSelectedBill()

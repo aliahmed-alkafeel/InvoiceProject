@@ -136,7 +136,10 @@ namespace Data.Services.Implementations
 
             _unitOfWork.Vouchers.Update(voucher);
 
-            return await _unitOfWork.SaveChangesAsync() > 0;
+            // الحفظ بدون تغيير فعلي لا يُعد فشلاً؛ الأخطاء الحقيقية تُرمى كاستثناءات.
+            await _unitOfWork.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<bool> DeleteVoucherAsync(Guid modelId)

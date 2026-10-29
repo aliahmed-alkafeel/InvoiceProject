@@ -44,34 +44,16 @@ namespace UI.Forms
         public ItemBillsForm()
         {
             InitializeComponent();
-
             gridControl1.DataSource = _billItems;
             gridView1.InitNewRow += gridView1_InitNewRow;
-
-            ApplyCaptionToControlDistance();
         }
 
-        /// <summary>
-        /// تقريب نصوص التسميات (نوع الفاتورة، سعر الصرف، وغيرها) من القيم المعروضة بجانبها،
-        /// بإزالة المسافة الافتراضية الفاصلة بين النص والcontrol.
-        /// </summary>
-        private void ApplyCaptionToControlDistance()
-        {
-            const int textToControlDistance = 0;
 
-            itemBillNumber.TextToControlDistance = textToControlDistance;
-            itemType.TextToControlDistance = textToControlDistance;
-            itemAccount.TextToControlDistance = textToControlDistance;
-            itemEqual.TextToControlDistance = textToControlDistance;
-            itemDate.TextToControlDistance = textToControlDistance;
-            itemCurrency.TextToControlDistance = textToControlDistance;
-            itemNotes.TextToControlDistance = textToControlDistance;
-        }
-
-        public ItemBillsForm(IBillService billService, IItemService itemService) : this()
+        public ItemBillsForm(IBillService billService, IItemService itemService, int? billNumber = null) : this()
         {
             _billService = billService;
             _itemService = itemService;
+            BillNumber = billNumber;
         }
 
         private async void ItemBillsForm_Load(object sender, EventArgs e)
@@ -118,7 +100,7 @@ namespace UI.Forms
                     await _billService.GetAllBillsAsync(cts),
                     "جارٍ تحميل الفواتير، يرجى الانتظار...") ?? new List<BillDto>();
 
-                _bills.AddRange(bills.OrderBy(b => b.Date).ThenBy(b => b.BillNumber));
+                _bills.AddRange(bills.OrderByDescending(b => b.BillNumber));
             }
             catch (Exception ex)
             {
@@ -128,9 +110,9 @@ namespace UI.Forms
             UpdateNavigationButtons();
         }
 
-        private async void btnPrev_Click(object sender, EventArgs e) => await NavigateAsync(-1);
+        private async void btnPrev_Click(object sender, EventArgs e) => await NavigateAsync(1);
 
-        private async void btnNext_Click(object sender, EventArgs e) => await NavigateAsync(1);
+        private async void btnNext_Click(object sender, EventArgs e) => await NavigateAsync(-1);
 
         /// <summary>
         /// التنقل بين الفواتير بشكل دائري: -1 للسابقة و 1 للتالية.
@@ -170,11 +152,8 @@ namespace UI.Forms
                 return;
             }
 
-            using (var manageForm = ActivatorUtilities.CreateInstance<BillsManageForm>(Navigator.CurrentScopeProvider, billToEdit))
-            {
-                if (manageForm.ShowDialog(this) != DialogResult.OK)
-                    return;
-            }
+            if (Navigator.ShowScopedDialog<BillsManageForm>(billToEdit) != DialogResult.OK)
+                return;
 
             await ReloadCurrentBillAsync();
         }
@@ -230,7 +209,8 @@ namespace UI.Forms
 
             try
             {
-                var bill = await _billService.GetBillByNumberAsync(number);
+                var bill = await this.WithLoading(async cts => await _billService.GetBillByNumberAsync(number,cts),
+                    "جارٍ تحميل المواد، يرجى الانتظار...");
 
                 Display(bill);
 

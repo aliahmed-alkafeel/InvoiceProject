@@ -80,15 +80,9 @@ namespace UI.Forms
             if (CheckGroupsLoading())
                 return;
 
-            using (var manageForm = Program.ServiceProvider
-                .GetService(typeof(GroupsManageForm)) as GroupsManageForm)
+            if (Navigator.ShowScopedDialog<GroupsManageForm>() == DialogResult.OK)
             {
-                var result = manageForm.ShowDialog(this);
-
-                if (result == DialogResult.OK)
-                {
-                    await LoadGroupsAsync();
-                }
+                await LoadGroupsAsync();
             }
         }
 
@@ -111,17 +105,10 @@ namespace UI.Forms
                 return;
             }
 
-            using (var manageForm =
-                ActivatorUtilities.CreateInstance<GroupsManageForm>(
-                    Navigator.CurrentScopeProvider,
-                    selectedGroup))
+            if (Navigator.ShowScopedDialog<GroupsManageForm>(
+                selectedGroup) == DialogResult.OK)
             {
-                var result = manageForm.ShowDialog(this);
-
-                if (result == DialogResult.OK)
-                {
-                    await LoadGroupsAsync();
-                }
+                await LoadGroupsAsync();
             }
         }
         

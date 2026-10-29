@@ -10,7 +10,7 @@ namespace Data.Services.Interfaces
     {
         Task<List<BillDto>> GetAllBillsAsync(System.Threading.CancellationToken cts);
         Task<BillDto> GetBillByIdAsync(Guid id);
-        Task<BillDto> GetBillByNumberAsync(int billNumber);
+        Task<BillDto> GetBillByNumberAsync(int billNumber, System.Threading.CancellationToken cts);
         Task<bool> CreateBillAsync(CreateBillDto model);
         Task<bool> UpdateBillAsync(UpdateBillDto model);
         Task<bool> DeleteBillAsync(Guid modelId);

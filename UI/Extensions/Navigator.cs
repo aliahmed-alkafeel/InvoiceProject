@@ -12,14 +12,8 @@ namespace UI
         private static XtraForm _currentPage;
         private static IServiceScope _currentPageScope;
 
-        /// <summary>
-        /// الـ Provider الخاص بالشاشة الحالية (Scope الشاشة).
-        /// </summary>
         public static IServiceProvider CurrentScopeProvider { get; private set; }
 
-        /// <summary>
-        /// تهيئة الـ Navigator بالـ Provider الرئيسي والفورم المضيف.
-        /// </summary>
         public static void Initialize(IServiceProvider rootProvider, XtraForm hostForm)
         {
             _rootProvider = rootProvider
@@ -38,14 +32,12 @@ namespace UI
                 throw new InvalidOperationException(
                     "لم يتم تهيئة Navigator. استدعِ Initialize أولاً");
 
-            // إذا كانت الشاشة المطلوبة هي الشاشة الحالية، فلا تفعل شيئًا.
             if (_currentPage != null &&
                 _currentPage.GetType() == typeof(TPage))
             {
                 return;
             }
 
-            // 1. إنشاء Scope جديد للشاشة.
             var newScope = _rootProvider.CreateScope();
 
             TPage newPage;
@@ -81,9 +73,22 @@ namespace UI
             previousScope?.Dispose();
         }
 
-        /// <summary>
-        /// تنظيف الموارد عند إغلاق التطبيق.
-        /// </summary>
+
+        public static DialogResult ShowScopedDialog<TDialog>(
+            params object[] parameters)
+            where TDialog : Form
+        {
+            using (var scope = _rootProvider.CreateScope())
+            using (var dialog = ActivatorUtilities.CreateInstance<TDialog>(
+                scope.ServiceProvider,
+                parameters))
+            {
+                return dialog.ShowDialog();
+            }
+        }
+
+
+
         public static void Shutdown()
         {
             _currentPageScope?.Dispose();
@@ -93,5 +98,7 @@ namespace UI
             _hostForm = null;
             _rootProvider = null;
         }
+
+
     }
 }
