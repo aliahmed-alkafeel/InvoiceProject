@@ -596,7 +596,11 @@
             this.Controls.Add(this.saveCancelControl21);
             this.Controls.Add(this.btnAddItem);
             this.Controls.Add(this.btnDeleteItem);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "BillsManageForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "الفواتير";
             this.Load += new System.EventHandler(this.BillsManageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.spinBillNumber.Properties)).EndInit();

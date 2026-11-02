@@ -66,6 +66,7 @@
             this.cmbCategories.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.cmbCategories.Properties.PopupView = this.searchLookUpEdit1View;
+            this.cmbCategories.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cmbCategories.Size = new System.Drawing.Size(183, 20);
             this.cmbCategories.TabIndex = 65;
             // 
@@ -187,7 +188,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(409, 348);
+            this.ClientSize = new System.Drawing.Size(391, 348);
             this.Controls.Add(this.spnPrice);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.cmbCategories);
@@ -203,6 +204,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ItemsEditForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "إدارة المنتج";
             this.Load += new System.EventHandler(this.ItemsEditForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.cmbCategories.Properties)).EndInit();

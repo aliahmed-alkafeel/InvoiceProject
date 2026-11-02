@@ -120,6 +120,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CategoriesManageForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "إدارة الفئة";
             this.Load += new System.EventHandler(this.CategoriesManageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).EndInit();

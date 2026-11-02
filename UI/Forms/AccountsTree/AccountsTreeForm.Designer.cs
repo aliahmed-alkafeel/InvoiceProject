@@ -35,6 +35,7 @@
             this.colIsLeaf = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             this.colIsActive = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             this.colNotes = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.treeListControl1)).BeginInit();
             this.SuspendLayout();
             // 
             // toolBarControl1
@@ -61,6 +62,7 @@
             this.treeListControl1.OptionsBehavior.AutoPopulateColumns = false;
             this.treeListControl1.OptionsBehavior.Editable = false;
             this.treeListControl1.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.treeListControl1.OptionsView.ShowIndentAsRowStyle = true;
             this.treeListControl1.OptionsView.ShowTreeLines = DevExpress.Utils.DefaultBoolean.True;
             this.treeListControl1.ParentFieldName = "ParentGuid";
             this.treeListControl1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -96,7 +98,7 @@
             // 
             // colIsActive
             // 
-            this.colIsActive.Caption = "فعالة";
+            this.colIsActive.Caption = "فعال";
             this.colIsActive.FieldName = "IsActive";
             this.colIsActive.Name = "colIsActive";
             this.colIsActive.Visible = true;
@@ -122,6 +124,7 @@
             this.Name = "AccountsTreeForm";
             this.Text = "شجرة الحسابات";
             this.Load += new System.EventHandler(this.AccountsTreeForm_LoadAsync);
+            ((System.ComponentModel.ISupportInitialize)(this.treeListControl1)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -297,7 +297,7 @@
             this.layoutBillInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.layoutBillInfo.Location = new System.Drawing.Point(0, 64);
             this.layoutBillInfo.Name = "layoutBillInfo";
-            this.layoutBillInfo.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2407, 355, 650, 400);
+            this.layoutBillInfo.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2561, 383, 650, 400);
             this.layoutBillInfo.Root = this.Root_BillInfo;
             this.layoutBillInfo.Size = new System.Drawing.Size(1000, 110);
             this.layoutBillInfo.TabIndex = 1;
@@ -310,7 +310,7 @@
             this.lblTypeValue.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.lblTypeValue.Location = new System.Drawing.Point(742, 16);
             this.lblTypeValue.Name = "lblTypeValue";
-            this.lblTypeValue.Size = new System.Drawing.Size(115, 16);
+            this.lblTypeValue.Size = new System.Drawing.Size(167, 16);
             this.lblTypeValue.StyleController = this.layoutBillInfo;
             this.lblTypeValue.TabIndex = 0;
             // 
@@ -322,7 +322,7 @@
             this.lblDateValue.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.lblDateValue.Location = new System.Drawing.Point(542, 16);
             this.lblDateValue.Name = "lblDateValue";
-            this.lblDateValue.Size = new System.Drawing.Size(65, 16);
+            this.lblDateValue.Size = new System.Drawing.Size(144, 16);
             this.lblDateValue.StyleController = this.layoutBillInfo;
             this.lblDateValue.TabIndex = 1;
             // 
@@ -346,7 +346,7 @@
             this.lblCurrencyValue.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.lblCurrencyValue.Location = new System.Drawing.Point(542, 46);
             this.lblCurrencyValue.Name = "lblCurrencyValue";
-            this.lblCurrencyValue.Size = new System.Drawing.Size(65, 16);
+            this.lblCurrencyValue.Size = new System.Drawing.Size(143, 16);
             this.lblCurrencyValue.StyleController = this.layoutBillInfo;
             this.lblCurrencyValue.TabIndex = 3;
             // 
@@ -359,7 +359,7 @@
             this.lblEqualValue.Location = new System.Drawing.Point(740, 76);
             this.lblEqualValue.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.lblEqualValue.Name = "lblEqualValue";
-            this.lblEqualValue.Size = new System.Drawing.Size(117, 16);
+            this.lblEqualValue.Size = new System.Drawing.Size(164, 16);
             this.lblEqualValue.StyleController = this.layoutBillInfo;
             this.lblEqualValue.TabIndex = 4;
             // 
@@ -371,12 +371,14 @@
             this.lblNotesValue.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.lblNotesValue.Location = new System.Drawing.Point(542, 76);
             this.lblNotesValue.Name = "lblNotesValue";
-            this.lblNotesValue.Size = new System.Drawing.Size(65, 16);
+            this.lblNotesValue.Size = new System.Drawing.Size(119, 16);
             this.lblNotesValue.StyleController = this.layoutBillInfo;
             this.lblNotesValue.TabIndex = 5;
             // 
             // Root_BillInfo
             // 
+            this.Root_BillInfo.AppearanceItemCaption.Options.UseTextOptions = true;
+            this.Root_BillInfo.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
             this.Root_BillInfo.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             this.Root_BillInfo.GroupBordersVisible = false;
             this.Root_BillInfo.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
@@ -388,6 +390,7 @@
             this.itemNotes});
             this.Root_BillInfo.LayoutMode = DevExpress.XtraLayout.Utils.LayoutMode.Table;
             this.Root_BillInfo.Name = "Root";
+            this.Root_BillInfo.OptionsItemText.TextAlignMode = DevExpress.XtraLayout.TextAlignModeGroup.AutoSize;
             columnDefinition6.SizeType = System.Windows.Forms.SizeType.Percent;
             columnDefinition6.Width = 100D;
             columnDefinition7.SizeType = System.Windows.Forms.SizeType.Absolute;
@@ -829,6 +832,7 @@
             this.Controls.Add(this.layoutBillInfo);
             this.Controls.Add(this.layoutSearch);
             this.Name = "ItemBillsForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "تفاصيل الفاتورة";
             this.Load += new System.EventHandler(this.ItemBillsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.layoutSearch)).EndInit();

@@ -66,6 +66,7 @@
             this.cmbVoucherTypes.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.cmbVoucherTypes.Properties.PopupView = this.gridView1;
+            this.cmbVoucherTypes.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cmbVoucherTypes.Size = new System.Drawing.Size(183, 20);
             this.cmbVoucherTypes.TabIndex = 98;
             // 
@@ -137,6 +138,7 @@
             this.cmbAccounts.Properties.NullText = "اختر الحساب";
             this.cmbAccounts.Properties.PopupView = this.searchLookUpEdit1View;
             this.cmbAccounts.Properties.ValueMember = "Id";
+            this.cmbAccounts.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cmbAccounts.Size = new System.Drawing.Size(183, 20);
             this.cmbAccounts.TabIndex = 92;
             // 
@@ -217,6 +219,7 @@
             this.cmbCurrencies.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.cmbCurrencies.Properties.PopupView = this.gridView2;
+            this.cmbCurrencies.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cmbCurrencies.Size = new System.Drawing.Size(183, 20);
             this.cmbCurrencies.TabIndex = 100;
             // 
@@ -281,6 +284,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "VouchersCreateForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "اضافة سند";
             this.Load += new System.EventHandler(this.VouchersCreateFormAsync_Load);
             ((System.ComponentModel.ISupportInitialize)(this.cmbVoucherTypes.Properties)).EndInit();

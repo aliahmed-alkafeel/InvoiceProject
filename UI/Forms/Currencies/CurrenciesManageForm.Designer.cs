@@ -229,6 +229,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CurrenciesManageForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "إدارة العملة";
             this.Load += new System.EventHandler(this.CurrenciesManageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtCurrencyName.Properties)).EndInit();

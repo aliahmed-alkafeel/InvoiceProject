@@ -39,19 +39,10 @@ namespace UI.Extensions
                 // Close the loading form when the operation finishes.
                 form.Shown += async (s, e) =>
                 {
-                    try
-                    {
-                        await operationTask;
-                    }
-                    catch (Exception)
-                    {
-                        // The exception will be propagated below.
-                    }
-                    finally
-                    {
-                        if (!form.IsDisposed)
-                            form.CloseAfterOperation();
-                    }
+
+                await operationTask;
+                if (!form.IsDisposed)
+                    form.CloseAfterOperation();
                 };
 
                 // Show the loading form only when the delay has elapsed

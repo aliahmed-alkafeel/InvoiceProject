@@ -68,7 +68,6 @@ namespace Data.Services.Implementations
 
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
-
         public async Task<bool> UpdateCategoryAsync(UpdateCategoryDto model)
         {
             if (model == null)
@@ -88,12 +87,28 @@ namespace Data.Services.Implementations
 
             _unitOfWork.Categories.Update(category);
 
-            // الحفظ بدون تغيير فعلي لا يُعد فشلاً؛ الأخطاء الحقيقية تُرمى كاستثناءات.
-            await _unitOfWork.SaveChangesAsync();
+            // عند تعطيل التصنيف، يتم تعطيل جميع المواد المرتبطة به.
+            if (!category.IsActive)
+            {
+                var items = await _unitOfWork.Items
+                .Select()
+                .Where(i => i.CategoryGuid == category.Id)
+                .ToListAsync();
 
-            return true;
+                foreach (var item in items)
+                {
+                    if (!item.IsActive)
+                        continue;
+
+                    item.IsActive = false;
+
+                    _unitOfWork.Items.Update(item);
+                }
+
+            }
+                 return await _unitOfWork.SaveChangesAsync() > 0;
+
         }
-
         public async Task<bool> DeleteCategoryAsync(Guid modelId)
         {
             var category = await _unitOfWork.Categories

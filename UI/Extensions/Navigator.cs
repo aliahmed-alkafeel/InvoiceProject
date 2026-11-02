@@ -16,17 +16,10 @@ namespace UI
         private static XtraForm _hostForm;
         private static XtraForm _currentPage;
         private static IServiceScope _currentPageScope;
-
-        public static IServiceProvider CurrentScopeProvider { get; private set; }
-
         public static void Initialize(IServiceProvider rootProvider, XtraForm hostForm)
         {
             _rootProvider = rootProvider;
             _hostForm = hostForm;
-
-            _currentPage = null;
-            _currentPageScope = null;
-            CurrentScopeProvider = null;
         }
 
         public static void NavigateTo<TPage>() where TPage : XtraForm
@@ -68,7 +61,6 @@ namespace UI
             _hostForm.Controls.Add(newPage);
             _currentPage = newPage;
             _currentPageScope = newScope;
-            CurrentScopeProvider = newScope.ServiceProvider;
             _hostForm.Text = newPage.Text;
             newPage.Show();
             newPage.BringToFront();
@@ -92,7 +84,6 @@ namespace UI
 
         public static bool NavigateToFirstAllowedForm()
         {
-            // الترتيب هنا هو أولوية الصفحات، غيّره حسب رغبتك
             if (CurrentUser.HasRole(UserRole.AccessItems))
                 NavigateTo<ItemsForm>();
             else if (CurrentUser.HasRole(UserRole.AccessCategories))
@@ -120,7 +111,6 @@ namespace UI
             _currentPageScope?.Dispose();
             _currentPageScope = null;
             _currentPage = null;
-            CurrentScopeProvider = null;
             _hostForm = null;
             _rootProvider = null;
         }

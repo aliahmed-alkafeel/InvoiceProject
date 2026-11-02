@@ -192,6 +192,7 @@
             this.cmbGroups.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.cmbGroups.Properties.PopupView = this.searchLookUpEdit1View;
+            this.cmbGroups.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cmbGroups.Size = new System.Drawing.Size(285, 20);
             this.cmbGroups.TabIndex = 10;
             // 
@@ -329,6 +330,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EmployeesManageForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "إدارة الموظف";
             this.Load += new System.EventHandler(this.EmployeesManageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.cmbGroups.Properties)).EndInit();

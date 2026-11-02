@@ -121,7 +121,7 @@ namespace UI.Forms.Items
             var categories = (await this.WithLoading(async cts =>
                 await _categoryService.GetAllCategoriesAsync(cts),
                 "جارٍ تحميل الفئات، يرجى الانتظار..."))
-                .Select(c => new
+                .Where(c => c.IsActive).Select(c => new
                 {
                     c.Id,
                     c.Name

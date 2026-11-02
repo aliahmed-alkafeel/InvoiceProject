@@ -98,6 +98,9 @@ namespace Data.Services.Implementations
                 throw new InvalidOperationException(
                     $"لم يتم العثور على المادة بالمعرّف '{model.Id}'.");
 
+            await EnsureCategoryCanBeAssignedAsync(
+              model.CategoryGuid,
+              model.IsActive);
             item.Name = model.Name;
             item.Price = model.Price.Value;
             item.IsActive = model.IsActive;
@@ -110,6 +113,29 @@ namespace Data.Services.Implementations
             await _unitOfWork.SaveChangesAsync();
 
             return true;
+        }
+
+        private async Task EnsureCategoryCanBeAssignedAsync(
+            Guid categoryGuid,
+            bool activateItem)
+        {
+            var category = await _unitOfWork.Categories
+                .Select()
+                .Where(c => c.Id == categoryGuid)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.IsActive
+                })
+                .FirstOrDefaultAsync();
+
+            if (category == null)
+                throw new InvalidOperationException(
+                    "التصنيف المحدد غير موجود أو تم حذفه. يرجى اختيار تصنيف صالح.");
+
+            if (activateItem && !category.IsActive)
+                throw new InvalidOperationException(
+                    "لا يمكن تفعيل المادة لأن التصنيف المرتبط بها غير فعال. يرجى تفعيل التصنيف أولاً.");
         }
 
         public async Task<bool> DeleteItemAsync(Guid modelId)

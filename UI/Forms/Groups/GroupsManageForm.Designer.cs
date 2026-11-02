@@ -93,6 +93,7 @@
             this.checkedListBoxControl1.Appearance.Options.UseFont = true;
             this.checkedListBoxControl1.Location = new System.Drawing.Point(70, 105);
             this.checkedListBoxControl1.Name = "checkedListBoxControl1";
+            this.checkedListBoxControl1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.checkedListBoxControl1.Size = new System.Drawing.Size(285, 148);
             this.checkedListBoxControl1.TabIndex = 71;
             // 
@@ -129,6 +130,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GroupsManageForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "إدارة المجموعة";
             this.Load += new System.EventHandler(this.GroupsManageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).EndInit();

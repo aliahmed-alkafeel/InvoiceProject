@@ -114,28 +114,36 @@ namespace Data.Services.Implementations
             if (account == null)
                 throw new InvalidOperationException(
                     $"لم يتم العثور على الحساب بالمعرّف '{model.Id}'.");
+
             var oldParentGuid = account.ParentGuid;
             var newParentGuid = model.ParentGuid;
 
+            AccountsTree newParent = null;
+
+            // التحقق من الأب الجديد.
+            if (newParentGuid.HasValue)
+            {
+                await EnsureNoCycleAsync(account.Id, newParentGuid.Value);
+
+                newParent = await _unitOfWork.AccountsTrees
+                    .Select()
+                    .FirstOrDefaultAsync(a => a.Id == newParentGuid.Value);
+
+                if (newParent == null)
+                    throw new InvalidOperationException("الحساب الأب الجديد غير موجود.");
+            }
+
             if (oldParentGuid != newParentGuid)
             {
-                if (newParentGuid.HasValue)
-                    await EnsureNoCycleAsync(account.Id, newParentGuid.Value);
-
-                // الأب القديم: يصبح ورقة إذا لم يبقَ له أبناء غير هذا الحساب
+                // تحديث الأب القديم.
                 if (oldParentGuid.HasValue)
-                    await RefreshParentLeafAsync(oldParentGuid.Value, excludedChildId: account.Id);
+                    await RefreshParentLeafAsync(
+                        oldParentGuid.Value,
+                        excludedChildId: account.Id);
 
-                // الأب الجديد: لم يعد ورقة
-                if (newParentGuid.HasValue)
+                // تحديث الأب الجديد.
+                if (newParent != null)
                 {
-                    var newParent = await _unitOfWork.AccountsTrees
-                        .Select()
-                        .FirstOrDefaultAsync(a => a.Id == newParentGuid.Value);
-
-                    if (newParent == null)
-                        throw new InvalidOperationException("الحساب الأب الجديد غير موجود.");
-
                     newParent.IsLeaf = false;
                     _unitOfWork.AccountsTrees.Update(newParent);
                 }
@@ -144,14 +152,49 @@ namespace Data.Services.Implementations
             account.ParentGuid = newParentGuid;
             account.AccountCode = model.AccountCode;
             account.AccountName = model.AccountName;
-            account.IsActive = model.IsActive;
             account.Notes = model.Notes;
+
+            account.IsActive = model.IsActive &&
+                               (newParent == null || newParent.IsActive);
 
             _unitOfWork.AccountsTrees.Update(account);
 
+            if (!account.IsActive)
+                await DeactivateDescendantAccountsAsync(account.Id);
+
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
+        private async Task DeactivateDescendantAccountsAsync(Guid accountId)
+        {
+            var accounts = await _unitOfWork.AccountsTrees
+                .Select()
+                .ToListAsync();
+            var childrenLookup = accounts.ToLookup(a => a.ParentGuid);
 
+            var stack = new Stack<Guid>();
+            var visited = new HashSet<Guid>();
+
+            stack.Push(accountId);
+
+            while (stack.Count > 0)
+            {
+                var parentId = stack.Pop();
+
+                foreach (var child in childrenLookup[parentId])
+                {
+                    if (!visited.Add(child.Id))
+                        continue;
+
+                    if (child.IsActive)
+                    {
+                        child.IsActive = false;
+                        _unitOfWork.AccountsTrees.Update(child);
+                    }
+
+                    stack.Push(child.Id);
+                }
+            }
+        }
         public async Task<bool> DeleteAccountAsync(Guid modelId)
         {
             var account = await _unitOfWork.AccountsTrees

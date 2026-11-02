@@ -144,9 +144,6 @@ namespace UI.Forms
 
         private async void btnNext_Click(object sender, EventArgs e) => await NavigateAsync(-1);
 
-        /// <summary>
-        /// التنقل بين الفواتير بشكل دائري: -1 للسابقة و 1 للتالية.
-        /// </summary>
         private async Task NavigateAsync(int offset)
         {
             if (_currentIndex < 0)
@@ -159,9 +156,7 @@ namespace UI.Forms
             await LoadBillAsync();
         }
 
-        /// <summary>
-        /// فتح نموذج إدارة الفاتورة للفاتورة الحالية في وضع التعديل.
-        /// </summary>
+
         private async void btnAddItems_Click(object sender, EventArgs e)
         {
             BillDto billToEdit;
@@ -188,9 +183,7 @@ namespace UI.Forms
             await ReloadCurrentBillAsync();
         }
 
-        /// <summary>
-        /// إعادة تحميل قائمة الفواتير ثم تحديث الفاتورة المعروضة.
-        /// </summary>
+
         private async Task ReloadCurrentBillAsync()
         {
             var currentId = _currentBill?.Id;
@@ -258,9 +251,6 @@ namespace UI.Forms
             }
         }
 
-        /// <summary>
-        /// عرض الفاتورة وبنودها، أو تفريغ الشاشة عند تمرير null.
-        /// </summary>
         private void Display(BillDto bill)
         {
             _currentBill = bill;
@@ -282,22 +272,29 @@ namespace UI.Forms
             UpdateNavigationButtons();
         }
 
-        /// <summary>
-        /// إعطاء البند الجديد معرّفاً فريداً.
-        /// </summary>
+
         private void gridView1_InitNewRow(object sender, InitNewRowEventArgs e)
         {
             if (gridView1.GetRow(e.RowHandle) is BillItemDto row && row.Id == Guid.Empty)
                 row.Id = Guid.NewGuid();
         }
 
-        private void gridView1_CellValueChanged(object sender, CellValueChangedEventArgs e)
+        private void gridView1_CellValueChanged(
+            object sender,
+            CellValueChangedEventArgs e)
         {
-            if (e.Column == colItem && gridView1.GetRow(e.RowHandle) is BillItemDto row)
+            if (e.Column == colItem &&
+                gridView1.GetRow(e.RowHandle) is BillItemDto row)
             {
                 BillItemsGridHelper.ApplyItemToRow(row, _itemLookup);
-
-                // ضروري: الـ DTO لا يُبلغ الشبكة بتغيّر السعر.
+                if (_currentBill != null &&
+                    _currentBill.CurrencyEqualValue > 0 &&
+                    _itemLookup.TryGetValue(row.ItemGuid, out var item))
+                {
+                    row.Price = Math.Round(item.Price.Value / _currentBill.CurrencyEqualValue,
+                    6,
+                    MidpointRounding.AwayFromZero);
+                }
                 gridView1.RefreshRow(e.RowHandle);
             }
 

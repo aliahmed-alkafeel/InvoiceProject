@@ -130,8 +130,10 @@
             this.cmbParent.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.cmbParent.Properties.DisplayMember = "AccountName";
+            this.cmbParent.Properties.NullText = "لا يوجد";
             this.cmbParent.Properties.PopupView = this.gridView1;
             this.cmbParent.Properties.ValueMember = "Id";
+            this.cmbParent.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cmbParent.Size = new System.Drawing.Size(285, 20);
             this.cmbParent.TabIndex = 11;
             this.cmbParent.EditValueChanged += new System.EventHandler(this.cmbParent_EditValueChanged);
@@ -210,6 +212,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AccountsTreeManageForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "إدارة الحساب";
             this.Load += new System.EventHandler(this.AccountsTreeManageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtAccountName.Properties)).EndInit();
