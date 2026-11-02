@@ -169,6 +169,22 @@ namespace Data.Services.Implementations
             if (hasChildren)
                 throw new InvalidOperationException("لا يمكن حذف حساب لديه حسابات فرعية.");
 
+            // لا يُسمح بحذف حساب مرتبط بسجلات مالية أخرى:
+            // الفواتير (Bill.AccountTreeGuid) والسندات (Voucher.AccountTreeGuid).
+            var isUsedInBills = await _unitOfWork.Bills
+                .NoTrackingSelect()
+                .AnyAsync(b => b.AccountTreeGuid == modelId);
+
+            if (isUsedInBills)
+                return false;
+
+            var isUsedInVouchers = await _unitOfWork.Vouchers
+                .NoTrackingSelect()
+                .AnyAsync(v => v.AccountTreeGuid == modelId);
+
+            if (isUsedInVouchers)
+                return false;
+
             if (account.ParentGuid.HasValue)
                 await RefreshParentLeafAsync(account.ParentGuid.Value, excludedChildId: modelId);
 

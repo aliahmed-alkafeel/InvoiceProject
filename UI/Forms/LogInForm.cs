@@ -58,7 +58,7 @@ namespace UI.Screens
         {
             string username = txtUsername.Text;
             //string password = txtPassword.Text;
-            string password = "admin";
+            string password = txtPassword.Text;
             var loginResult = await _loginService.LoginAsync(username, password);
             if (!loginResult)
             {

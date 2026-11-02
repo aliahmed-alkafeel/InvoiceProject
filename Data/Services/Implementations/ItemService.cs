@@ -14,16 +14,18 @@ namespace Data.Services.Implementations
     public class ItemService : IItemService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ICurrencyService _currencyService;
 
-        public ItemService(IUnitOfWork unitOfWork)
+        public ItemService(IUnitOfWork unitOfWork, ICurrencyService currencyService)
         {
             _unitOfWork = unitOfWork;
+            _currencyService = currencyService;
         }
 
         public async Task<List<ItemDto>> GetAllItemsAsync(System.Threading.CancellationToken cts)
         {
             return await _unitOfWork.Items
-                .Select().Include(i => i.Category)
+                .NoTrackingSelect().Include(i => i.Category)
                 .Select(i => new ItemDto
                 {
                     Id = i.Id,
@@ -65,6 +67,9 @@ namespace Data.Services.Implementations
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات المادة مطلوبة.");
+
+            // لا يُضاف أي سجل جديد ما لم توجد عملة رئيسية واحدة بالضبط.
+            await _currencyService.EnsureExactlyOneMainCurrencyAsync("إضافة المادة");
 
             var item = new Item
             {

@@ -1,7 +1,12 @@
 ﻿using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
+using Models.CurrentUserDetails;
+using Models.Entities;
 using System;
 using System.Windows.Forms;
+using UI.Forms;
+using UI.Forms.Categories;
+using UI.Forms.Vouchers;
 
 namespace UI
 {
@@ -85,7 +90,30 @@ namespace UI
             }
         }
 
+        public static bool NavigateToFirstAllowedForm()
+        {
+            // الترتيب هنا هو أولوية الصفحات، غيّره حسب رغبتك
+            if (CurrentUser.HasRole(UserRole.AccessItems))
+                NavigateTo<ItemsForm>();
+            else if (CurrentUser.HasRole(UserRole.AccessCategories))
+                NavigateTo<CategoriesForm>();
+            else if (CurrentUser.HasRole(UserRole.AccessBills))
+                NavigateTo<BillsForm>();
+            else if (CurrentUser.HasRole(UserRole.AccessVoucher))
+                NavigateTo<VouchersForm>();
+            else if (CurrentUser.HasRole(UserRole.AccessAccountsTree))
+                NavigateTo<AccountsTreeForm>();
+            else if (CurrentUser.HasRole(UserRole.AccessCurrency))
+                NavigateTo<CurrenciesForm>();
+            else if (CurrentUser.HasRole(UserRole.AccessEmployees))
+                NavigateTo<EmployeesForm>();
+            else if (CurrentUser.HasRole(UserRole.AccessGroups))
+                NavigateTo<GroupsForm>();
+            else
+                return false;
 
+            return true;
+        }
 
         public static void Shutdown()
         {

@@ -88,6 +88,15 @@ namespace RestaurantManagement.Areas.Dashboard.Services
             if (hasEmployees)
                 return false;
 
+            // لا يُسمح بحذف مجموعة مرتبطة بسجلات أخرى:
+            // صلاحيات المجموعة (GroupRole.GroupGuid).
+            var hasGroupRoles = await _unitOfWork.GroupRoles
+                .NoTrackingSelect()
+                .AnyAsync(gr => gr.GroupGuid == id);
+
+            if (hasGroupRoles)
+                return false;
+
             _unitOfWork.Groups.Delete(group);
 
             return await _unitOfWork.SaveChangesAsync() > 0;

@@ -39,10 +39,10 @@
             this.colCurrencyEqualValue = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colNotes = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.CurrencyType = new DevExpress.XtraGrid.Columns.GridColumn();
             this.vouchersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.invoiceDbDataSet2 = new UI.InvoiceDbDataSet2();
             this.vouchersTableAdapter = new UI.InvoiceDbDataSet2TableAdapters.VouchersTableAdapter();
-            this.CurrencyType = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vouchersBindingSource)).BeginInit();
@@ -91,7 +91,7 @@
             this.colAccountTree.Name = "colAccountTree";
             this.colAccountTree.Visible = true;
             this.colAccountTree.VisibleIndex = 2;
-            this.colAccountTree.Width = 139;
+            this.colAccountTree.Width = 129;
             // 
             // colVoucherNumber
             // 
@@ -100,7 +100,7 @@
             this.colVoucherNumber.Name = "colVoucherNumber";
             this.colVoucherNumber.Visible = true;
             this.colVoucherNumber.VisibleIndex = 0;
-            this.colVoucherNumber.Width = 98;
+            this.colVoucherNumber.Width = 90;
             // 
             // colVoucherType
             // 
@@ -109,7 +109,7 @@
             this.colVoucherType.Name = "colVoucherType";
             this.colVoucherType.Visible = true;
             this.colVoucherType.VisibleIndex = 1;
-            this.colVoucherType.Width = 103;
+            this.colVoucherType.Width = 95;
             // 
             // colAmount
             // 
@@ -118,16 +118,16 @@
             this.colAmount.Name = "colAmount";
             this.colAmount.Visible = true;
             this.colAmount.VisibleIndex = 4;
-            this.colAmount.Width = 74;
+            this.colAmount.Width = 128;
             // 
             // colCurrencyEqualValue
             // 
-            this.colCurrencyEqualValue.Caption = "القيمة بالعملة الرئيسية";
+            this.colCurrencyEqualValue.Caption = "سعر الصرف";
             this.colCurrencyEqualValue.FieldName = "CurrencyEqualValue";
             this.colCurrencyEqualValue.Name = "colCurrencyEqualValue";
             this.colCurrencyEqualValue.Visible = true;
             this.colCurrencyEqualValue.VisibleIndex = 5;
-            this.colCurrencyEqualValue.Width = 183;
+            this.colCurrencyEqualValue.Width = 125;
             // 
             // colDate
             // 
@@ -136,7 +136,7 @@
             this.colDate.Name = "colDate";
             this.colDate.Visible = true;
             this.colDate.VisibleIndex = 6;
-            this.colDate.Width = 105;
+            this.colDate.Width = 91;
             // 
             // colNotes
             // 
@@ -145,7 +145,16 @@
             this.colNotes.Name = "colNotes";
             this.colNotes.Visible = true;
             this.colNotes.VisibleIndex = 7;
-            this.colNotes.Width = 271;
+            this.colNotes.Width = 246;
+            // 
+            // CurrencyType
+            // 
+            this.CurrencyType.Caption = "نوع العملة";
+            this.CurrencyType.FieldName = "Currency.CurrencyName";
+            this.CurrencyType.Name = "CurrencyType";
+            this.CurrencyType.Visible = true;
+            this.CurrencyType.VisibleIndex = 3;
+            this.CurrencyType.Width = 69;
             // 
             // vouchersBindingSource
             // 
@@ -160,14 +169,6 @@
             // vouchersTableAdapter
             // 
             this.vouchersTableAdapter.ClearBeforeFill = true;
-            // 
-            // CurrencyType
-            // 
-            this.CurrencyType.Caption = "نوع العملة";
-            this.CurrencyType.FieldName = "Currency.CurrencyName";
-            this.CurrencyType.Name = "CurrencyType";
-            this.CurrencyType.Visible = true;
-            this.CurrencyType.VisibleIndex = 3;
             // 
             // VouchersForm
             // 

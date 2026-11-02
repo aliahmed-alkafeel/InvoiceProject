@@ -52,7 +52,18 @@ namespace UI.Forms.Items
                     return;
                 }
 
-                var result = await _itemsService.CreateItemAsync(newItem);
+                bool result;
+
+                try
+                {
+                    result = await _itemsService.CreateItemAsync(newItem);
+                }
+                catch (Exception ex)
+                {
+                    MessageHelper.Error(ex.Message);
+                    return;
+                }
+
                 if(result)
                 {
                     MessageBox.Show("تم إضافة المنتج بنجاح", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);

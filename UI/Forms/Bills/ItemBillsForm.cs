@@ -4,15 +4,19 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Microsoft.Extensions.DependencyInjection;
+using Models.CurrentUserDetails;
 using Models.DTOs;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Controls;
 using UI.Extensions;
 using UI.Forms.Bills;
+using UI.InvoiceDbDataSet2TableAdapters;
 
 namespace UI.Forms
 {
@@ -21,7 +25,6 @@ namespace UI.Forms
         private readonly IBillService _billService;
         private readonly IItemService _itemService;
 
-        /// <summary>بنود الفاتورة المعروضة، قابلة للتعديل مباشرة داخل الشبكة.</summary>
         private readonly BindingList<BillItemDto> _billItems = new BindingList<BillItemDto>();
 
         /// <summary>قاموس المواد المستخدم في اختيار المادة داخل الشبكة.</summary>
@@ -46,6 +49,7 @@ namespace UI.Forms
             InitializeComponent();
             gridControl1.DataSource = _billItems;
             gridView1.InitNewRow += gridView1_InitNewRow;
+
         }
 
 
@@ -59,7 +63,7 @@ namespace UI.Forms
         private async void ItemBillsForm_Load(object sender, EventArgs e)
         {
             Display(null);
-
+            ApplyPermissions();
             await LoadItemsLookupAsync();
             await LoadBillsListAsync();
 
@@ -74,7 +78,33 @@ namespace UI.Forms
             spinBillNumber.EditValue = number;
             await LoadBillAsync();
         }
+        private void ApplyPermissions()
+        {
+            if (!CurrentUser.HasRole(UserRole.ManageBills))
+            {
+                
+            SetVisible(btnAddItems);
+            SetVisible(btnDeleteItem);
+            SetVisible(btnAddItem);
+            SetVisible(btnSaveItems);
+            gridView1.OptionsBehavior.Editable = false;
+            }
+        }
+        private static void SetVisible(Control button)
+        {
+            bool canManage = CurrentUser.HasRole(UserRole.ManageBills);
 
+            var item = button.Parent is DevExpress.XtraLayout.LayoutControl lc
+                ? lc.GetItemByControl(button)
+                : null;
+
+            if (item != null)
+                item.Visibility = canManage
+                    ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always
+                    : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+            else
+                button.Visible = canManage;
+        }
         private async Task LoadItemsLookupAsync()
         {
             try
@@ -344,7 +374,6 @@ namespace UI.Forms
             {
                 MessageHelper.Error(error);
 
-                // الشبكة تعدّل كائنات الـ DTO نفسها، فنعيد التحميل لإلغاء التعديلات غير المحفوظة.
                 await LoadBillAsync();
                 return;
             }
@@ -359,9 +388,7 @@ namespace UI.Forms
             lblTotal.Text = $"إجمالي الفاتورة: {_billItems.Sum(bi => bi.Qty * bi.Price):N2}";
         }
 
-        /// <summary>
-        /// تفعيل/تعطيل الأزرار حسب وجود فاتورة معروضة وموقعها في القائمة.
-        /// </summary>
+
         private void UpdateNavigationButtons()
         {
             var hasCurrentBill = _currentIndex >= 0;

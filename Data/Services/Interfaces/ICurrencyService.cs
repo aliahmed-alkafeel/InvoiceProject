@@ -14,5 +14,7 @@ namespace Data.Services.Interfaces
         Task<bool> CreateCurrencyAsync(CreateCurrencyDto model);
         Task<bool> UpdateCurrencyAsync(UpdateCurrencyDto model);
         Task<bool> DeleteCurrencyAsync(Guid modelId);
+        Task EnsureExactlyOneMainCurrencyAsync(string operation);
+
     }
 }

@@ -68,7 +68,17 @@ namespace UI.Forms.Vouchers
 
 
 
-            var result = await _voucherService.CreateVoucherAsync(newVoucher);
+            bool result;
+
+            try
+            {
+                result = await _voucherService.CreateVoucherAsync(newVoucher);
+            }
+            catch (Exception ex)
+            {
+                MessageHelper.Error(ex.Message);
+                return;
+            }
 
             if (result)
             {

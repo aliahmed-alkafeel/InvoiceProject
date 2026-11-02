@@ -104,6 +104,15 @@ namespace Data.Services.Implementations
                 throw new InvalidOperationException(
                     $"لم يتم العثور على التصنيف بالمعرّف '{modelId}'.");
 
+            // لا يُسمح بحذف تصنيف مرتبط بسجلات أخرى:
+            // الكيان المرجعي للتصنيف هو المادة (Item.CategoryGuid).
+            var hasRelatedItems = await _unitOfWork.Items
+                .NoTrackingSelect()
+                .AnyAsync(i => i.CategoryGuid == modelId);
+
+            if (hasRelatedItems)
+                return false;
+
             _unitOfWork.Categories.Delete(category);
 
             return await _unitOfWork.SaveChangesAsync() > 0;

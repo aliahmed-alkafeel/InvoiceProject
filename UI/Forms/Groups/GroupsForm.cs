@@ -158,7 +158,7 @@ namespace UI.Forms
                 else
                 {
                     XtraMessageBox.Show(
-                        "لا يمكن حذف المجموعة.\nقد تكون مجموعة المسؤول أو توجد موظفون مرتبطون بها.",
+                        "لا يمكن حذف المجموعة.\nقد تكون مجموعة المسؤول أو توجد موظفون أو صلاحيات مرتبطون بها.",
                         "خطأ",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);

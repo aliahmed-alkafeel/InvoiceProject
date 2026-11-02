@@ -23,13 +23,13 @@ namespace Data.Services.Implementations
 
         public async Task<bool> LoginAsync(string username, string password)
         {
-            var employee = await _unitOfWork.Employees.Select()
+            var employee = await _unitOfWork.Employees.NoTrackingSelect()
                 .FirstOrDefaultAsync(x => x.Username == username);
             if (employee == null)
                 return false;
             if (employee.Password != password)
                 return false;
-            var roles = await _unitOfWork.GroupRoles.Select()
+            var roles = await _unitOfWork.GroupRoles.NoTrackingSelect()
                 .Where(gr => gr.GroupGuid == employee.GroupGuid)
                 .Select(gr => gr.Role.RoleName)
                 .ToListAsync();

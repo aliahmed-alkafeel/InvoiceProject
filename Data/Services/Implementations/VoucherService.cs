@@ -17,10 +17,12 @@ namespace Data.Services.Implementations
     public class VoucherService : IVoucherService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ICurrencyService _currencyService;
 
-        public VoucherService(IUnitOfWork unitOfWork)
+        public VoucherService(IUnitOfWork unitOfWork, ICurrencyService currencyService)
         {
             _unitOfWork = unitOfWork;
+            _currencyService = currencyService;
         }
 
         public async Task<List<VoucherDto>> GetAllVouchersAsync(CancellationToken cts)
@@ -82,6 +84,10 @@ namespace Data.Services.Implementations
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات السند مطلوبة");
+
+            // لا يُضاف أي سجل جديد ما لم توجد عملة رئيسية واحدة بالضبط.
+            await _currencyService.EnsureExactlyOneMainCurrencyAsync("إضافة السند");    
+
             var currency = await _unitOfWork.Currencies
                           .Select()
                           .FirstOrDefaultAsync(c => c.Id == model.CurrencyGuid);
@@ -151,6 +157,15 @@ namespace Data.Services.Implementations
             if (voucher == null)
                 throw new InvalidOperationException(
                     $"لم يتم العثور على السند بالمعرّف '{modelId}'.");
+
+            // فحص السجلات التابعة للسند قبل الحذف:
+            // بعد فحص إعدادات الكيانات والخصائص التنقلية ومفاتيح الـ Foreign Keys
+            // (Categories, Items, Bills, BillItems, Vouchers, AccountsTrees,
+            // Currencies, Employees, Groups, GroupRoles, Roles) لا يوجد في قاعدة
+            // البيانات أي جدول يحتوي على مفتاح خارجي يشير إلى السند (Voucher)،
+            // ولا يوجد جدول "تفاصيل سند" في المشروع، لذا لا توجد سجلات تابعة
+            // تمنع حذف السند حالياً. يجب إضافة فحص AnyAsync() هنا فور إنشاء أي
+            // جدول مستقبلي يرتبط بالسند.
 
             _unitOfWork.Vouchers.Delete(voucher);
 

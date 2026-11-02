@@ -65,7 +65,17 @@ namespace UI.Forms.Currencies
                     return;
                 }
 
-                var result = await _currencyService.CreateCurrencyAsync(newCurrency);
+                bool result;
+
+                try
+                {
+                    result = await _currencyService.CreateCurrencyAsync(newCurrency);
+                }
+                catch (Exception ex)
+                {
+                    MessageHelper.Error(ex.Message);
+                    return;
+                }
 
                 if (result)
                 {
@@ -109,7 +119,17 @@ namespace UI.Forms.Currencies
                     return;
                 }
 
-                var result = await _currencyService.UpdateCurrencyAsync(updatedCurrency);
+                bool result;
+
+                try
+                {
+                    result = await _currencyService.UpdateCurrencyAsync(updatedCurrency);
+                }
+                catch (Exception ex)
+                {
+                    MessageHelper.Error(ex.Message);
+                    return;
+                }
 
                 if (result)
                 {

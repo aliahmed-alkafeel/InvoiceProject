@@ -9,6 +9,7 @@ using DevExpress.LookAndFeel;
 using DevExpress.Skins;
 using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
+using Models.CurrentUserDetails;
 using RestaurantManagement.Areas.Dashboard.Services;
 using System;
 using System.Drawing;
@@ -36,7 +37,6 @@ namespace UI
             GlobalExceptionHandler.UseGlobalExceptionHandler();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
             SkinManager.EnableFormSkins();
             UserLookAndFeel.Default.SetSkinStyle("WXI");
 
@@ -81,7 +81,20 @@ namespace UI
 
                     try
                     {
-                        Navigator.NavigateTo<ItemsForm>();
+                        if (!Navigator.NavigateToFirstAllowedForm())
+                        {
+                            MessageBox.Show(
+                                "ما عندك صلاحيات لاستخدام النظام.\nراجع مدير النظام.",
+                                "لا توجد صلاحيات",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning,
+                                MessageBoxDefaultButton.Button1,
+                                MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+
+                            CurrentUser.LogOut();
+                            return;
+                        }
+
                         Application.Run(hostForm);
                     }
                     finally

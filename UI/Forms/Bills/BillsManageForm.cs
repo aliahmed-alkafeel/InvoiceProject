@@ -169,7 +169,19 @@ namespace UI.Forms.Bills
                     return;
                 }
 
-                OnSaved(await _billService.CreateBillAsync(newBill), "إضافة");
+                bool createResult;
+
+                try
+                {
+                    createResult = await _billService.CreateBillAsync(newBill);
+                }
+                catch (Exception ex)
+                {
+                    MessageHelper.Error(ex.Message);
+                    return;
+                }
+
+                OnSaved(createResult, "إضافة");
                 return;
             }
 

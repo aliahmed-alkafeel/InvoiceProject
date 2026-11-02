@@ -15,16 +15,18 @@ namespace Data.Services.Implementations
     public class BillService : IBillService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ICurrencyService _currencyService;
 
-        public BillService(IUnitOfWork unitOfWork)
+        public BillService(IUnitOfWork unitOfWork,ICurrencyService currencyService)
         {
             _unitOfWork = unitOfWork;
+            _currencyService = currencyService;
         }
 
         public async Task<List<BillDto>> GetAllBillsAsync(CancellationToken cts)
         {
             return await _unitOfWork.Bills
-                .Select()
+                .NoTrackingSelect()
                 .OrderByDescending(b => b.Date)
                 .Select(b => new BillDto
                 {
@@ -159,6 +161,10 @@ namespace Data.Services.Implementations
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات الفاتورة مطلوبة.");
+
+            // لا يُضاف أي سجل جديد ما لم توجد عملة رئيسية واحدة بالضبط.
+            await _currencyService.EnsureExactlyOneMainCurrencyAsync("إضافة الفاتورة");
+
 
             var currency = await _unitOfWork.Currencies
                 .Select()

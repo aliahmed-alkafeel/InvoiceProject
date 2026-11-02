@@ -6,6 +6,7 @@ using Models.DTOs;
 using Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,24 +19,35 @@ namespace UI.Forms
         private readonly IBillService _billService;
         private List<BillDto> _bills = new List<BillDto>();
         private bool _isLoadingBills;
-
+        private bool canManage;
         public BillsForm(IBillService billService)
         {
             _billService = billService;
             InitializeComponent();
-            if(toolBarControl1.SetManageVisible(CurrentUser.HasRole(UserRole.ManageBills)))
+            canManage = toolBarControl1.SetManageVisible(CurrentUser.HasRole(UserRole.ManageBills));
+            if (canManage)
             {
                 toolBarControl1.CreateClicked += BillsToolbar_CreateClicked;
                 toolBarControl1.EditClicked += BillsToolbar_EditClicked;
                 toolBarControl1.DeleteClicked += BillsToolbar_DeleteClicked;
             }
-                toolBarControl1.RefreshClicked += BillsToolbar_RefreshClicked;
+            toolBarControl1.RefreshClicked += BillsToolbar_RefreshClicked;
         }
 
+        private void setBtnShowBillItemsLocation()
+        {
+            if (!canManage)
+            {
+                btnShowBillItems.Location = new Point(
+                    btnShowBillItems.Location.X + 314,
+                    btnShowBillItems.Location.Y);
+            }
+        }
         private async void BillsForm_LoadAsync(object sender, EventArgs e)
         {
             try
             {
+                BeginInvoke(new Action(() => setBtnShowBillItemsLocation()));
                 await LoadBillsAsync();
             }
             catch (Exception ex)
