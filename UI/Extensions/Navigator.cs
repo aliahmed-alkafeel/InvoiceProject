@@ -16,10 +16,8 @@ namespace UI
 
         public static void Initialize(IServiceProvider rootProvider, XtraForm hostForm)
         {
-            _rootProvider = rootProvider
-                ?? throw new ArgumentNullException(nameof(rootProvider));
-            _hostForm = hostForm
-                ?? throw new ArgumentNullException(nameof(hostForm));
+            _rootProvider = rootProvider;
+            _hostForm = hostForm;
 
             _currentPage = null;
             _currentPageScope = null;

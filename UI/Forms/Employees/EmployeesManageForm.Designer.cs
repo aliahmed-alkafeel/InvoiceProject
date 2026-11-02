@@ -71,7 +71,7 @@
             this.lblTitle.Appearance.Options.UseFont = true;
             this.lblTitle.Appearance.Options.UseTextOptions = true;
             this.lblTitle.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.lblTitle.Location = new System.Drawing.Point(185, 22);
+            this.lblTitle.Location = new System.Drawing.Point(190, 22);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(109, 27);
             this.lblTitle.TabIndex = 20;

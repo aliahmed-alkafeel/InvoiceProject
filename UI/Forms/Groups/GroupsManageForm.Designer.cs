@@ -46,7 +46,7 @@
             this.lblTitle.Appearance.Options.UseFont = true;
             this.lblTitle.Location = new System.Drawing.Point(175, 25);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(118, 27);
+            this.lblTitle.Size = new System.Drawing.Size(120, 27);
             this.lblTitle.TabIndex = 77;
             this.lblTitle.Text = "تعديل المجموعة";
             // 
@@ -66,7 +66,7 @@
             this.labelControl4.Appearance.Options.UseFont = true;
             this.labelControl4.Location = new System.Drawing.Point(372, 72);
             this.labelControl4.Name = "labelControl4";
-            this.labelControl4.Size = new System.Drawing.Size(73, 17);
+            this.labelControl4.Size = new System.Drawing.Size(93, 17);
             this.labelControl4.TabIndex = 74;
             this.labelControl4.Text = ":اسم المجموعة";
             // 
@@ -76,7 +76,7 @@
             this.labelControl3.Appearance.Options.UseFont = true;
             this.labelControl3.Location = new System.Drawing.Point(384, 108);
             this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Size = new System.Drawing.Size(61, 17);
+            this.labelControl3.Size = new System.Drawing.Size(62, 17);
             this.labelControl3.TabIndex = 72;
             this.labelControl3.Text = ":الصلاحيات";
             // 
@@ -125,6 +125,9 @@
             this.Controls.Add(this.checkedListBoxControl1);
             this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.saveCancelControl21);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "GroupsManageForm";
             this.Text = "إدارة المجموعة";
             this.Load += new System.EventHandler(this.GroupsManageForm_Load);

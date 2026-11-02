@@ -116,6 +116,9 @@
             this.Controls.Add(this.chkIsActive);
             this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.saveCancelControl21);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "CategoriesManageForm";
             this.Text = "إدارة الفئة";
             this.Load += new System.EventHandler(this.CategoriesManageForm_Load);

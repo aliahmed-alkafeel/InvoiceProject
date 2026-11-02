@@ -121,7 +121,6 @@ namespace UI.Forms.AccountsTree
         {
             var accountCode = txtAccountCode.Text.Trim();
             var accountName = txtAccountName.Text.Trim();
-            var isLeaf = chkIsLeaf.Checked;
             var isActive = chkIsActive.Checked;
             var notes = txtNotes.Text;
             var parentGuid = cmbParent.EditValue as Guid?;
@@ -134,7 +133,6 @@ namespace UI.Forms.AccountsTree
                     ParentGuid = parentGuid,
                     AccountCode = accountCode,
                     AccountName = accountName,
-                    IsLeaf = isLeaf,
                     IsActive = isActive,
                     Notes = notes
                 };
@@ -164,7 +162,6 @@ namespace UI.Forms.AccountsTree
                     ParentGuid = parentGuid,
                     AccountCode = accountCode,
                     AccountName = accountName,
-                    IsLeaf = isLeaf,
                     IsActive = isActive,
                     Notes = notes
                 };
@@ -210,7 +207,6 @@ namespace UI.Forms.AccountsTree
 
             txtAccountCode.Text = account.AccountCode;
             txtAccountName.Text = account.AccountName;
-            chkIsLeaf.Checked = account.IsLeaf;
             chkIsActive.Checked = account.IsActive;
             txtNotes.Text = account.Notes;
             cmbParent.EditValue = account.ParentGuid;

@@ -138,17 +138,24 @@ namespace UI.Forms
 
             var childrenCount = GetChildrenCount(account);
 
-            var message = childrenCount > 0
-                ? $"هل أنت متأكد من حذف الحساب '{account.AccountName}'؟\nسيتم إلغاء ارتباط {childrenCount} من الحسابات الفرعية به."
-                : $"هل أنت متأكد من حذف الحساب '{account.AccountName}'؟";
-
-            var confirmResult = XtraMessageBox.Show(
-                message,
+            DialogResult confirmResult;
+            if (childrenCount > 0)
+            {
+                confirmResult = XtraMessageBox.Show(
+                    $"لا يمكن حذف الحساب '{account.AccountName}' لأنه لا يحتوي على حسابات فرعية.",
+                    "تأكيد الحذف",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            else
+            {
+                confirmResult = XtraMessageBox.Show(
+                $"هل أنت متأكد من حذف الحساب '{account.AccountName}'؟",
                 "تأكيد الحذف",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
-
-            if (confirmResult == DialogResult.No)
+            }
+            if (confirmResult != DialogResult.Yes)
                 return;
 
             try

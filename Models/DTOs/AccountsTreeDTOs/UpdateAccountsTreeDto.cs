@@ -14,8 +14,6 @@ namespace Models.DTOs
 
         public string AccountName { get; set; }
 
-        public bool IsLeaf { get; set; }
-
         public bool IsActive { get; set; } = true;
     }
 }

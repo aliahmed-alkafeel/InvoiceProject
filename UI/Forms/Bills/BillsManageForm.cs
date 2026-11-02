@@ -116,7 +116,6 @@ namespace UI.Forms.Bills
             }
             else
             {
-                // تعديل فاتورة موجودة
                 lblTitle.Text = "تعديل الفاتورة";
                 saveCancelControl21.SaveText = "تعديل";
 
@@ -140,7 +139,6 @@ namespace UI.Forms.Bills
 
         private async void SaveCancelControl_SaveClicked()
         {
-            // إنهاء تحرير الخلية الحالية حتى لا تضيع آخر قيمة مكتوبة.
             gridViewItems.CloseEditor();
             gridViewItems.UpdateCurrentRow();
             var billItems = _billItems.Where(bi => bi.ItemGuid != Guid.Empty).ToList();
@@ -197,9 +195,6 @@ namespace UI.Forms.Bills
             OnSaved(await _billService.UpdateBillAsync(updateBill), "تعديل");
         }
 
-        /// <summary>
-        /// عرض نتيجة الحفظ وإغلاق النموذج عند النجاح.
-        /// </summary>
         private void OnSaved(bool success, string action)
         {
             if (!success)
@@ -213,9 +208,7 @@ namespace UI.Forms.Bills
             Close();
         }
 
-        /// <summary>
-        /// إعطاء البند الجديد معرّفاً فريداً.
-        /// </summary>
+
         private void gridViewItems_InitNewRow(object sender, InitNewRowEventArgs e)
         {
             if (gridViewItems.GetRow(e.RowHandle) is BillItemDto row && row.Id == Guid.Empty)
@@ -228,10 +221,9 @@ namespace UI.Forms.Bills
             {
                 BillItemsGridHelper.ApplyItemToRow(row, _itemLookup);
 
-                // ضروري: الـ DTO لا يُبلغ الشبكة بتغيّر السعر.
                 gridViewItems.RefreshRow(e.RowHandle);
+               
             }
-
             UpdateTotal();
         }
 

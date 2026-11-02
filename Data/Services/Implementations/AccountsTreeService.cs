@@ -21,19 +21,13 @@ namespace Data.Services.Implementations
             _unitOfWork = unitOfWork;
         }
 
+
         public async Task<List<AccountsTreeDto>> GetAllAccountsAsync(CancellationToken cts)
         {
             var accounts = await _unitOfWork.AccountsTrees
-                .Select()
+                .NoTrackingSelect()
                 .OrderBy(a => a.AccountCode)
                 .ToListAsync(cts);
-
-            // الحساب النهائي هو الذي لا يحتوي على حسابات فرعية.
-            // تُحسب الحالة من الشجرة نفسها بدلاً من العمود المخزّن (IsLeaf)
-            // لأنه يصبح قديماً عند إضافة حساب فرعي لاحقاً.
-            var parentIds = new HashSet<Guid>(accounts
-                .Where(a => a.ParentGuid.HasValue)
-                .Select(a => a.ParentGuid.Value));
 
             return accounts
                 .Select(a => new AccountsTreeDto
@@ -42,7 +36,7 @@ namespace Data.Services.Implementations
                     ParentGuid = a.ParentGuid,
                     AccountCode = a.AccountCode,
                     AccountName = a.AccountName,
-                    IsLeaf = !parentIds.Contains(a.Id),
+                    IsLeaf = a.IsLeaf,
                     IsActive = a.IsActive,
                     Notes = a.Notes
                 })
@@ -79,14 +73,28 @@ namespace Data.Services.Implementations
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات الحساب مطلوبة.");
 
+            // التحقق من الأب قبل إضافة الحساب إلى الـ Context
+            if (model.ParentGuid.HasValue)
+            {
+                var parent = await _unitOfWork.AccountsTrees
+                    .Select()
+                    .FirstOrDefaultAsync(a => a.Id == model.ParentGuid.Value);
+
+                if (parent == null)
+                    throw new InvalidOperationException("الحساب الأب غير موجود.");
+
+                parent.IsLeaf = false;
+                _unitOfWork.AccountsTrees.Update(parent);
+            }
+
             var account = new AccountsTree
             {
                 ParentGuid = model.ParentGuid,
                 AccountCode = model.AccountCode,
                 AccountName = model.AccountName,
-                IsLeaf = model.IsLeaf,
                 IsActive = model.IsActive,
-                Notes = model.Notes
+                Notes = model.Notes,
+                IsLeaf = true
             };
 
             _unitOfWork.AccountsTrees.Add(account);
@@ -106,20 +114,42 @@ namespace Data.Services.Implementations
             if (account == null)
                 throw new InvalidOperationException(
                     $"لم يتم العثور على الحساب بالمعرّف '{model.Id}'.");
+            var oldParentGuid = account.ParentGuid;
+            var newParentGuid = model.ParentGuid;
 
-            account.ParentGuid = model.ParentGuid;
+            if (oldParentGuid != newParentGuid)
+            {
+                if (newParentGuid.HasValue)
+                    await EnsureNoCycleAsync(account.Id, newParentGuid.Value);
+
+                // الأب القديم: يصبح ورقة إذا لم يبقَ له أبناء غير هذا الحساب
+                if (oldParentGuid.HasValue)
+                    await RefreshParentLeafAsync(oldParentGuid.Value, excludedChildId: account.Id);
+
+                // الأب الجديد: لم يعد ورقة
+                if (newParentGuid.HasValue)
+                {
+                    var newParent = await _unitOfWork.AccountsTrees
+                        .Select()
+                        .FirstOrDefaultAsync(a => a.Id == newParentGuid.Value);
+
+                    if (newParent == null)
+                        throw new InvalidOperationException("الحساب الأب الجديد غير موجود.");
+
+                    newParent.IsLeaf = false;
+                    _unitOfWork.AccountsTrees.Update(newParent);
+                }
+            }
+
+            account.ParentGuid = newParentGuid;
             account.AccountCode = model.AccountCode;
             account.AccountName = model.AccountName;
-            account.IsLeaf = model.IsLeaf;
             account.IsActive = model.IsActive;
             account.Notes = model.Notes;
 
             _unitOfWork.AccountsTrees.Update(account);
 
-            // الحفظ بدون تغيير فعلي لا يُعد فشلاً؛ الأخطاء الحقيقية تُرمى كاستثناءات.
-            await _unitOfWork.SaveChangesAsync();
-
-            return true;
+            return await _unitOfWork.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> DeleteAccountAsync(Guid modelId)
@@ -132,9 +162,56 @@ namespace Data.Services.Implementations
                 throw new InvalidOperationException(
                     $"لم يتم العثور على الحساب بالمعرّف '{modelId}'.");
 
+            var hasChildren = await _unitOfWork.AccountsTrees
+                .Select()
+                .AnyAsync(a => a.ParentGuid == modelId);
+
+            if (hasChildren)
+                throw new InvalidOperationException("لا يمكن حذف حساب لديه حسابات فرعية.");
+
+            if (account.ParentGuid.HasValue)
+                await RefreshParentLeafAsync(account.ParentGuid.Value, excludedChildId: modelId);
+
             _unitOfWork.AccountsTrees.Delete(account);
 
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
-    }
+        private async Task RefreshParentLeafAsync(Guid parentId, Guid excludedChildId)
+        {
+            var parent = await _unitOfWork.AccountsTrees
+                .Select()
+                .FirstOrDefaultAsync(a => a.Id == parentId);
+
+            if (parent == null)
+                return;
+
+            parent.IsLeaf = !await _unitOfWork.AccountsTrees
+                .Select()
+                .AnyAsync(a => a.ParentGuid == parentId && a.Id != excludedChildId);
+
+            _unitOfWork.AccountsTrees.Update(parent);
+        }
+
+        /// <summary>
+        /// يمنع جعل الحساب أباً لنفسه أو لأحد أحفاده.
+        /// </summary>
+        private async Task EnsureNoCycleAsync(Guid accountId, Guid newParentId)
+        {
+            Guid? current = newParentId;
+
+            while (current.HasValue)
+            {
+                if (current.Value == accountId)
+                    throw new InvalidOperationException(
+                        "لا يمكن نقل الحساب تحت نفسه أو تحت أحد حساباته الفرعية.");
+
+                var id = current.Value;
+                current = await _unitOfWork.AccountsTrees
+                    .Select()
+                    .Where(a => a.Id == id)
+                    .Select(a => a.ParentGuid)
+                    .FirstOrDefaultAsync();
+            }
+        }
+        }
 }

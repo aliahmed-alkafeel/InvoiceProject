@@ -134,9 +134,9 @@
             this.cmbAccounts.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.cmbAccounts.Properties.DisplayMember = "AccountName";
-            this.cmbAccounts.Properties.ValueMember = "Id";
             this.cmbAccounts.Properties.NullText = "اختر الحساب";
             this.cmbAccounts.Properties.PopupView = this.searchLookUpEdit1View;
+            this.cmbAccounts.Properties.ValueMember = "Id";
             this.cmbAccounts.Size = new System.Drawing.Size(183, 20);
             this.cmbAccounts.TabIndex = 92;
             // 
@@ -277,6 +277,9 @@
             this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.labelControl3);
             this.Controls.Add(this.saveCancelControl21);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "VouchersCreateForm";
             this.Text = "اضافة سند";
             this.Load += new System.EventHandler(this.VouchersCreateFormAsync_Load);

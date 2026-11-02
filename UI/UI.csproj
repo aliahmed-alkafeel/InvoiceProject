@@ -116,6 +116,7 @@
     <Compile Include="Controls\TopBarButtonsControl.Designer.cs">
       <DependentUpon>TopBarButtonsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\BillItemsGridHelper.cs" />
     <Compile Include="Extensions\DialogHelper.cs" />
     <Compile Include="Extensions\LoadingExtensions.cs" />
     <Compile Include="Extensions\MessageHelper.cs" />
@@ -180,7 +181,6 @@
     <Compile Include="Forms\Employees\EmployeesForm.Designer.cs">
       <DependentUpon>EmployeesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\BillItemsGridHelper.cs" />
     <Compile Include="Extensions\GlobalExceptionHandler.cs" />
     <Compile Include="Extensions\ValidationHelper.cs" />
     <Compile Include="Forms\Employees\EmployeesManageForm.cs">
@@ -230,12 +230,6 @@
     </Compile>
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Previews\TopBarButtonsPreviewForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Previews\TopBarButtonsPreviewForm.Designer.cs">
-      <DependentUpon>TopBarButtonsPreviewForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Vouchers\VouchersCreateForm.cs">
       <SubType>Form</SubType>
@@ -334,9 +328,6 @@
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Previews\TopBarButtonsPreviewForm.resx">
-      <DependentUpon>TopBarButtonsPreviewForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Vouchers\VouchersCreateForm.resx">
       <DependentUpon>VouchersCreateForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -361,7 +352,6 @@
       <DependentUpon>LogInForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
-    <None Include="Forms\Previews\RunTopBarButtonsPreview.ps1" />
     <None Include="InvoiceDbDataSet21.xsc">
       <DependentUpon>InvoiceDbDataSet21.xsd</DependentUpon>
     </None>

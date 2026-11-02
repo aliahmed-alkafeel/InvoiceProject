@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblTitle = new DevExpress.XtraEditors.LabelControl();
             this.labelBillNumber = new DevExpress.XtraEditors.LabelControl();
             this.labelBillType = new DevExpress.XtraEditors.LabelControl();
@@ -57,6 +58,9 @@
             this.colItem = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemGridLookUpEdit = new DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit();
             this.repositoryItemGridLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colLookupName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colLookupCategory = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colLookupPrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colQty = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemSpinEditQty = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
             this.colPrice = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -66,9 +70,7 @@
             this.btnDeleteItem = new DevExpress.XtraEditors.SimpleButton();
             this.lblTotal = new DevExpress.XtraEditors.LabelControl();
             this.saveCancelControl21 = new UI.Controls.SaveCancelControl2();
-            this.colLookupName = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colLookupCategory = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colLookupPrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.spinBillNumber.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbBillType.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewBillType)).BeginInit();
@@ -85,6 +87,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit1View)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEditQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEditPrice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -428,6 +431,36 @@
             this.repositoryItemGridLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.repositoryItemGridLookUpEdit1View.OptionsView.ShowGroupPanel = false;
             // 
+            // colLookupName
+            // 
+            this.colLookupName.AppearanceCell.Options.UseTextOptions = true;
+            this.colLookupName.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.colLookupName.Caption = "اسم المنتج";
+            this.colLookupName.FieldName = "Name";
+            this.colLookupName.Name = "colLookupName";
+            this.colLookupName.Visible = true;
+            this.colLookupName.VisibleIndex = 0;
+            // 
+            // colLookupCategory
+            // 
+            this.colLookupCategory.AppearanceCell.Options.UseTextOptions = true;
+            this.colLookupCategory.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.colLookupCategory.Caption = "الفئة";
+            this.colLookupCategory.FieldName = "Category.Name";
+            this.colLookupCategory.Name = "colLookupCategory";
+            this.colLookupCategory.Visible = true;
+            this.colLookupCategory.VisibleIndex = 1;
+            // 
+            // colLookupPrice
+            // 
+            this.colLookupPrice.AppearanceCell.Options.UseTextOptions = true;
+            this.colLookupPrice.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.colLookupPrice.Caption = "السعر";
+            this.colLookupPrice.FieldName = "Price";
+            this.colLookupPrice.Name = "colLookupPrice";
+            this.colLookupPrice.Visible = true;
+            this.colLookupPrice.VisibleIndex = 2;
+            // 
             // colQty
             // 
             this.colQty.AppearanceCell.Options.UseTextOptions = true;
@@ -537,36 +570,6 @@
             this.saveCancelControl21.Size = new System.Drawing.Size(191, 45);
             this.saveCancelControl21.TabIndex = 20;
             // 
-            // colLookupName
-            // 
-            this.colLookupName.AppearanceCell.Options.UseTextOptions = true;
-            this.colLookupName.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            this.colLookupName.Caption = "اسم المنتج";
-            this.colLookupName.FieldName = "Name";
-            this.colLookupName.Name = "colLookupName";
-            this.colLookupName.Visible = true;
-            this.colLookupName.VisibleIndex = 0;
-            // 
-            // colLookupCategory
-            // 
-            this.colLookupCategory.AppearanceCell.Options.UseTextOptions = true;
-            this.colLookupCategory.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            this.colLookupCategory.Caption = "الفئة";
-            this.colLookupCategory.FieldName = "Category.Name";
-            this.colLookupCategory.Name = "colLookupCategory";
-            this.colLookupCategory.Visible = true;
-            this.colLookupCategory.VisibleIndex = 1;
-            // 
-            // colLookupPrice
-            // 
-            this.colLookupPrice.AppearanceCell.Options.UseTextOptions = true;
-            this.colLookupPrice.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            this.colLookupPrice.Caption = "السعر";
-            this.colLookupPrice.FieldName = "Price";
-            this.colLookupPrice.Name = "colLookupPrice";
-            this.colLookupPrice.Visible = true;
-            this.colLookupPrice.VisibleIndex = 2;
-            // 
             // BillsManageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -593,9 +596,6 @@
             this.Controls.Add(this.saveCancelControl21);
             this.Controls.Add(this.btnAddItem);
             this.Controls.Add(this.btnDeleteItem);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "BillsManageForm";
             this.Text = "الفواتير";
             this.Load += new System.EventHandler(this.BillsManageForm_Load);
@@ -615,6 +615,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit1View)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEditQty)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEditPrice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -663,5 +664,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn colLookupName;
         private DevExpress.XtraGrid.Columns.GridColumn colLookupCategory;
         private DevExpress.XtraGrid.Columns.GridColumn colLookupPrice;
+        private DevExpress.Utils.Behaviors.BehaviorManager behaviorManager1;
     }
 }

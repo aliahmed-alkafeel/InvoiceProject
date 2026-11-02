@@ -200,8 +200,8 @@
             this.btnAddItems.Size = new System.Drawing.Size(106, 22);
             this.btnAddItems.StyleController = this.layoutSearch;
             this.btnAddItems.TabIndex = 3;
-            this.btnAddItems.Text = "إضافة مواد";
-            this.btnAddItems.ToolTip = "إضافة مواد إلى الفاتورة الحالية";
+            this.btnAddItems.Text = "تعديل الفاتورة";
+            this.btnAddItems.ToolTip = "تعديل معلومات الفاتورة الحالية";
             this.btnAddItems.Click += new System.EventHandler(this.btnAddItems_Click);
             // 
             // Root_Search
@@ -687,6 +687,7 @@
             this.gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
             this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.gridView1.OptionsView.ShowGroupPanel = false;
+            this.gridView1.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gridView1_CellValueChanged);
             // 
             // colItem
             // 
