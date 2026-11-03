@@ -46,7 +46,7 @@ namespace Data.Services.Implementations
         public async Task<ItemDto> GetItemByIdAsync(Guid id)
         {
             var item = await _unitOfWork.Items
-                .Select()
+                .NoTrackingSelect()
                 .Where(i => i.Id == id)
                 .Select(i => new ItemDto
                 {
@@ -120,7 +120,7 @@ namespace Data.Services.Implementations
             bool activateItem)
         {
             var category = await _unitOfWork.Categories
-                .Select()
+                .NoTrackingSelect()
                 .Where(c => c.Id == categoryGuid)
                 .Select(c => new
                 {
@@ -147,6 +147,15 @@ namespace Data.Services.Implementations
             if (item == null)
                 throw new InvalidOperationException(
                     $"لم يتم العثور على المادة بالمعرّف '{modelId}'.");
+
+            // التحقق من ارتباط المادة بأي بند فاتورة.
+            var isUsedInBills = await _unitOfWork.BillItems
+                .NoTrackingSelect()
+                .AnyAsync(bi => bi.ItemGuid == modelId);
+
+            if (isUsedInBills)
+                throw new InvalidOperationException(
+                    "لا يمكن حذف المادة لأنها مرتبطة بفاتورة أو أكثر.");
 
             _unitOfWork.Items.Delete(item);
 

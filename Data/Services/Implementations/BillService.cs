@@ -1,4 +1,5 @@
-﻿using Data.Services.Interfaces;
+﻿using Data.Repositories.Interfaces;
+using Data.Services.Interfaces;
 using Data.UnitOfWork;
 using Models.DTOs;
 using Models.Entities;
@@ -57,7 +58,7 @@ namespace Data.Services.Implementations
         public async Task<BillDto> GetBillByIdAsync(Guid id)
         {
             var bill = await _unitOfWork.Bills
-                .Select()
+                .NoTrackingSelect()
                 .Where(b => b.Id == id)
                 .Select(b => new BillDto
                 {
@@ -99,7 +100,7 @@ namespace Data.Services.Implementations
                 throw new ArgumentException("رقم الفاتورة مطلوب.", nameof(billNumber));
 
             var bill = await _unitOfWork.Bills
-                .Select()
+                .NoTrackingSelect()
                 .Where(b => b.BillNumber == billNumber)
                 .OrderByDescending(b => b.Date)
                 .Select(b => new BillDto
@@ -138,7 +139,7 @@ namespace Data.Services.Implementations
         private async Task<List<BillItemDto>> GetBillItemsAsync(Guid billId, CancellationToken cts = default)
         {
             return await _unitOfWork.BillItems
-                .Select()
+                .NoTrackingSelect()
                 .Where(bi => bi.BillGuid == billId)
                 .Select(bi => new BillItemDto
                 {
@@ -162,12 +163,11 @@ namespace Data.Services.Implementations
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات الفاتورة مطلوبة.");
 
-            // لا يُضاف أي سجل جديد ما لم توجد عملة رئيسية واحدة بالضبط.
             await _currencyService.EnsureExactlyOneMainCurrencyAsync("إضافة الفاتورة");
 
 
             var currency = await _unitOfWork.Currencies
-                .Select()
+                .NoTrackingSelect()
                 .FirstOrDefaultAsync(c => c.Id == model.CurrencyGuid);
 
             if (currency == null)
@@ -177,7 +177,7 @@ namespace Data.Services.Implementations
                 throw new InvalidOperationException("قيمة تحويل العملة يجب أن تكون أكبر من صفر");
 
             var lastBillNumber = await _unitOfWork.Bills
-                .Select()
+                .NoTrackingSelect()
                 .Where(b => b.BillNumber >= 1)
                 .OrderByDescending(b => b.BillNumber)
                 .Select(b => (int?)b.BillNumber)
@@ -194,15 +194,46 @@ namespace Data.Services.Implementations
                 Notes = model.Notes
             };
 
+            var existingItems = bill.BillItems
+        .Where(bi => !bi.IsDeleted)
+        .ToList();
+
+            // حذف المواد التي أزيلت من الفاتورة فقط.
+            var incomingIds = new HashSet<Guid>(
+                model.BillItems
+                    .Where(bi => bi.Id != Guid.Empty)
+                    .Select(bi => bi.Id));
+
+            foreach (var oldItem in existingItems.Where(
+                bi => !incomingIds.Contains(bi.Id)))
+            {
+                _unitOfWork.BillItems.Delete(oldItem);
+            }
+
+            // تحديث المواد الموجودة وإضافة المواد الجديدة.
             foreach (var item in model.BillItems)
             {
-                bill.BillItems.Add(new BillItem
+                var existingItem = existingItems.FirstOrDefault(
+                    bi => bi.Id == item.Id && item.Id != Guid.Empty);
+
+                if (existingItem != null)
                 {
-                    ItemGuid = item.ItemGuid,
-                    Qty = item.Qty,
-                    Price = item.Price,
-                    Notes = item.Notes
-                });
+                    existingItem.ItemGuid = item.ItemGuid;
+                    existingItem.Qty = item.Qty;
+                    existingItem.Price = item.Price;
+                    existingItem.Notes = item.Notes;
+                }
+                else
+                {
+                    bill.BillItems.Add(new BillItem
+                    {
+                        BillGuid = bill.Id,
+                        ItemGuid = item.ItemGuid,
+                        Qty = item.Qty,
+                        Price = item.Price,
+                        Notes = item.Notes
+                    });
+                }
             }
 
             _unitOfWork.Bills.Add(bill);

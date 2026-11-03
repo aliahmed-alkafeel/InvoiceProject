@@ -23,7 +23,7 @@ namespace Data.Services.Implementations
         public async Task<List<CategoryDto>> GetAllCategoriesAsync(CancellationToken cts)
         {
             return await _unitOfWork.Categories
-                .Select()
+                .NoTrackingSelect()
                 .Select(c => new CategoryDto
                 {
                     Id = c.Id,
@@ -37,7 +37,7 @@ namespace Data.Services.Implementations
         public async Task<CategoryDto> GetCategoryByIdAsync(Guid id)
         {
             var category = await _unitOfWork.Categories
-                .Select()
+                .NoTrackingSelect()
                 .Where(c => c.Id == id)
                 .Select(c => new CategoryDto
                 {

@@ -28,7 +28,7 @@ namespace Data.Services.Implementations
         public async Task<List<VoucherDto>> GetAllVouchersAsync(CancellationToken cts)
         {
             return await _unitOfWork.Vouchers
-                .Select()
+                .NoTrackingSelect()
                 .OrderByDescending(v => v.Date)
                 .Select(v => new VoucherDto
                 {
@@ -60,7 +60,7 @@ namespace Data.Services.Implementations
         public async Task<VoucherDto> GetVoucherByIdAsync(Guid id)
         {
             var voucher = await _unitOfWork.Vouchers
-                .Select()
+                .NoTrackingSelect()
                 .Where(v => v.Id == id)
                 .Select(v => new VoucherDto
                 {
@@ -89,7 +89,7 @@ namespace Data.Services.Implementations
             await _currencyService.EnsureExactlyOneMainCurrencyAsync("إضافة السند");    
 
             var currency = await _unitOfWork.Currencies
-                          .Select()
+                          .NoTrackingSelect()
                           .FirstOrDefaultAsync(c => c.Id == model.CurrencyGuid);
 
             if (currency == null)
@@ -201,7 +201,7 @@ private async Task<string> GenerateVoucherNumberAsync(
             var prefix = $"{typeCode}-{year}-";
 
             var lastVoucherNumber = await _unitOfWork.Vouchers
-                .Select(DeletedStatus.All)
+                .NoTrackingSelect(DeletedStatus.All)
                 .Where(v => v.VoucherNumber.StartsWith(prefix))
                 .OrderByDescending(v => v.VoucherNumber)
                 .Select(v => v.VoucherNumber)

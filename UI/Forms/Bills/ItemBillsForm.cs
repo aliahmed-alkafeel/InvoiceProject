@@ -286,15 +286,17 @@ namespace UI.Forms
             if (e.Column == colItem &&
                 gridView1.GetRow(e.RowHandle) is BillItemDto row)
             {
-                BillItemsGridHelper.ApplyItemToRow(row, _itemLookup);
-                if (_currentBill != null &&
-                    _currentBill.CurrencyEqualValue > 0 &&
-                    _itemLookup.TryGetValue(row.ItemGuid, out var item))
+                 if (_currentBill == null ||
+                    _currentBill.CurrencyEqualValue <= 0)
                 {
-                    row.Price = Math.Round(item.Price.Value / _currentBill.CurrencyEqualValue,
-                    6,
-                    MidpointRounding.AwayFromZero);
+                    MessageHelper.Error("معامل تحويل العملة غير صالح.");
+                    return;
                 }
+
+                BillItemsGridHelper.ApplyItemToRow(
+                    row,
+                    _itemLookup,
+                    _currentBill.CurrencyEqualValue);
                 gridView1.RefreshRow(e.RowHandle);
             }
 

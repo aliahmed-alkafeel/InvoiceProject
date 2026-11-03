@@ -40,7 +40,7 @@ namespace Data.Services.Implementations
         public async Task<CurrencyDto> GetCurrencyByIdAsync(Guid id)
         {
             var currency = await _unitOfWork.Currencies
-                .Select()
+                .NoTrackingSelect()
                 .Where(c => c.Id == id)
                 .Select(c => new CurrencyDto
                 {

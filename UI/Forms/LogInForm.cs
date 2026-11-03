@@ -63,11 +63,12 @@ namespace UI.Screens
             if (!loginResult)
             {
                 XtraMessageBox.Show(
-                    "Username or password is incorrect.",
-                    "Login Failed",
+                    "اسم المستخدم أو كلمة المرور غير صحيحة.",
+                    "فشل تسجيل الدخول",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-
+                txtUsername.Clear();
+                txtPassword.Clear();
                 return;
             }
             if (checkRememberMe.Checked)

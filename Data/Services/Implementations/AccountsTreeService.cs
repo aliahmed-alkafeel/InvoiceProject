@@ -26,7 +26,7 @@ namespace Data.Services.Implementations
         {
             var accounts = await _unitOfWork.AccountsTrees
                 .NoTrackingSelect()
-                .OrderBy(a => a.AccountCode)
+                .OrderByDescending(a => a.AccountCode)
                 .ToListAsync(cts);
 
             return accounts
@@ -46,7 +46,7 @@ namespace Data.Services.Implementations
         public async Task<AccountsTreeDto> GetAccountByIdAsync(Guid id)
         {
             var entity = await _unitOfWork.AccountsTrees
-                .Select()
+                .NoTrackingSelect()
                 .FirstOrDefaultAsync(a => a.Id == id);
 
             if (entity == null)
@@ -59,10 +59,7 @@ namespace Data.Services.Implementations
                 ParentGuid = entity.ParentGuid,
                 AccountCode = entity.AccountCode,
                 AccountName = entity.AccountName,
-                // تُحسب الحالة من الشجرة نفسها بدلاً من العمود المخزّن (IsLeaf).
-                IsLeaf = !await _unitOfWork.AccountsTrees
-                    .Select()
-                    .AnyAsync(a => a.ParentGuid == entity.Id),
+                IsLeaf = entity.IsLeaf,
                 IsActive = entity.IsActive,
                 Notes = entity.Notes
             };
@@ -120,7 +117,7 @@ namespace Data.Services.Implementations
 
             AccountsTree newParent = null;
 
-            // التحقق من الأب الجديد.
+           
             if (newParentGuid.HasValue)
             {
                 await EnsureNoCycleAsync(account.Id, newParentGuid.Value);
@@ -206,7 +203,7 @@ namespace Data.Services.Implementations
                     $"لم يتم العثور على الحساب بالمعرّف '{modelId}'.");
 
             var hasChildren = await _unitOfWork.AccountsTrees
-                .Select()
+                .NoTrackingSelect()
                 .AnyAsync(a => a.ParentGuid == modelId);
 
             if (hasChildren)
@@ -245,7 +242,7 @@ namespace Data.Services.Implementations
                 return;
 
             parent.IsLeaf = !await _unitOfWork.AccountsTrees
-                .Select()
+                .NoTrackingSelect()
                 .AnyAsync(a => a.ParentGuid == parentId && a.Id != excludedChildId);
 
             _unitOfWork.AccountsTrees.Update(parent);
@@ -266,7 +263,7 @@ namespace Data.Services.Implementations
 
                 var id = current.Value;
                 current = await _unitOfWork.AccountsTrees
-                    .Select()
+                    .NoTrackingSelect()
                     .Where(a => a.Id == id)
                     .Select(a => a.ParentGuid)
                     .FirstOrDefaultAsync();

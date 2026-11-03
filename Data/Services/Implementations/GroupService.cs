@@ -34,7 +34,7 @@ namespace RestaurantManagement.Areas.Dashboard.Services
                 throw new ArgumentException("اسم المجموعة مطلوب");
 
             var hasRepeatedName = await _unitOfWork.Groups
-                .Select()
+                .NoTrackingSelect()
                 .AnyAsync(g => g.GroupName == model.GroupName);
 
             if (hasRepeatedName)
@@ -46,7 +46,7 @@ namespace RestaurantManagement.Areas.Dashboard.Services
                 .ToList();
 
             var roles = await _unitOfWork.Roles
-                .Select()
+                .NoTrackingSelect()
                 .Where(r => roleIds.Contains(r.Id))
                 .ToListAsync();
             var group = new Group
@@ -188,7 +188,7 @@ namespace RestaurantManagement.Areas.Dashboard.Services
     .ToList();
 
             var roles = await _unitOfWork.Roles
-                .Select()
+                .NoTrackingSelect()
                 .Where(r => roleIds.Contains(r.Id))
                 .ToListAsync();
 
