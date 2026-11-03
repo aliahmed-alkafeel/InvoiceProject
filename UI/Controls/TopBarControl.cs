@@ -1,4 +1,4 @@
-using DevExpress.XtraBars.Navigation;
+﻿using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraEditors;
 using Microsoft.Extensions.DependencyInjection;
 using Models.CurrentUserDetails;
@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Windows;
+using System.Windows.Forms;
 using UI.Extensions;
 using UI.Forms;
 using UI.Forms.Categories;
@@ -108,6 +110,17 @@ namespace UI.Base.TopBar
             element.Appearance.Options.UseBackColor = true;
 
             _activeElement = element;
+        }
+        private void btnLogout_Click(object sender, NavElementEventArgs e)
+        {
+            SetActiveElement(e.Element);
+            var result = System.Windows.Forms.MessageBox.Show("هل أنت متأكد أنك تريد تسجيل الخروج؟", "تأكيد تسجيل الخروج",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if(result == DialogResult.Yes)
+            {
+                CurrentUser.LogOut();
+                System.Windows.Forms.Application.Restart();
+            }
         }
 
         public void ApplyRoles()

@@ -38,6 +38,7 @@
             this.btnBills = new DevExpress.XtraBars.Navigation.NavButton();
             this.btnCategories = new DevExpress.XtraBars.Navigation.NavButton();
             this.btnItems = new DevExpress.XtraBars.Navigation.NavButton();
+            this.btnLogout = new DevExpress.XtraBars.Navigation.NavButton();
             ((System.ComponentModel.ISupportInitialize)(this.tileNavPane1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,6 +47,7 @@
             this.tileNavPane1.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(76)))), ((int)(((byte)(129)))));
             this.tileNavPane1.Appearance.Options.UseBackColor = true;
             this.tileNavPane1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(76)))), ((int)(((byte)(129)))));
+            this.tileNavPane1.Buttons.Add(this.btnLogout);
             this.tileNavPane1.Buttons.Add(this.btnGroups);
             this.tileNavPane1.Buttons.Add(this.btnEmployees);
             this.tileNavPane1.Buttons.Add(this.btnCurrencies);
@@ -137,6 +139,13 @@
             this.btnItems.Name = "btnItems";
             this.btnItems.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnItems_Click);
             // 
+            // btnLogout
+            // 
+            this.btnLogout.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
+            this.btnLogout.Caption = "تسجيل الخروج";
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnLogout_Click);
+            // 
             // TopBarControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -160,5 +169,6 @@
         private DevExpress.XtraBars.Navigation.NavButton btnItems;
         private DevExpress.XtraBars.Navigation.TileNavPane tileNavPane1;
         private DevExpress.XtraBars.Navigation.NavButton btnGroups;
+        private DevExpress.XtraBars.Navigation.NavButton btnLogout;
     }
 }

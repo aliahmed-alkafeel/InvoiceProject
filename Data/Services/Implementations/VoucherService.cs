@@ -85,8 +85,7 @@ namespace Data.Services.Implementations
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات السند مطلوبة");
 
-            // لا يُضاف أي سجل جديد ما لم توجد عملة رئيسية واحدة بالضبط.
-            await _currencyService.EnsureExactlyOneMainCurrencyAsync("إضافة السند");    
+            await _currencyService.EnsureExactlyOneMainCurrencyAsync("إضافة السند");
 
             var currency = await _unitOfWork.Currencies
                           .NoTrackingSelect()
@@ -99,8 +98,8 @@ namespace Data.Services.Implementations
                 throw new InvalidOperationException(
                     "قيمة تحويل العملة يجب أن تكون أكبر من صفر");
             var voucherNumber = await GenerateVoucherNumberAsync(
-            model.VoucherType,
-            DateTime.Now.Year);
+            model.VoucherType
+            );
             var voucher = new Voucher
             {
                 VoucherNumber = voucherNumber,
@@ -126,11 +125,9 @@ namespace Data.Services.Implementations
             var voucher = await _unitOfWork.Vouchers
                 .Select()
                 .FirstOrDefaultAsync(v => v.Id == model.Id);
-
             if (voucher == null)
                 throw new InvalidOperationException(
                     $"لم يتم العثور على السند بالمعرّف '{model.Id}'.");
-
             voucher.VoucherNumber = model.VoucherNumber;
             voucher.VoucherType = model.VoucherType;
             voucher.AccountTreeGuid = model.AccountTreeGuid.Value;
@@ -139,14 +136,11 @@ namespace Data.Services.Implementations
             voucher.CurrencyEqualValue = model.CurrencyEqualValue;
             voucher.Date = model.Date;
             voucher.Notes = model.Notes;
-
             _unitOfWork.Vouchers.Update(voucher);
-
-            // الحفظ بدون تغيير فعلي لا يُعد فشلاً؛ الأخطاء الحقيقية تُرمى كاستثناءات.
             await _unitOfWork.SaveChangesAsync();
-
             return true;
         }
+
 
         public async Task<bool> DeleteVoucherAsync(Guid modelId)
         {
@@ -158,23 +152,13 @@ namespace Data.Services.Implementations
                 throw new InvalidOperationException(
                     $"لم يتم العثور على السند بالمعرّف '{modelId}'.");
 
-            // فحص السجلات التابعة للسند قبل الحذف:
-            // بعد فحص إعدادات الكيانات والخصائص التنقلية ومفاتيح الـ Foreign Keys
-            // (Categories, Items, Bills, BillItems, Vouchers, AccountsTrees,
-            // Currencies, Employees, Groups, GroupRoles, Roles) لا يوجد في قاعدة
-            // البيانات أي جدول يحتوي على مفتاح خارجي يشير إلى السند (Voucher)،
-            // ولا يوجد جدول "تفاصيل سند" في المشروع، لذا لا توجد سجلات تابعة
-            // تمنع حذف السند حالياً. يجب إضافة فحص AnyAsync() هنا فور إنشاء أي
-            // جدول مستقبلي يرتبط بالسند.
-
             _unitOfWork.Vouchers.Delete(voucher);
 
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
 
 private async Task<string> GenerateVoucherNumberAsync(
-    string voucherType,
-    int year)
+    string voucherType)
         {
             if (string.IsNullOrWhiteSpace(voucherType))
                 throw new ArgumentException(
@@ -197,7 +181,7 @@ private async Task<string> GenerateVoucherNumberAsync(
                     "نوع السند غير صالح.",
                     nameof(voucherType));
             }
-
+            var year = DateTime.Now.Year;
             var prefix = $"{typeCode}-{year}-";
 
             var lastVoucherNumber = await _unitOfWork.Vouchers

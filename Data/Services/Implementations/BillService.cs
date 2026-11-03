@@ -163,8 +163,10 @@ namespace Data.Services.Implementations
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات الفاتورة مطلوبة.");
 
-            await _currencyService.EnsureExactlyOneMainCurrencyAsync("إضافة الفاتورة");
+            if (model.BillItems == null)
+                throw new ArgumentException("تفاصيل الفاتورة مطلوبة.", nameof(model));
 
+            await _currencyService.EnsureExactlyOneMainCurrencyAsync("إضافة الفاتورة");
 
             var currency = await _unitOfWork.Currencies
                 .NoTrackingSelect()
@@ -194,11 +196,55 @@ namespace Data.Services.Implementations
                 Notes = model.Notes
             };
 
-            var existingItems = bill.BillItems
-        .Where(bi => !bi.IsDeleted)
-        .ToList();
+            foreach (var item in model.BillItems)
+            {
+                bill.BillItems.Add(new BillItem
+                {
+                    BillGuid = bill.Id,
+                    ItemGuid = item.ItemGuid,
+                    Qty = item.Qty,
+                    Price = item.Price,
+                    Notes = item.Notes
+                });
+            }
 
-            // حذف المواد التي أزيلت من الفاتورة فقط.
+            _unitOfWork.Bills.Add(bill);
+
+            return await _unitOfWork.SaveChangesAsync() > 0;
+        }
+        public async Task<bool> UpdateBillAsync(UpdateBillDto model)
+        {
+            if (model == null)
+                throw new ArgumentNullException(nameof(model), "بيانات الفاتورة مطلوبة.");
+
+            if (model.BillItems == null)
+                throw new ArgumentException("تفاصيل الفاتورة مطلوبة.", nameof(model));
+
+            var bill = await _unitOfWork.Bills
+                .Select()
+                .Include(b => b.BillItems)
+                .FirstOrDefaultAsync(b => b.Id == model.Id);
+
+            if (bill == null)
+                throw new InvalidOperationException(
+                    $"لم يتم العثور على الفاتورة بالمعرّف '{model.Id}'.");
+
+            if (model.CurrencyEqualValue <= 0)
+                throw new InvalidOperationException("سعر الصرف يجب أن يكون أكبر من صفر");
+
+            // تحديث بيانات الفاتورة الأساسية.
+            bill.BillNumber = model.BillNumber;
+            bill.BillType = model.BillType;
+            bill.AccountTreeGuid = model.AccountTreeGuid;
+            bill.CurrencyGuid = model.CurrencyGuid;
+            bill.CurrencyEqualValue = model.CurrencyEqualValue;
+            bill.Date = model.Date;
+            bill.Notes = model.Notes;
+
+            var existingItems = bill.BillItems
+                .Where(bi => !bi.IsDeleted)
+                .ToList();
+
             var incomingIds = new HashSet<Guid>(
                 model.BillItems
                     .Where(bi => bi.Id != Guid.Empty)
@@ -210,11 +256,14 @@ namespace Data.Services.Implementations
                 _unitOfWork.BillItems.Delete(oldItem);
             }
 
-            // تحديث المواد الموجودة وإضافة المواد الجديدة.
             foreach (var item in model.BillItems)
             {
                 var existingItem = existingItems.FirstOrDefault(
                     bi => bi.Id == item.Id && item.Id != Guid.Empty);
+
+                if (item.Id != Guid.Empty && existingItem == null)
+                    throw new InvalidOperationException(
+                        $"تفصيل الفاتورة بالمعرّف '{item.Id}' غير موجود ضمن هذه الفاتورة.");
 
                 if (existingItem != null)
                 {
@@ -236,59 +285,12 @@ namespace Data.Services.Implementations
                 }
             }
 
-            _unitOfWork.Bills.Add(bill);
-
-            return await _unitOfWork.SaveChangesAsync() > 0;
-        }
-
-        public async Task<bool> UpdateBillAsync(UpdateBillDto model)
-        {
-            if (model == null)
-                throw new ArgumentNullException(nameof(model), "بيانات الفاتورة مطلوبة.");
-
-            var bill = await _unitOfWork.Bills
-                .Select()
-                .Include(b => b.BillItems)
-                .FirstOrDefaultAsync(b => b.Id == model.Id);
-
-            if (bill == null)
-                throw new InvalidOperationException(
-                    $"لم يتم العثور على الفاتورة بالمعرّف '{model.Id}'.");
-
-            if (model.CurrencyEqualValue <= 0)
-                throw new InvalidOperationException("سعر الصرف يجب أن يكون أكبر من صفر");
-
-            bill.BillNumber = model.BillNumber;
-            bill.BillType = model.BillType;
-            bill.AccountTreeGuid = model.AccountTreeGuid;
-            bill.CurrencyGuid = model.CurrencyGuid;
-            bill.CurrencyEqualValue = model.CurrencyEqualValue;
-            bill.Date = model.Date;
-            bill.Notes = model.Notes;
-
-            // استبدال المواد القديمة بالجديدة
-            foreach (var old in bill.BillItems.ToList())
-                _unitOfWork.BillItems.Delete(old);
-
-            foreach (var item in model.BillItems)
-            {
-                bill.BillItems.Add(new BillItem
-                {
-                    ItemGuid = item.ItemGuid,
-                    Qty = item.Qty,
-                    Price = item.Price,
-                    Notes = item.Notes
-                });
-            }
-
             _unitOfWork.Bills.Update(bill);
 
-            // الحفظ بدون تغيير فعلي لا يُعد فشلاً؛ الأخطاء الحقيقية تُرمى كاستثناءات.
             await _unitOfWork.SaveChangesAsync();
 
             return true;
         }
-
         public async Task<bool> DeleteBillAsync(Guid modelId)
         {
             var bill = await _unitOfWork.Bills

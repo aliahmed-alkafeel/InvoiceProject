@@ -25,7 +25,7 @@ namespace Data.Services.Implementations
         public async Task<List<ItemDto>> GetAllItemsAsync(System.Threading.CancellationToken cts)
         {
             return await _unitOfWork.Items
-                .NoTrackingSelect().Include(i => i.Category)
+                .NoTrackingSelect()
                 .Select(i => new ItemDto
                 {
                     Id = i.Id,
