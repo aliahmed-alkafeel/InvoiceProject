@@ -53,7 +53,7 @@
             this.spinBillNumber = new DevExpress.XtraEditors.SpinEdit();
             this.btnPrev = new DevExpress.XtraEditors.SimpleButton();
             this.btnNext = new DevExpress.XtraEditors.SimpleButton();
-            this.btnAddItems = new DevExpress.XtraEditors.SimpleButton();
+            this.btnEditBill = new DevExpress.XtraEditors.SimpleButton();
             this.Root_Search = new DevExpress.XtraLayout.LayoutControlGroup();
             this.itemBillNumber = new DevExpress.XtraLayout.LayoutControlItem();
             this.itemPrev = new DevExpress.XtraLayout.LayoutControlItem();
@@ -135,7 +135,7 @@
             this.layoutSearch.Controls.Add(this.spinBillNumber);
             this.layoutSearch.Controls.Add(this.btnPrev);
             this.layoutSearch.Controls.Add(this.btnNext);
-            this.layoutSearch.Controls.Add(this.btnAddItems);
+            this.layoutSearch.Controls.Add(this.btnEditBill);
             this.layoutSearch.Dock = System.Windows.Forms.DockStyle.Top;
             this.layoutSearch.Location = new System.Drawing.Point(0, 0);
             this.layoutSearch.Name = "layoutSearch";
@@ -194,18 +194,18 @@
             this.btnNext.ToolTip = "الفاتورة التالية";
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
-            // btnAddItems
+            // btnEditBill
             // 
-            this.btnAddItems.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
-            this.btnAddItems.Appearance.Options.UseFont = true;
-            this.btnAddItems.Location = new System.Drawing.Point(422, 19);
-            this.btnAddItems.Name = "btnAddItems";
-            this.btnAddItems.Size = new System.Drawing.Size(106, 22);
-            this.btnAddItems.StyleController = this.layoutSearch;
-            this.btnAddItems.TabIndex = 3;
-            this.btnAddItems.Text = "تعديل الفاتورة";
-            this.btnAddItems.ToolTip = "تعديل معلومات الفاتورة الحالية";
-            this.btnAddItems.Click += new System.EventHandler(this.btnAddItems_Click);
+            this.btnEditBill.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
+            this.btnEditBill.Appearance.Options.UseFont = true;
+            this.btnEditBill.Location = new System.Drawing.Point(422, 19);
+            this.btnEditBill.Name = "btnEditBill";
+            this.btnEditBill.Size = new System.Drawing.Size(106, 22);
+            this.btnEditBill.StyleController = this.layoutSearch;
+            this.btnEditBill.TabIndex = 3;
+            this.btnEditBill.Text = "تعديل الفاتورة";
+            this.btnEditBill.ToolTip = "تعديل معلومات الفاتورة الحالية";
+            this.btnEditBill.Click += new System.EventHandler(this.btnEditBill_Click);
             // 
             // Root_Search
             // 
@@ -282,7 +282,7 @@
             // itemAddItems
             // 
             this.itemAddItems.ContentVertAlignment = DevExpress.Utils.VertAlignment.Center;
-            this.itemAddItems.Control = this.btnAddItems;
+            this.itemAddItems.Control = this.btnEditBill;
             this.itemAddItems.Location = new System.Drawing.Point(410, 0);
             this.itemAddItems.Name = "itemAddItems";
             this.itemAddItems.OptionsTableLayoutItem.ColumnIndex = 1;
@@ -694,6 +694,7 @@
             this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.gridView1.OptionsView.ShowGroupPanel = false;
             this.gridView1.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gridView1_CellValueChanged);
+            this.gridView1.RowCountChanged += new System.EventHandler(this.gridView1_RowCountChanged);
             // 
             // colItem
             // 
@@ -879,7 +880,7 @@
         private DevExpress.XtraEditors.SpinEdit spinBillNumber;
         private DevExpress.XtraEditors.SimpleButton btnPrev;
         private DevExpress.XtraEditors.SimpleButton btnNext;
-        private DevExpress.XtraEditors.SimpleButton btnAddItems;
+        private DevExpress.XtraEditors.SimpleButton btnEditBill;
         private DevExpress.XtraLayout.LayoutControlItem itemBillNumber;
         private DevExpress.XtraLayout.LayoutControlItem itemPrev;
         private DevExpress.XtraLayout.LayoutControlItem itemNext;

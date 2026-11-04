@@ -36,7 +36,7 @@ namespace UI.Extensions
         private static void ShowError(Exception exception)
         {
             string message = exception?.GetBaseException().Message
-                             ?? "حدث خطأ غير معروف.";
+                             ?? "";
 
             MessageBox.Show(
                 "حدث خطأ غير متوقع!\n" + message,

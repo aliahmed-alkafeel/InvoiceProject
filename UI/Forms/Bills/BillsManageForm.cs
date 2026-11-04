@@ -59,7 +59,6 @@ namespace UI.Forms.Bills
             spnCurrencyEqualValue.Validated += SpnCurrencyEqualValue_Validated;
         }
 
-        #region Loading
 
         private async void BillsManageForm_Load(object sender, EventArgs e)
         {
@@ -176,7 +175,7 @@ namespace UI.Forms.Bills
 
             _isMainCurrency = currency.IsMain;
 
-            if (currency.IsMain)
+            if (_isMainCurrency)
             {
                 RecalculateItemPrices(_currentCurrencyEqualValue, 1m);
                 _currentCurrencyEqualValue = 1m;
@@ -193,9 +192,7 @@ namespace UI.Forms.Bills
             UpdateTotal();
         }
 
-        #endregion
 
-        #region Save
 
         private async void SaveCancelControl_SaveClicked()
         {
@@ -290,9 +287,7 @@ namespace UI.Forms.Bills
             Close();
         }
 
-        #endregion
 
-        #region Grid
 
         private void gridViewItems_InitNewRow(object sender, InitNewRowEventArgs e)
         {
@@ -333,9 +328,6 @@ namespace UI.Forms.Bills
                 gridViewItems.DeleteRow(gridViewItems.FocusedRowHandle);
         }
 
-        #endregion
-
-        #region Currency
 
         private void RecalculateItemPrices(decimal oldRate, decimal newRate)
         {
@@ -466,7 +458,6 @@ namespace UI.Forms.Bills
             }
         }
 
-        #endregion
 
         private void UpdateTotal()
         {

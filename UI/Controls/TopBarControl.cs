@@ -119,6 +119,7 @@ namespace UI.Base.TopBar
             if(result == DialogResult.Yes)
             {
                 CurrentUser.LogOut();
+                Navigator.Shutdown();
                 System.Windows.Forms.Application.Restart();
             }
         }

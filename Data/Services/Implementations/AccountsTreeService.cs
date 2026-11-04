@@ -159,7 +159,9 @@ namespace Data.Services.Implementations
             if (!account.IsActive)
                 await DeactivateDescendantAccountsAsync(account.Id);
 
-            return await _unitOfWork.SaveChangesAsync() > 0;
+            await _unitOfWork.SaveChangesAsync();
+
+            return true;
         }
         private async Task DeactivateDescendantAccountsAsync(Guid accountId)
         {

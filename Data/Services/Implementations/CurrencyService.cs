@@ -76,9 +76,9 @@ namespace Data.Services.Implementations
             {
                 CurrencyName = model.CurrencyName,
                 CurrencySymbol = model.CurrencySymbol,
-                CurrencyEqual = model.CurrencyEqual,
+                CurrencyEqual = model.IsMain? 1m: model.CurrencyEqual,
                 IsMain = model.IsMain,
-                IsActive = model.IsActive,
+                IsActive = model.IsMain? true: model.IsActive,
                 Notes = model.Notes
             };
 
@@ -152,11 +152,12 @@ namespace Data.Services.Implementations
             Guid? excludedCurrencyId,
             string operation)
         {
-            var currentMain = await _unitOfWork.Currencies
-                .Select()
-                .FirstOrDefaultAsync(c => c.IsMain &&
-                    (!excludedCurrencyId.HasValue ||
-                     c.Id != excludedCurrencyId.Value));
+            var query = _unitOfWork.Currencies.Select().Where(c => c.IsMain);
+
+            if (excludedCurrencyId.HasValue)
+                query = query.Where(c => c.Id != excludedCurrencyId.Value);
+
+            var currentMain = await query.FirstOrDefaultAsync();
 
             if (currentMain == null)
                 return false;

@@ -1,4 +1,5 @@
 ﻿using Data.Configurations.DTOsConfigurations;
+using Data.Services.Implementations;
 using Data.Services.Interfaces;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
@@ -27,10 +28,8 @@ namespace UI.Forms
 
         private readonly BindingList<BillItemDto> _billItems = new BindingList<BillItemDto>();
 
-        /// <summary>قاموس المواد المستخدم في اختيار المادة داخل الشبكة.</summary>
         private IDictionary<Guid, ItemDto> _itemLookup = new Dictionary<Guid, ItemDto>();
 
-        /// <summary>الفاتورة المعروضة حالياً.</summary>
         private BillDto _currentBill;
 
         /// <summary>الفواتير مرتبة من الأقدم إلى الأحدث (للتنقل).</summary>
@@ -44,17 +43,11 @@ namespace UI.Forms
         /// <summary>رقم الفاتورة المطلوب عرضها عند الفتح، و null لعرض أول فاتورة.</summary>
         public int? BillNumber { get; set; }
 
-        public ItemBillsForm()
+        public ItemBillsForm(IBillService billService, IItemService itemService, int? billNumber = null)
         {
             InitializeComponent();
             gridControl1.DataSource = _billItems;
             gridView1.InitNewRow += gridView1_InitNewRow;
-
-        }
-
-
-        public ItemBillsForm(IBillService billService, IItemService itemService, int? billNumber = null) : this()
-        {
             _billService = billService;
             _itemService = itemService;
             BillNumber = billNumber;
@@ -62,7 +55,6 @@ namespace UI.Forms
 
         private async void ItemBillsForm_Load(object sender, EventArgs e)
         {
-            Display(null);
             ApplyPermissions();
             await LoadItemsLookupAsync();
             await LoadBillsListAsync();
@@ -83,7 +75,7 @@ namespace UI.Forms
             if (!CurrentUser.HasRole(UserRole.ManageBills))
             {
                 
-            SetVisible(btnAddItems);
+            SetVisible(btnEditBill);
             SetVisible(btnDeleteItem);
             SetVisible(btnAddItem);
             SetVisible(btnSaveItems);
@@ -128,7 +120,7 @@ namespace UI.Forms
             {
                 var bills = await this.WithLoading(async cts =>
                     await _billService.GetAllBillsAsync(cts),
-                    "جارٍ تحميل الفواتير، يرجى الانتظار...") ?? new List<BillDto>();
+                    "جارٍ تحميل الفواتير، يرجى الانتظار...");
 
                 _bills.AddRange(bills.OrderByDescending(b => b.BillNumber));
             }
@@ -146,18 +138,34 @@ namespace UI.Forms
 
         private async Task NavigateAsync(int offset)
         {
-            if (_currentIndex < 0)
+            if (_bills.Count == 0)
                 return;
 
-            var count = _bills.Count;
+            BillDto target;
 
-            spinBillNumber.EditValue = _bills[(_currentIndex + offset + count) % count].BillNumber;
+            if (_currentIndex >= 0)
+            {
+                var index = (_currentIndex + offset + _bills.Count) % _bills.Count;
+                target = _bills[index];
+            }
+            else
+            {
+                var number = Convert.ToInt32(spinBillNumber.EditValue ?? 0);
 
+                target = offset > 0
+                    ? _bills.FirstOrDefault(b => b.BillNumber < number)
+                    : _bills.LastOrDefault(b => b.BillNumber > number);
+
+                if (target == null)
+                    return;
+            }
+
+            spinBillNumber.EditValue = target.BillNumber;
             await LoadBillAsync();
         }
 
 
-        private async void btnAddItems_Click(object sender, EventArgs e)
+        private async void btnEditBill_Click(object sender, EventArgs e)
         {
             BillDto billToEdit;
 
@@ -251,6 +259,7 @@ namespace UI.Forms
             }
         }
 
+
         private void Display(BillDto bill)
         {
             _currentBill = bill;
@@ -317,9 +326,6 @@ namespace UI.Forms
                 gridView1.DeleteRow(gridView1.FocusedRowHandle);
         }
 
-        /// <summary>
-        /// حفظ تعديلات بنود الفاتورة الحالية.
-        /// </summary>
         private async void btnSaveItems_Click(object sender, EventArgs e)
         {
             // إنهاء تحرير الخلية الحالية حتى لا تضيع آخر قيمة مكتوبة.
@@ -390,11 +396,26 @@ namespace UI.Forms
 
         private void UpdateNavigationButtons()
         {
-            var hasCurrentBill = _currentIndex >= 0;
+            bool hasCurrentBill = _currentIndex >= 0;
 
-            btnPrev.Enabled = btnNext.Enabled = hasCurrentBill && _bills.Count > 1;
+            if (hasCurrentBill)
+            {
+                btnPrev.Enabled = btnNext.Enabled = _bills.Count > 1;
+            }
+            else
+            {
+                int number = Convert.ToInt32(spinBillNumber.EditValue ?? 0);
 
-            btnAddItems.Enabled = btnAddItem.Enabled = btnDeleteItem.Enabled = btnSaveItems.Enabled = hasCurrentBill;
+                btnPrev.Enabled = _bills.Any(b => b.BillNumber < number);
+                btnNext.Enabled = _bills.Any(b => b.BillNumber > number);
+            }
+
+            btnEditBill.Enabled =
+            btnAddItem.Enabled =
+            btnDeleteItem.Enabled =
+            btnSaveItems.Enabled = hasCurrentBill;
         }
+
+
     }
 }

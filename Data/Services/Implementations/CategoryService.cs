@@ -106,8 +106,9 @@ namespace Data.Services.Implementations
                 }
 
             }
-                 return await _unitOfWork.SaveChangesAsync() > 0;
+            await _unitOfWork.SaveChangesAsync();
 
+            return true;
         }
         public async Task<bool> DeleteCategoryAsync(Guid modelId)
         {
@@ -119,8 +120,7 @@ namespace Data.Services.Implementations
                 throw new InvalidOperationException(
                     $"لم يتم العثور على التصنيف بالمعرّف '{modelId}'.");
 
-            // لا يُسمح بحذف تصنيف مرتبط بسجلات أخرى:
-            // الكيان المرجعي للتصنيف هو المادة (Item.CategoryGuid).
+
             var hasRelatedItems = await _unitOfWork.Items
                 .NoTrackingSelect()
                 .AnyAsync(i => i.CategoryGuid == modelId);
