@@ -96,11 +96,12 @@
             this.lblTitle.Appearance.Options.UseFont = true;
             this.lblTitle.Appearance.Options.UseTextOptions = true;
             this.lblTitle.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.lblTitle.Location = new System.Drawing.Point(330, 9);
+            this.lblTitle.Location = new System.Drawing.Point(383, -4);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(99, 27);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "إضافة فاتورة";
+            this.lblTitle.Click += new System.EventHandler(this.lblTitle_Click);
             // 
             // labelBillNumber
             // 
@@ -108,7 +109,7 @@
             this.labelBillNumber.Appearance.Options.UseFont = true;
             this.labelBillNumber.Appearance.Options.UseTextOptions = true;
             this.labelBillNumber.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelBillNumber.Location = new System.Drawing.Point(730, 53);
+            this.labelBillNumber.Location = new System.Drawing.Point(744, 53);
             this.labelBillNumber.Name = "labelBillNumber";
             this.labelBillNumber.Size = new System.Drawing.Size(70, 17);
             this.labelBillNumber.TabIndex = 1;
@@ -120,7 +121,7 @@
             this.labelBillType.Appearance.Options.UseFont = true;
             this.labelBillType.Appearance.Options.UseTextOptions = true;
             this.labelBillType.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelBillType.Location = new System.Drawing.Point(730, 89);
+            this.labelBillType.Location = new System.Drawing.Point(744, 89);
             this.labelBillType.Name = "labelBillType";
             this.labelBillType.Size = new System.Drawing.Size(67, 17);
             this.labelBillType.TabIndex = 2;
@@ -132,7 +133,7 @@
             this.labelAccountTree.Appearance.Options.UseFont = true;
             this.labelAccountTree.Appearance.Options.UseTextOptions = true;
             this.labelAccountTree.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelAccountTree.Location = new System.Drawing.Point(730, 125);
+            this.labelAccountTree.Location = new System.Drawing.Point(744, 125);
             this.labelAccountTree.Name = "labelAccountTree";
             this.labelAccountTree.Size = new System.Drawing.Size(119, 17);
             this.labelAccountTree.TabIndex = 3;
@@ -144,7 +145,7 @@
             this.labelCurrency.Appearance.Options.UseFont = true;
             this.labelCurrency.Appearance.Options.UseTextOptions = true;
             this.labelCurrency.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelCurrency.Location = new System.Drawing.Point(730, 161);
+            this.labelCurrency.Location = new System.Drawing.Point(744, 161);
             this.labelCurrency.Name = "labelCurrency";
             this.labelCurrency.Size = new System.Drawing.Size(41, 17);
             this.labelCurrency.TabIndex = 4;
@@ -156,7 +157,7 @@
             this.labelCurrencyEqualValue.Appearance.Options.UseFont = true;
             this.labelCurrencyEqualValue.Appearance.Options.UseTextOptions = true;
             this.labelCurrencyEqualValue.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelCurrencyEqualValue.Location = new System.Drawing.Point(730, 197);
+            this.labelCurrencyEqualValue.Location = new System.Drawing.Point(336, 53);
             this.labelCurrencyEqualValue.Name = "labelCurrencyEqualValue";
             this.labelCurrencyEqualValue.Size = new System.Drawing.Size(72, 17);
             this.labelCurrencyEqualValue.TabIndex = 5;
@@ -168,7 +169,7 @@
             this.labelDate.Appearance.Options.UseFont = true;
             this.labelDate.Appearance.Options.UseTextOptions = true;
             this.labelDate.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelDate.Location = new System.Drawing.Point(730, 233);
+            this.labelDate.Location = new System.Drawing.Point(336, 89);
             this.labelDate.Name = "labelDate";
             this.labelDate.Size = new System.Drawing.Size(40, 17);
             this.labelDate.TabIndex = 6;
@@ -180,7 +181,7 @@
             this.labelNotes.Appearance.Options.UseFont = true;
             this.labelNotes.Appearance.Options.UseTextOptions = true;
             this.labelNotes.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelNotes.Location = new System.Drawing.Point(730, 273);
+            this.labelNotes.Location = new System.Drawing.Point(336, 129);
             this.labelNotes.Name = "labelNotes";
             this.labelNotes.Size = new System.Drawing.Size(65, 17);
             this.labelNotes.TabIndex = 7;
@@ -192,7 +193,7 @@
             this.labelItems.Appearance.Options.UseFont = true;
             this.labelItems.Appearance.Options.UseTextOptions = true;
             this.labelItems.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelItems.Location = new System.Drawing.Point(730, 356);
+            this.labelItems.Location = new System.Drawing.Point(747, 205);
             this.labelItems.Name = "labelItems";
             this.labelItems.Size = new System.Drawing.Size(72, 17);
             this.labelItems.TabIndex = 8;
@@ -205,7 +206,7 @@
             0,
             0,
             0});
-            this.spinBillNumber.Location = new System.Drawing.Point(420, 51);
+            this.spinBillNumber.Location = new System.Drawing.Point(434, 51);
             this.spinBillNumber.Name = "spinBillNumber";
             this.spinBillNumber.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
             this.spinBillNumber.Properties.IsFloatValue = false;
@@ -220,7 +221,7 @@
             // 
             // cmbBillType
             // 
-            this.cmbBillType.Location = new System.Drawing.Point(420, 87);
+            this.cmbBillType.Location = new System.Drawing.Point(434, 87);
             this.cmbBillType.Name = "cmbBillType";
             this.cmbBillType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -251,7 +252,7 @@
             // 
             // cmbAccountTree
             // 
-            this.cmbAccountTree.Location = new System.Drawing.Point(420, 123);
+            this.cmbAccountTree.Location = new System.Drawing.Point(434, 123);
             this.cmbAccountTree.Name = "cmbAccountTree";
             this.cmbAccountTree.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -289,7 +290,7 @@
             // 
             // cmbCurrency
             // 
-            this.cmbCurrency.Location = new System.Drawing.Point(420, 159);
+            this.cmbCurrency.Location = new System.Drawing.Point(434, 159);
             this.cmbCurrency.Name = "cmbCurrency";
             this.cmbCurrency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -332,7 +333,7 @@
             0,
             0,
             0});
-            this.spnCurrencyEqualValue.Location = new System.Drawing.Point(420, 195);
+            this.spnCurrencyEqualValue.Location = new System.Drawing.Point(26, 51);
             this.spnCurrencyEqualValue.Name = "spnCurrencyEqualValue";
             this.spnCurrencyEqualValue.Properties.Increment = new decimal(new int[] {
             1,
@@ -350,7 +351,7 @@
             // deDate
             // 
             this.deDate.EditValue = null;
-            this.deDate.Location = new System.Drawing.Point(420, 231);
+            this.deDate.Location = new System.Drawing.Point(26, 87);
             this.deDate.Name = "deDate";
             this.deDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -359,15 +360,15 @@
             // 
             // txtNotes
             // 
-            this.txtNotes.Location = new System.Drawing.Point(420, 269);
+            this.txtNotes.Location = new System.Drawing.Point(26, 125);
             this.txtNotes.Name = "txtNotes";
-            this.txtNotes.Size = new System.Drawing.Size(290, 60);
+            this.txtNotes.Size = new System.Drawing.Size(290, 21);
             this.txtNotes.TabIndex = 15;
             this.txtNotes.Text = "";
             // 
             // gridControlItems
             // 
-            this.gridControlItems.Location = new System.Drawing.Point(40, 380);
+            this.gridControlItems.Location = new System.Drawing.Point(12, 231);
             this.gridControlItems.MainView = this.gridViewItems;
             this.gridControlItems.Name = "gridControlItems";
             this.gridControlItems.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -530,7 +531,7 @@
             // 
             this.btnAddItem.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
             this.btnAddItem.Appearance.Options.UseFont = true;
-            this.btnAddItem.Location = new System.Drawing.Point(610, 352);
+            this.btnAddItem.Location = new System.Drawing.Point(627, 201);
             this.btnAddItem.Name = "btnAddItem";
             this.btnAddItem.Size = new System.Drawing.Size(110, 24);
             this.btnAddItem.TabIndex = 17;
@@ -542,7 +543,7 @@
             // 
             this.btnDeleteItem.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
             this.btnDeleteItem.Appearance.Options.UseFont = true;
-            this.btnDeleteItem.Location = new System.Drawing.Point(490, 352);
+            this.btnDeleteItem.Location = new System.Drawing.Point(507, 201);
             this.btnDeleteItem.Name = "btnDeleteItem";
             this.btnDeleteItem.Size = new System.Drawing.Size(110, 24);
             this.btnDeleteItem.TabIndex = 18;
@@ -556,7 +557,7 @@
             this.lblTotal.Appearance.Options.UseFont = true;
             this.lblTotal.Appearance.Options.UseTextOptions = true;
             this.lblTotal.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.lblTotal.Location = new System.Drawing.Point(60, 560);
+            this.lblTotal.Location = new System.Drawing.Point(32, 413);
             this.lblTotal.Name = "lblTotal";
             this.lblTotal.Size = new System.Drawing.Size(81, 18);
             this.lblTotal.TabIndex = 19;
@@ -564,7 +565,7 @@
             // 
             // saveCancelControl21
             // 
-            this.saveCancelControl21.Location = new System.Drawing.Point(375, 577);
+            this.saveCancelControl21.Location = new System.Drawing.Point(347, 428);
             this.saveCancelControl21.Name = "saveCancelControl21";
             this.saveCancelControl21.SaveText = "حفظ";
             this.saveCancelControl21.Size = new System.Drawing.Size(191, 45);
@@ -574,7 +575,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(920, 640);
+            this.ClientSize = new System.Drawing.Size(885, 509);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.labelBillNumber);
             this.Controls.Add(this.labelBillType);

@@ -68,18 +68,15 @@
             this.treeListControl1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.treeListControl1.Size = new System.Drawing.Size(976, 412);
             this.treeListControl1.TabIndex = 1;
-            // 
-            // colAccountCode
-            // 
+            this.treeListControl1.PopupMenuShowing += new DevExpress.XtraTreeList.PopupMenuShowingEventHandler(this.treeList1_PopupMenuShowing);
+
             this.colAccountCode.Caption = "رمز الحساب";
             this.colAccountCode.FieldName = "AccountCode";
             this.colAccountCode.Name = "colAccountCode";
             this.colAccountCode.Visible = true;
             this.colAccountCode.VisibleIndex = 0;
             this.colAccountCode.Width = 150;
-            // 
-            // colAccountName
-            // 
+
             this.colAccountName.Caption = "اسم الحساب";
             this.colAccountName.FieldName = "AccountName";
             this.colAccountName.Name = "colAccountName";

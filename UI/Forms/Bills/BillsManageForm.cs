@@ -24,7 +24,6 @@ namespace UI.Forms.Bills
         private readonly ICurrencyService _currencyService;
         private readonly IItemService _itemService;
         private readonly BillDto _selectedBill;
-
         private readonly BindingList<BillItemDto> _billItems = new BindingList<BillItemDto>();
         private IDictionary<Guid, ItemDto> _itemLookup = new Dictionary<Guid, ItemDto>();
 
@@ -102,9 +101,8 @@ namespace UI.Forms.Bills
                 "جارٍ تحميل المواد، يرجى الانتظار..."))
                 .Where(i => i.IsActive)
                 .ToList();
-
-            repositoryItemGridLookUpEdit.DataSource = items;
             _itemLookup = items.ToDictionary(i => i.Id);
+            RefreshItemsLookup();
         }
 
         private void LoadBillDetails(BillDto bill)
@@ -187,7 +185,7 @@ namespace UI.Forms.Bills
                 spnCurrencyEqualValue.EditValue = _currentCurrencyEqualValue;
                 spnCurrencyEqualValue.Properties.ReadOnly = false;
             }
-
+            RefreshItemsLookup();
             gridViewItems.RefreshData();
             UpdateTotal();
         }
@@ -291,9 +289,8 @@ namespace UI.Forms.Bills
 
         private void gridViewItems_InitNewRow(object sender, InitNewRowEventArgs e)
         {
-            if (gridViewItems.GetRow(e.RowHandle) is BillItemDto row &&
-                row.Id == Guid.Empty)
-                row.Id = Guid.NewGuid();
+            if (gridViewItems.GetRow(e.RowHandle) is BillItemDto row)
+                row.Id = Guid.Empty;
         }
 
         private void gridViewItems_CellValueChanged(object sender, CellValueChangedEventArgs e)
@@ -384,7 +381,7 @@ namespace UI.Forms.Bills
 
             RecalculateItemPrices(oldRate, newRate);
             _currentCurrencyEqualValue = newRate;
-
+            RefreshItemsLookup();
             gridViewItems.RefreshData();
             UpdateTotal();
         }
@@ -444,7 +441,7 @@ namespace UI.Forms.Bills
 
                 _currentCurrencyEqualValue = newRate;
                 _isMainCurrency = currency.IsMain;
-
+                RefreshItemsLookup();
                 spnCurrencyEqualValue.EditValue = newRate;
                 spnCurrencyEqualValue.Properties.ReadOnly = currency.IsMain;
 
@@ -457,11 +454,31 @@ namespace UI.Forms.Bills
                     MessageHelper.Error($"فشل تحميل بيانات العملة.\n{ex.Message}");
             }
         }
+        private void RefreshItemsLookup()
+        {
+            if (_currentCurrencyEqualValue <= 0)
+                return;
 
+            repositoryItemGridLookUpEdit.DataSource = _itemLookup.Values.Select(i => new
+            {
+                i.Id,
+                i.Name,
+                i.Category,
+                Price = Math.Round(
+                    (i.Price ?? 0m) / _currentCurrencyEqualValue,
+                    6,
+                    MidpointRounding.AwayFromZero),
+            }).ToList();
+        }
 
         private void UpdateTotal()
         {
             lblTotal.Text = $"الإجمالي: {_billItems.Sum(bi => bi.Qty * bi.Price):N2}";
+        }
+
+        private void lblTitle_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,7 +19,6 @@ namespace Data.Services.Implementations
         {
             _unitOfWork = unitOfWork;
         }
-
 
         public async Task<List<AccountsTreeDto>> GetAllAccountsAsync(CancellationToken cts)
         {
@@ -70,7 +68,9 @@ namespace Data.Services.Implementations
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "بيانات الحساب مطلوبة.");
 
-            // التحقق من الأب قبل إضافة الحساب إلى الـ Context
+            var parentIsActive = true;
+
+            // التحقق من الحساب الأب قبل إضافة الحساب الجديد.
             if (model.ParentGuid.HasValue)
             {
                 var parent = await _unitOfWork.AccountsTrees
@@ -79,6 +79,11 @@ namespace Data.Services.Implementations
 
                 if (parent == null)
                     throw new InvalidOperationException("الحساب الأب غير موجود.");
+
+                // لا يمكن تحويل حساب مرتبط بحركات مالية إلى حساب أب.
+                await EnsureCanBecomeParentAsync(parent.Id);
+
+                parentIsActive = parent.IsActive;
 
                 parent.IsLeaf = false;
                 _unitOfWork.AccountsTrees.Update(parent);
@@ -89,7 +94,10 @@ namespace Data.Services.Implementations
                 ParentGuid = model.ParentGuid,
                 AccountCode = model.AccountCode,
                 AccountName = model.AccountName,
-                IsActive = model.IsActive,
+
+                // لا يمكن تفعيل حساب إذا كان حسابه الأب غير فعال.
+                IsActive = model.IsActive && parentIsActive,
+
                 Notes = model.Notes,
                 IsLeaf = true
             };
@@ -117,9 +125,9 @@ namespace Data.Services.Implementations
 
             AccountsTree newParent = null;
 
-           
             if (newParentGuid.HasValue)
             {
+                // منع تكوين دورة في شجرة الحسابات.
                 await EnsureNoCycleAsync(account.Id, newParentGuid.Value);
 
                 newParent = await _unitOfWork.AccountsTrees
@@ -130,15 +138,24 @@ namespace Data.Services.Implementations
                     throw new InvalidOperationException("الحساب الأب الجديد غير موجود.");
             }
 
+            // عند تغيير الحساب الأب، نتحقق من إمكانية تحويل الأب الجديد
+            // إلى حساب أب قبل إجراء أي تعديلات.
+            if (oldParentGuid != newParentGuid && newParent != null)
+            {
+                await EnsureCanBecomeParentAsync(newParent.Id);
+            }
+
             if (oldParentGuid != newParentGuid)
             {
-                // تحديث الأب القديم.
+                // تحديث حالة الأب القديم.
                 if (oldParentGuid.HasValue)
+                {
                     await RefreshParentLeafAsync(
                         oldParentGuid.Value,
                         excludedChildId: account.Id);
+                }
 
-                // تحديث الأب الجديد.
+                // تحديث حالة الأب الجديد.
                 if (newParent != null)
                 {
                     newParent.IsLeaf = false;
@@ -151,11 +168,13 @@ namespace Data.Services.Implementations
             account.AccountName = model.AccountName;
             account.Notes = model.Notes;
 
+            // لا يمكن تفعيل الحساب إذا كان الأب غير فعال.
             account.IsActive = model.IsActive &&
                                (newParent == null || newParent.IsActive);
 
             _unitOfWork.AccountsTrees.Update(account);
 
+            // عند إيقاف الحساب، يتم إيقاف جميع الحسابات التابعة له.
             if (!account.IsActive)
                 await DeactivateDescendantAccountsAsync(account.Id);
 
@@ -163,11 +182,13 @@ namespace Data.Services.Implementations
 
             return true;
         }
+
         private async Task DeactivateDescendantAccountsAsync(Guid accountId)
         {
             var accounts = await _unitOfWork.AccountsTrees
                 .Select()
                 .ToListAsync();
+
             var childrenLookup = accounts.ToLookup(a => a.ParentGuid);
 
             var stack = new Stack<Guid>();
@@ -194,6 +215,7 @@ namespace Data.Services.Implementations
                 }
             }
         }
+
         public async Task<bool> DeleteAccountAsync(Guid modelId)
         {
             var account = await _unitOfWork.AccountsTrees
@@ -209,10 +231,10 @@ namespace Data.Services.Implementations
                 .AnyAsync(a => a.ParentGuid == modelId);
 
             if (hasChildren)
-                throw new InvalidOperationException("لا يمكن حذف حساب لديه حسابات فرعية.");
+                throw new InvalidOperationException(
+                    "لا يمكن حذف حساب لديه حسابات فرعية.");
 
-            // لا يُسمح بحذف حساب مرتبط بسجلات مالية أخرى:
-            // الفواتير (Bill.AccountTreeGuid) والسندات (Voucher.AccountTreeGuid).
+            // التحقق من ارتباط الحساب بالفواتير.
             var isUsedInBills = await _unitOfWork.Bills
                 .NoTrackingSelect()
                 .AnyAsync(b => b.AccountTreeGuid == modelId);
@@ -220,6 +242,7 @@ namespace Data.Services.Implementations
             if (isUsedInBills)
                 return false;
 
+            // التحقق من ارتباط الحساب بالسندات.
             var isUsedInVouchers = await _unitOfWork.Vouchers
                 .NoTrackingSelect()
                 .AnyAsync(v => v.AccountTreeGuid == modelId);
@@ -228,13 +251,20 @@ namespace Data.Services.Implementations
                 return false;
 
             if (account.ParentGuid.HasValue)
-                await RefreshParentLeafAsync(account.ParentGuid.Value, excludedChildId: modelId);
+            {
+                await RefreshParentLeafAsync(
+                    account.ParentGuid.Value,
+                    excludedChildId: modelId);
+            }
 
             _unitOfWork.AccountsTrees.Delete(account);
 
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
-        private async Task RefreshParentLeafAsync(Guid parentId, Guid excludedChildId)
+
+        private async Task RefreshParentLeafAsync(
+            Guid parentId,
+            Guid excludedChildId)
         {
             var parent = await _unitOfWork.AccountsTrees
                 .Select()
@@ -245,25 +275,51 @@ namespace Data.Services.Implementations
 
             parent.IsLeaf = !await _unitOfWork.AccountsTrees
                 .NoTrackingSelect()
-                .AnyAsync(a => a.ParentGuid == parentId && a.Id != excludedChildId);
+                .AnyAsync(a => a.ParentGuid == parentId &&
+                               a.Id != excludedChildId);
 
             _unitOfWork.AccountsTrees.Update(parent);
         }
 
         /// <summary>
+        /// يمنع تحويل حساب مرتبط بفواتير أو سندات إلى حساب أب.
+        /// </summary>
+        private async Task EnsureCanBecomeParentAsync(Guid accountId)
+        {
+            var isUsedInBills = await _unitOfWork.Bills
+                .NoTrackingSelect()
+                .AnyAsync(b => b.AccountTreeGuid == accountId);
+
+            var isUsedInVouchers = await _unitOfWork.Vouchers
+                .NoTrackingSelect()
+                .AnyAsync(v => v.AccountTreeGuid == accountId);
+
+            if (isUsedInBills || isUsedInVouchers)
+            {
+                throw new InvalidOperationException(
+                    "لا يمكن تحويل هذا الحساب إلى حساب أب لارتباطه بفواتير أو سندات مالية.");
+            }
+        }
+
+        /// <summary>
         /// يمنع جعل الحساب أباً لنفسه أو لأحد أحفاده.
         /// </summary>
-        private async Task EnsureNoCycleAsync(Guid accountId, Guid newParentId)
+        private async Task EnsureNoCycleAsync(
+            Guid accountId,
+            Guid newParentId)
         {
             Guid? current = newParentId;
 
             while (current.HasValue)
             {
                 if (current.Value == accountId)
+                {
                     throw new InvalidOperationException(
                         "لا يمكن نقل الحساب تحت نفسه أو تحت أحد حساباته الفرعية.");
+                }
 
                 var id = current.Value;
+
                 current = await _unitOfWork.AccountsTrees
                     .NoTrackingSelect()
                     .Where(a => a.Id == id)
@@ -271,5 +327,5 @@ namespace Data.Services.Implementations
                     .FirstOrDefaultAsync();
             }
         }
-        }
+    }
 }

@@ -18,6 +18,7 @@ namespace UI.Forms.AccountsTree
         private readonly IAccountsTreeService _accountsTreeService;
         private AccountsTreeDto _selectedAccount;
         private List<AccountsTreeDto> _accounts = new List<AccountsTreeDto>();
+        private Guid? _parentGuid;
         private bool isEdit => _selectedAccount != null;
 
         public AccountsTreeManageForm(
@@ -29,7 +30,13 @@ namespace UI.Forms.AccountsTree
             saveCancelControl21.SaveClicked += SaveCancelControl_SaveClicked;
             saveCancelControl21.CancelClicked += SaveCancelControl_CancelClicked;
         }
-
+         public AccountsTreeManageForm(
+         IAccountsTreeService accountsTreeService,
+         Guid parentGuid)
+         : this(accountsTreeService, (AccountsTreeDto)null)
+             {
+                 _parentGuid = parentGuid;
+             }
         private async void AccountsTreeManageForm_Load(object sender, EventArgs e)
         {
             try
@@ -195,10 +202,12 @@ namespace UI.Forms.AccountsTree
 
         private void LoadAccountDetails(AccountsTreeDto account)
         {
+            
             if (account == null)
             {
                 lblTitle.Text = "إضافة حساب";
                 saveCancelControl21.SaveText = "إضافة";
+                cmbParent.EditValue = _parentGuid;
                 return;
             }
 

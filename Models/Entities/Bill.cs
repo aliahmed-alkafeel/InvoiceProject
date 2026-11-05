@@ -32,8 +32,8 @@ namespace Models.Entities
     }
     public static class BillType
     {
-        public const string In = "وارد";
-        public const string Out = "صادر";
+        public const string In = "شراء";
+        public const string Out = "بيع";
 
         public static readonly string[] All = { In, Out };
     }

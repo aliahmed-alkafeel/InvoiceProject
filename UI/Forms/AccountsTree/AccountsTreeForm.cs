@@ -1,5 +1,6 @@
 ﻿using Data.Services.Interfaces;
 using DevExpress.XtraEditors;
+using DevExpress.XtraTreeList;
 using Microsoft.Extensions.DependencyInjection;
 using Models.CurrentUserDetails;
 using Models.DTOs;
@@ -83,7 +84,19 @@ namespace UI.Forms
             if (CheckAccountsLoading())
                 return;
 
-            if (Navigator.ShowScopedDialog<AccountsTreeManageForm>() == DialogResult.OK)
+            var selectedAccount = GetSelectedAccount();
+
+            if (selectedAccount == null)
+            {
+                XtraMessageBox.Show(
+                    "يرجى اختيار حساب لتعديله.",
+                    "اختيار حساب",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+                return;
+            }
+            if (Navigator.ShowScopedDialog<AccountsTreeManageForm>(selectedAccount.Id) == DialogResult.OK)
             {
                 await LoadAccountsAsync();
             }
@@ -245,5 +258,31 @@ namespace UI.Forms
 
             return true;
         }
+
+        private void treeList1_PopupMenuShowing(
+            object sender,
+            DevExpress.XtraTreeList.PopupMenuShowingEventArgs e)
+        {
+            if (e.Menu == null || e.HitInfo.Node == null)
+                return;
+
+            treeListControl1.FocusedNode = e.HitInfo.Node;
+
+            var createAccount = new DevExpress.Utils.Menu.DXMenuItem(
+                "Create",
+                (s, args) => AccountsToolbar_CreateClicked(this, EventArgs.Empty)
+            );
+
+            e.Menu.Items.Add(createAccount);
+
+            var editAccount = new DevExpress.Utils.Menu.DXMenuItem(
+                "Update",
+                (s, args) => AccountsToolbar_EditClicked(this, EventArgs.Empty)
+            );
+                   
+            e.Menu.Items.Add(editAccount);
+               
+        }
+
     }
 }

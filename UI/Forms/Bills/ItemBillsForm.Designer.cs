@@ -35,20 +35,19 @@
             DevExpress.XtraLayout.ColumnDefinition columnDefinition4 = new DevExpress.XtraLayout.ColumnDefinition();
             DevExpress.XtraLayout.ColumnDefinition columnDefinition5 = new DevExpress.XtraLayout.ColumnDefinition();
             DevExpress.XtraLayout.RowDefinition rowDefinition1 = new DevExpress.XtraLayout.RowDefinition();
-            DevExpress.XtraLayout.RowDefinition rowDefinition2 = new DevExpress.XtraLayout.RowDefinition();
             DevExpress.XtraLayout.ColumnDefinition columnDefinition6 = new DevExpress.XtraLayout.ColumnDefinition();
             DevExpress.XtraLayout.ColumnDefinition columnDefinition7 = new DevExpress.XtraLayout.ColumnDefinition();
             DevExpress.XtraLayout.ColumnDefinition columnDefinition8 = new DevExpress.XtraLayout.ColumnDefinition();
+            DevExpress.XtraLayout.RowDefinition rowDefinition2 = new DevExpress.XtraLayout.RowDefinition();
             DevExpress.XtraLayout.RowDefinition rowDefinition3 = new DevExpress.XtraLayout.RowDefinition();
             DevExpress.XtraLayout.RowDefinition rowDefinition4 = new DevExpress.XtraLayout.RowDefinition();
-            DevExpress.XtraLayout.RowDefinition rowDefinition5 = new DevExpress.XtraLayout.RowDefinition();
             DevExpress.XtraLayout.ColumnDefinition columnDefinition9 = new DevExpress.XtraLayout.ColumnDefinition();
             DevExpress.XtraLayout.ColumnDefinition columnDefinition10 = new DevExpress.XtraLayout.ColumnDefinition();
             DevExpress.XtraLayout.ColumnDefinition columnDefinition11 = new DevExpress.XtraLayout.ColumnDefinition();
             DevExpress.XtraLayout.ColumnDefinition columnDefinition12 = new DevExpress.XtraLayout.ColumnDefinition();
             DevExpress.XtraLayout.ColumnDefinition columnDefinition13 = new DevExpress.XtraLayout.ColumnDefinition();
             DevExpress.XtraLayout.ColumnDefinition columnDefinition14 = new DevExpress.XtraLayout.ColumnDefinition();
-            DevExpress.XtraLayout.RowDefinition rowDefinition6 = new DevExpress.XtraLayout.RowDefinition();
+            DevExpress.XtraLayout.RowDefinition rowDefinition5 = new DevExpress.XtraLayout.RowDefinition();
             this.layoutSearch = new DevExpress.XtraLayout.LayoutControl();
             this.spinBillNumber = new DevExpress.XtraEditors.SpinEdit();
             this.btnPrev = new DevExpress.XtraEditors.SimpleButton();
@@ -151,7 +150,7 @@
             0,
             0,
             0});
-            this.spinBillNumber.Location = new System.Drawing.Point(612, 20);
+            this.spinBillNumber.Location = new System.Drawing.Point(612, 22);
             this.spinBillNumber.Name = "spinBillNumber";
             this.spinBillNumber.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
             this.spinBillNumber.Properties.IsFloatValue = false;
@@ -172,7 +171,7 @@
             // 
             this.btnPrev.Appearance.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold);
             this.btnPrev.Appearance.Options.UseFont = true;
-            this.btnPrev.Location = new System.Drawing.Point(572, 18);
+            this.btnPrev.Location = new System.Drawing.Point(572, 20);
             this.btnPrev.Name = "btnPrev";
             this.btnPrev.Size = new System.Drawing.Size(36, 23);
             this.btnPrev.StyleController = this.layoutSearch;
@@ -185,7 +184,7 @@
             // 
             this.btnNext.Appearance.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold);
             this.btnNext.Appearance.Options.UseFont = true;
-            this.btnNext.Location = new System.Drawing.Point(532, 18);
+            this.btnNext.Location = new System.Drawing.Point(532, 20);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(36, 23);
             this.btnNext.StyleController = this.layoutSearch;
@@ -198,7 +197,7 @@
             // 
             this.btnEditBill.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
             this.btnEditBill.Appearance.Options.UseFont = true;
-            this.btnEditBill.Location = new System.Drawing.Point(422, 19);
+            this.btnEditBill.Location = new System.Drawing.Point(422, 21);
             this.btnEditBill.Name = "btnEditBill";
             this.btnEditBill.Size = new System.Drawing.Size(106, 22);
             this.btnEditBill.StyleController = this.layoutSearch;
@@ -236,11 +235,8 @@
             columnDefinition5});
             rowDefinition1.Height = 40D;
             rowDefinition1.SizeType = System.Windows.Forms.SizeType.Absolute;
-            rowDefinition2.Height = 20D;
-            rowDefinition2.SizeType = System.Windows.Forms.SizeType.Percent;
             this.Root_Search.OptionsTableLayoutGroup.RowDefinitions.AddRange(new DevExpress.XtraLayout.RowDefinition[] {
-            rowDefinition1,
-            rowDefinition2});
+            rowDefinition1});
             this.Root_Search.Size = new System.Drawing.Size(1000, 64);
             this.Root_Search.TextVisible = false;
             // 
@@ -253,9 +249,11 @@
             this.itemBillNumber.ContentVertAlignment = DevExpress.Utils.VertAlignment.Center;
             this.itemBillNumber.Control = this.spinBillNumber;
             this.itemBillNumber.Location = new System.Drawing.Point(600, 0);
+            this.itemBillNumber.MinSize = new System.Drawing.Size(136, 24);
             this.itemBillNumber.Name = "itemBillNumber";
             this.itemBillNumber.OptionsTableLayoutItem.ColumnIndex = 4;
-            this.itemBillNumber.Size = new System.Drawing.Size(380, 40);
+            this.itemBillNumber.Size = new System.Drawing.Size(380, 44);
+            this.itemBillNumber.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.itemBillNumber.Text = ":رقم الفاتورة";
             this.itemBillNumber.TextLocation = DevExpress.Utils.Locations.Right;
             // 
@@ -264,9 +262,11 @@
             this.itemPrev.ContentVertAlignment = DevExpress.Utils.VertAlignment.Center;
             this.itemPrev.Control = this.btnPrev;
             this.itemPrev.Location = new System.Drawing.Point(560, 0);
+            this.itemPrev.MinSize = new System.Drawing.Size(26, 27);
             this.itemPrev.Name = "itemPrev";
             this.itemPrev.OptionsTableLayoutItem.ColumnIndex = 3;
-            this.itemPrev.Size = new System.Drawing.Size(40, 40);
+            this.itemPrev.Size = new System.Drawing.Size(40, 44);
+            this.itemPrev.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.itemPrev.TextVisible = false;
             // 
             // itemNext
@@ -274,9 +274,11 @@
             this.itemNext.ContentVertAlignment = DevExpress.Utils.VertAlignment.Center;
             this.itemNext.Control = this.btnNext;
             this.itemNext.Location = new System.Drawing.Point(520, 0);
+            this.itemNext.MinSize = new System.Drawing.Size(26, 27);
             this.itemNext.Name = "itemNext";
             this.itemNext.OptionsTableLayoutItem.ColumnIndex = 2;
-            this.itemNext.Size = new System.Drawing.Size(40, 40);
+            this.itemNext.Size = new System.Drawing.Size(40, 44);
+            this.itemNext.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.itemNext.TextVisible = false;
             // 
             // itemAddItems
@@ -284,9 +286,11 @@
             this.itemAddItems.ContentVertAlignment = DevExpress.Utils.VertAlignment.Center;
             this.itemAddItems.Control = this.btnEditBill;
             this.itemAddItems.Location = new System.Drawing.Point(410, 0);
+            this.itemAddItems.MinSize = new System.Drawing.Size(77, 26);
             this.itemAddItems.Name = "itemAddItems";
             this.itemAddItems.OptionsTableLayoutItem.ColumnIndex = 1;
-            this.itemAddItems.Size = new System.Drawing.Size(110, 40);
+            this.itemAddItems.Size = new System.Drawing.Size(110, 44);
+            this.itemAddItems.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.itemAddItems.TextVisible = false;
             // 
             // layoutBillInfo
@@ -404,16 +408,16 @@
             columnDefinition6,
             columnDefinition7,
             columnDefinition8});
+            rowDefinition2.Height = 100D;
+            rowDefinition2.SizeType = System.Windows.Forms.SizeType.Percent;
             rowDefinition3.Height = 100D;
             rowDefinition3.SizeType = System.Windows.Forms.SizeType.Percent;
             rowDefinition4.Height = 100D;
             rowDefinition4.SizeType = System.Windows.Forms.SizeType.Percent;
-            rowDefinition5.Height = 100D;
-            rowDefinition5.SizeType = System.Windows.Forms.SizeType.Percent;
             this.Root_BillInfo.OptionsTableLayoutGroup.RowDefinitions.AddRange(new DevExpress.XtraLayout.RowDefinition[] {
+            rowDefinition2,
             rowDefinition3,
-            rowDefinition4,
-            rowDefinition5});
+            rowDefinition4});
             this.Root_BillInfo.Size = new System.Drawing.Size(1000, 110);
             this.Root_BillInfo.TextVisible = false;
             // 
@@ -614,10 +618,10 @@
             columnDefinition12,
             columnDefinition13,
             columnDefinition14});
-            rowDefinition6.Height = 100D;
-            rowDefinition6.SizeType = System.Windows.Forms.SizeType.Percent;
+            rowDefinition5.Height = 100D;
+            rowDefinition5.SizeType = System.Windows.Forms.SizeType.Percent;
             this.Root_ItemsActions.OptionsTableLayoutGroup.RowDefinitions.AddRange(new DevExpress.XtraLayout.RowDefinition[] {
-            rowDefinition6});
+            rowDefinition5});
             this.Root_ItemsActions.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
             this.Root_ItemsActions.Size = new System.Drawing.Size(1000, 36);
             this.Root_ItemsActions.TextVisible = false;

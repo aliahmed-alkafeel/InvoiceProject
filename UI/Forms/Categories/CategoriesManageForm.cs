@@ -1,50 +1,62 @@
 ﻿using Data.Configurations.DTOsConfigurations;
-using Data.Services.Implementations;
 using Data.Services.Interfaces;
-using Data.UnitOfWork;
 using DevExpress.XtraEditors;
 using Models.DTOs;
-using Models.Entities;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.Entity;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using UI.Extensions;
 
 namespace UI.Forms.Categories
 {
-    public partial class CategoriesManageForm : DevExpress.XtraEditors.XtraForm
+    public partial class CategoriesManageForm : XtraForm
     {
         private readonly ICategoryService _categoryService;
+        private readonly BindingSource _categoryBindingSource = new BindingSource();
         private CategoryDto _selectedCategory;
         private bool isEdit => _selectedCategory != null;
+
         public CategoriesManageForm(
             ICategoryService categoryService, CategoryDto selectedCategory = null)
         {
             InitializeComponent();
             _categoryService = categoryService;
             _selectedCategory = selectedCategory;
+
+            _categoryBindingSource.DataSource = typeof(CategoryDto);
+            BindControls();
+
             saveCancelControl21.SaveClicked += SaveCancelControl_SaveClicked;
             saveCancelControl21.CancelClicked += SaveCancelControl_CancelClicked;
         }
 
+        private void BindControls()
+        {
+            txtName.DataBindings.Add(
+                nameof(txtName.Text), _categoryBindingSource, nameof(CategoryDto.Name),
+                true, DataSourceUpdateMode.OnPropertyChanged);
+
+            chkIsActive.DataBindings.Add(
+                nameof(chkIsActive.Checked), _categoryBindingSource, nameof(CategoryDto.IsActive),
+                true, DataSourceUpdateMode.OnPropertyChanged);
+
+            txtNotes.DataBindings.Add(
+                nameof(txtNotes.Text), _categoryBindingSource, nameof(CategoryDto.Notes),
+                true, DataSourceUpdateMode.OnPropertyChanged);
+        }
+
         private async void SaveCancelControl_SaveClicked()
         {
+            _categoryBindingSource.EndEdit();
+            var current = _categoryBindingSource.Current as CategoryDto;
+
             if (!isEdit)
             {
                 var newCategory = new CreateCategoryDto()
                 {
                     Id = Guid.NewGuid(),
-                    Name = txtName.Text,
-                    IsActive = chkIsActive.Checked,
-                    Notes = txtNotes.Text
+                    Name = current.Name,
+                    IsActive = current.IsActive,
+                    Notes = current.Notes
                 };
 
                 if (!ValidationHelper.IsValid(new CreateCategoryDtoConfiguration(), newCategory, out var errors))
@@ -70,9 +82,9 @@ namespace UI.Forms.Categories
                 var newCategory = new UpdateCategoryDto()
                 {
                     Id = _selectedCategory.Id,
-                    Name = txtName.Text,
-                    IsActive = chkIsActive.Checked,
-                    Notes = txtNotes.Text
+                    Name = current.Name,
+                    IsActive = current.IsActive,
+                    Notes = current.Notes
                 };
 
                 if (!ValidationHelper.IsValid(new UpdateCategoryDtoConfiguration(), newCategory, out var errors))
@@ -108,22 +120,29 @@ namespace UI.Forms.Categories
         {
             LoadCategoryDetails(_selectedCategory);
         }
+
         private void LoadCategoryDetails(CategoryDto category)
         {
             _selectedCategory = category;
-            if (category == null)
-            {
-                return;
-            }
+
             if (!isEdit)
             {
                 lblTitle.Text = "إضافة فئة";
                 saveCancelControl21.SaveText = "إضافة";
+                _categoryBindingSource.DataSource = new CategoryDto
+                {
+                    IsActive = chkIsActive.Checked
+                };
+                return;
             }
-            txtName.Text = category.Name;
-            chkIsActive.Checked = category.IsActive;
-            txtNotes.Text = category.Notes;
 
+            _categoryBindingSource.DataSource = new CategoryDto
+            {
+                Id = category.Id,
+                Name = category.Name,
+                IsActive = category.IsActive,
+                Notes = category.Notes
+            };
         }
     }
 }

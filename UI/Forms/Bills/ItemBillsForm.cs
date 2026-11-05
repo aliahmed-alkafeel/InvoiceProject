@@ -103,8 +103,8 @@ namespace UI.Forms
             {
                 var items = (await this.WithLoading(async cts => await _itemService.GetAllItemsAsync(cts), "جارٍ تحميل المواد، يرجى الانتظار..."))
                     .Where(i => i.IsActive).ToList();
-                repositoryItemGridLookUpEdit.DataSource = items;
                 _itemLookup = items.ToDictionary(i => i.Id);
+                RefreshItemsLookup();
             }
             catch (Exception ex)
             {
@@ -263,13 +263,14 @@ namespace UI.Forms
         private void Display(BillDto bill)
         {
             _currentBill = bill;
+            RefreshItemsLookup();
             _currentIndex = bill == null ? -1 : _bills.FindIndex(b => b.Id == bill.Id);
 
             lblTypeValue.Text = bill?.BillType ?? string.Empty;
             lblDateValue.Text = bill?.Date.ToString("yyyy/MM/dd") ?? string.Empty;
             lblAccountValue.Text = bill?.AccountTree?.AccountName ?? string.Empty;
             lblCurrencyValue.Text = bill?.Currency?.CurrencyName ?? string.Empty;
-            lblEqualValue.Text = bill?.CurrencyEqualValue.ToString("N2") ?? string.Empty;
+            lblEqualValue.Text = bill?.CurrencyEqualValue.ToString("N6") ?? string.Empty;
             lblNotesValue.Text = bill?.Notes ?? string.Empty;
 
             _billItems.Clear();
@@ -284,10 +285,9 @@ namespace UI.Forms
 
         private void gridView1_InitNewRow(object sender, InitNewRowEventArgs e)
         {
-            if (gridView1.GetRow(e.RowHandle) is BillItemDto row && row.Id == Guid.Empty)
-                row.Id = Guid.NewGuid();
+            if (gridView1.GetRow(e.RowHandle) is BillItemDto row)
+                row.Id = Guid.Empty;
         }
-
         private void gridView1_CellValueChanged(
             object sender,
             CellValueChangedEventArgs e)
@@ -393,7 +393,24 @@ namespace UI.Forms
             lblTotal.Text = $"إجمالي الفاتورة: {_billItems.Sum(bi => bi.Qty * bi.Price):N2}";
         }
 
+        private void RefreshItemsLookup()
+        {
+            var rate = _currentBill?.CurrencyEqualValue ?? 1m;
 
+            if (rate <= 0)
+                return;
+
+            repositoryItemGridLookUpEdit.DataSource = _itemLookup.Values.Select(i => new
+            {
+                i.Id,
+                i.Name,
+                i.Category,
+                Price = Math.Round(
+                    (i.Price ?? 0m) / rate,
+                    6,
+                    MidpointRounding.AwayFromZero)
+            }).ToList();
+        }
         private void UpdateNavigationButtons()
         {
             bool hasCurrentBill = _currentIndex >= 0;

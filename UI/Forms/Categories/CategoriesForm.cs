@@ -1,34 +1,30 @@
-﻿using Data.Services.Implementations;
-using Data.Services.Interfaces;
-using Data.UnitOfWork;
-using DevExpress.Internal.WinApi.Windows.UI.Notifications;
+﻿using Data.Services.Interfaces;
 using DevExpress.XtraEditors;
-using DevExpress.XtraGrid.Views.Base;
-using Microsoft.Extensions.DependencyInjection;
 using Models.CurrentUserDetails;
 using Models.DTOs;
 using Models.Entities;
 using System;
-using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UI.Extensions;
-
 
 namespace UI.Forms.Categories
 {
     public partial class CategoriesForm : XtraForm
     {
         private readonly ICategoryService _categoryService;
-
-        //public Guid CurrentUserId { get; set; }
+        private readonly BindingSource _categoriesBindingSource = new BindingSource();
         private bool _isLoadingCategories;
 
         public CategoriesForm(ICategoryService categoryService)
         {
             _categoryService = categoryService;
             InitializeComponent();
-            if(toolBarControl1.SetManageVisible(CurrentUser.HasRole(UserRole.ManageCategories)))
+
+            _categoriesBindingSource.DataSource = typeof(CategoryDto);
+            gridControl1.DataSource = _categoriesBindingSource;
+
+            if (toolBarControl1.SetManageVisible(CurrentUser.HasRole(UserRole.ManageCategories)))
             {
                 toolBarControl1.CreateClicked += CategoriesToolbar_CreateClicked;
                 toolBarControl1.EditClicked += CategoriesToolbar_EditClicked;
@@ -36,8 +32,6 @@ namespace UI.Forms.Categories
             }
             toolBarControl1.RefreshClicked += CategoriesToolbar_RefreshClicked;
         }
-
-
 
         private async void CategoriesForm_LoadAsync(object sender, EventArgs e)
         {
@@ -63,16 +57,14 @@ namespace UI.Forms.Categories
             _isLoadingCategories = true;
             try
             {
-                var categorys = await this.WithLoading(cts =>
-                    _categoryService.GetAllCategoriesAsync(cts),
+                var categories = await this.WithLoading(
+                    cts => _categoryService.GetAllCategoriesAsync(cts),
                     "جارٍ تحميل الفئات، يرجى الانتظار...");
 
-                gridControl1.DataSource = categorys;
+                _categoriesBindingSource.DataSource = categories;
 
-                if (gridView1.RowCount > 0)
-                {
-                    gridView1.FocusedRowHandle = 0;
-                }
+                if (_categoriesBindingSource.Count > 0)
+                    _categoriesBindingSource.Position = 0;
             }
             finally
             {
@@ -80,30 +72,23 @@ namespace UI.Forms.Categories
             }
         }
 
+        private CategoryDto CurrentCategory => _categoriesBindingSource.Current as CategoryDto;
 
-
-        private async void CategoriesToolbar_CreateClicked(
-            object sender,
-            EventArgs e)
+        private async void CategoriesToolbar_CreateClicked(object sender, EventArgs e)
         {
             if (CheckCategoriesLoading())
                 return;
 
             if (Navigator.ShowScopedDialog<CategoriesManageForm>() == DialogResult.OK)
-            {
                 await LoadCategoriesAsync();
-            }
         }
 
-        private async void CategoriesToolbar_EditClicked(
-            object sender,
-            EventArgs e)
+        private async void CategoriesToolbar_EditClicked(object sender, EventArgs e)
         {
             if (CheckCategoriesLoading())
                 return;
 
-            var selectedCategory = gridView1.GetFocusedRow() as CategoryDto;
-
+            var selectedCategory = CurrentCategory;
             if (selectedCategory == null)
             {
                 XtraMessageBox.Show(
@@ -111,51 +96,43 @@ namespace UI.Forms.Categories
                     "اختيار فئة",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
-
                 return;
             }
 
-            if (Navigator.ShowScopedDialog<CategoriesManageForm>(
-                selectedCategory) == DialogResult.OK)
-            {
+            if (Navigator.ShowScopedDialog<CategoriesManageForm>(selectedCategory) == DialogResult.OK)
                 await LoadCategoriesAsync();
-            }
         }
 
-        private async void CategoriesToolbar_DeleteClicked(
-            object sender,
-            EventArgs e)
+        private async void CategoriesToolbar_DeleteClicked(object sender, EventArgs e)
         {
             if (CheckCategoriesLoading())
                 return;
 
-            var category = gridView1.GetFocusedRow() as CategoryDto;
-
+            var category = CurrentCategory;
             if (category == null)
             {
                 XtraMessageBox.Show(
-                    ".يرجى اختيار فئة أولاً",
+                    "يرجى اختيار فئة أولاً.",
                     "تنبيه",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
-
                 return;
             }
 
-            var result = XtraMessageBox.Show(
+            var confirm = XtraMessageBox.Show(
                 $"هل أنت متأكد من حذف الفئة '{category.Name}'؟",
                 "تأكيد الحذف",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
-            if (result == DialogResult.No)
+            if (confirm == DialogResult.No)
                 return;
 
             try
             {
-                var result2 = await _categoryService.DeleteCategoryAsync(category.Id);
+                var deleted = await _categoryService.DeleteCategoryAsync(category.Id);
 
-                if (result2)
+                if (deleted)
                 {
                     await LoadCategoriesAsync();
 
@@ -184,15 +161,12 @@ namespace UI.Forms.Categories
             }
         }
 
-        private async void CategoriesToolbar_RefreshClicked(
-            object sender,
-            EventArgs e)
+        private async void CategoriesToolbar_RefreshClicked(object sender, EventArgs e)
         {
             if (CheckCategoriesLoading())
                 return;
-  
-            UseWaitCursor = true;
 
+            UseWaitCursor = true;
             try
             {
                 await LoadCategoriesAsync();
